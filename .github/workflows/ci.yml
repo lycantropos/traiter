@@ -92,6 +92,7 @@ jobs:
         with:
           components: rustfmt
           default: true
+          profile: minimal
           target: ${{ matrix.platform.rust_target }}
           toolchain: nightly
       - name: 'Run Rust linter'
