@@ -18,43 +18,68 @@ jobs:
         platform: [
           {
             os: 'macos-latest',
+            rust_target: 'aarch64-apple-darwin',
+            with_coverage: true,
+          },
+          {
+            os: 'macos-latest',
             rust_target: 'x86_64-apple-darwin',
+            with_coverage: true,
           },
           {
             os: 'ubuntu-latest',
             rust_target: 'aarch64-unknown-linux-gnu',
+            with_coverage: true,
           },
           {
             os: 'ubuntu-latest',
             rust_target: 'aarch64-unknown-linux-musl',
+            with_coverage: false,
           },
           {
             os: 'ubuntu-latest',
             rust_target: 'i686-unknown-linux-gnu',
+            with_coverage: true,
+          },
+          {
+            os: 'ubuntu-latest',
+            rust_target: 'i686-unknown-linux-musl',
+            with_coverage: true,
           },
           {
             os: 'ubuntu-latest',
             rust_target: 'powerpc64le-unknown-linux-gnu',
+            with_coverage: true,
           },
           {
             os: 'ubuntu-latest',
             rust_target: 's390x-unknown-linux-gnu',
+            with_coverage: true,
+          },
+          {
+            os: 'ubuntu-latest',
+            rust_target: 's390x-unknown-linux-musl',
+            with_coverage: true,
           },
           {
             os: 'ubuntu-latest',
             rust_target: 'x86_64-unknown-linux-gnu',
+            with_coverage: true,
           },
           {
             os: 'ubuntu-latest',
             rust_target: 'x86_64-unknown-linux-musl',
+            with_coverage: false,
           },
           {
             os: 'windows-latest',
             rust_target: 'x86_64-pc-windows-msvc',
+            with_coverage: true,
           },
           {
             os: 'windows-latest',
             rust_target: 'i686-pc-windows-msvc',
+            with_coverage: true,
           },
         ]
     steps:
@@ -76,7 +101,7 @@ jobs:
         with:
           platforms: all
         if: ${{ runner.os == 'Linux' }}
-      - name: 'Run doctests'
+      - name: 'Run doctests with coverage'
         run: cargo test --doc --target=${{ matrix.platform.rust_target }}
         env:
           CARGO_INCREMENTAL: 0
@@ -86,6 +111,9 @@ jobs:
           RUSTFLAGS: >
             -Zprofile -Ccodegen-units=1 -Copt-level=0 -Coverflow-checks=off
             -Zpanic_abort_tests -Cpanic=abort
+        if: ${{ matrix.with_coverage }}
+      - name: 'Run doctests without coverage'
+        run: cargo test --doc --target=${{ matrix.platform.rust_target }}
       - name: 'Run tests'
         run: cargo test --all-targets --target=${{ matrix.platform.rust_target }}
         env:
