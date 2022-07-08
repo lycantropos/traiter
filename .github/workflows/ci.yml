@@ -115,7 +115,7 @@ jobs:
         run: cargo test --doc --target=${{ matrix.platform.rust_target }}
         if: ${{ !fromJSON(matrix.platform.with_coverage) }}
       - name: 'Run tests with coverage'
-        run: cargo test --all-targets --target=${{ matrix.platform.rust_target }}
+        run: cargo test --lib --target=${{ matrix.platform.rust_target }}
         env:
           CARGO_INCREMENTAL: 0
           RUSTFLAGS: >
