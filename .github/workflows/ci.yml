@@ -39,12 +39,12 @@ jobs:
           {
             os: 'ubuntu-latest',
             rust_target: 'i686-unknown-linux-gnu',
-            with_coverage: true,
+            with_coverage: false,
           },
           {
             os: 'ubuntu-latest',
             rust_target: 'i686-unknown-linux-musl',
-            with_coverage: true,
+            with_coverage: false,
           },
           {
             os: 'ubuntu-latest',
@@ -54,7 +54,7 @@ jobs:
           {
             os: 'ubuntu-latest',
             rust_target: 's390x-unknown-linux-gnu',
-            with_coverage: true,
+            with_coverage: false,
           },
           {
             os: 'ubuntu-latest',
@@ -96,6 +96,9 @@ jobs:
         uses: docker/setup-qemu-action@v2
         with:
           platforms: all
+        if: ${{ runner.os == 'Linux' }}
+      - name: 'Setup musl'
+        run: sudo apt-get install gcc-multilib
         if: ${{ runner.os == 'Linux' }}
       - name: 'Run doctests with coverage'
         run: cargo test --doc --target=${{ matrix.platform.rust_target }}
