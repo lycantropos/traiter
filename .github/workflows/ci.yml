@@ -28,38 +28,13 @@ jobs:
           },
           {
             os: 'ubuntu-latest',
-            rust_target: 'aarch64-unknown-linux-musl',
-            with_coverage: false,
-          },
-          {
-            os: 'ubuntu-latest',
             rust_target: 'i686-unknown-linux-gnu',
-            with_coverage: false,
-          },
-          {
-            os: 'ubuntu-latest',
-            rust_target: 'i686-unknown-linux-musl',
-            with_coverage: false,
-          },
-          {
-            os: 'ubuntu-latest',
-            rust_target: 'powerpc64-unknown-linux-gnu',
-            with_coverage: false,
-          },
-          {
-            os: 'ubuntu-latest',
-            rust_target: 's390x-unknown-linux-gnu',
             with_coverage: false,
           },
           {
             os: 'ubuntu-latest',
             rust_target: 'x86_64-unknown-linux-gnu',
             with_coverage: true,
-          },
-          {
-            os: 'ubuntu-latest',
-            rust_target: 'x86_64-unknown-linux-musl',
-            with_coverage: false,
           },
           {
             os: 'windows-latest',
