@@ -1,0 +1,9 @@
+[package]
+name = "traiter"
+description = "Traits collection."
+license = "MIT"
+version = "0.0.0"
+edition = "2018"
+
+[lib]
+name = "traiter"

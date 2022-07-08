@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 'master'
+    tags: [ 'v*' ]
+  pull_request:
+    branches:
+      - 'master'
+
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.platform.os }}
+    strategy:
+      matrix:
+        platform: [
+          {
+            os: 'macos-latest',
+            rust_target: 'x86_64-apple-darwin'
+          },
+          {
+            os: 'ubuntu-latest',
+            rust_target: 'x86_64-unknown-linux-gnu'
+          },
+          {
+            os: 'windows-latest',
+            rust_target: 'x86_64-pc-windows-msvc'
+          },
+          {
+            os: 'windows-latest',
+            rust_target: 'i686-pc-windows-msvc'
+          },
+        ]
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: 'Setup Rust'
+        uses: actions-rs/toolchain@v1
+        with:
+          components: rustfmt
+          default: true
+          target: ${{ matrix.platform.rust_target }}
+          toolchain: nightly
+      - name: 'Run Rust linter'
+        run: cargo fmt --check
+      - name: 'Run doctests'
+        run: cargo test --doc --target=${{ matrix.platform.rust_target }}
+        env:
+          CARGO_INCREMENTAL: 0
+          RUSTDOCFLAGS: >
+            -Zprofile -Ccodegen-units=1 -Copt-level=0 -Coverflow-checks=off
+            -Zpanic_abort_tests -Cpanic=abort
+          RUSTFLAGS: >
+            -Zprofile -Ccodegen-units=1 -Copt-level=0 -Coverflow-checks=off
+            -Zpanic_abort_tests -Cpanic=abort
+      - name: 'Run tests'
+        run: cargo test --all-targets --target=${{ matrix.platform.rust_target }}
+        env:
+          CARGO_INCREMENTAL: 0
+          RUSTFLAGS: >
+            -Zprofile -Ccodegen-units=1 -Copt-level=0 -Coverflow-checks=off
+            -Zpanic_abort_tests -Cpanic=abort
+      - name: 'Install coverage dependencies'
+        run: cargo install grcov
+      - name: 'Collect coverage'
+        run: >
+          grcov target -s . -t cobertura --llvm --branch --ignore-not-existing
+          --ignore "/*" -o coverage.xml
+      - name: 'Upload coverage'
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          fail_ci_if_error: false
+          files: ./coverage.xml
+        continue-on-error: true
+
+  pre-deploy:
+    name: 'Pre-deploy'
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && github.ref_type == 'tag'
+    steps:
+      - name: '_'
+        run: echo "Pre-deploy step"
+
+  deploy:
+    name: 'Deploy'
+    environment: release
+    needs: pre-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+      - name: 'Setup Rust'
+        uses: actions-rs/toolchain@v1
+        with:
+          default: true
+          toolchain: nightly
+      - name: 'Upload'
+        run: cargo publish --no-verify
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}

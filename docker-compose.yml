@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  traiter:
+    build:
+      context: .
+      args:
+        - IMAGE_NAME=${IMAGE_NAME}
+        - IMAGE_VERSION=${IMAGE_VERSION}
+    image: lycantropos/traiter:0.0.0
+    volumes:
+      - ./Cargo.toml:/opt/traiter/Cargo.toml
+      - ./README.md:/opt/traiter/README.md
+      - ./rust-toolchain.toml:/opt/traiter/rust-toolchain.toml
+      - ./src:/opt/traiter/src
+      - ./traiter:/opt/traiter/traiter
+    entrypoint: cargo test
