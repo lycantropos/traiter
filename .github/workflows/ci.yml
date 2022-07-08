@@ -24,7 +24,7 @@ jobs:
           {
             os: 'ubuntu-latest',
             rust_target: 'i686-unknown-linux-gnu',
-            with_coverage: false,
+            with_coverage: true,
           },
           {
             os: 'ubuntu-latest',
