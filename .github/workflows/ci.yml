@@ -19,27 +19,22 @@ jobs:
           {
             os: 'macos-latest',
             rust_target: 'x86_64-apple-darwin',
-            with_coverage: true,
           },
           {
             os: 'ubuntu-latest',
             rust_target: 'i686-unknown-linux-gnu',
-            with_coverage: true,
           },
           {
             os: 'ubuntu-latest',
             rust_target: 'x86_64-unknown-linux-gnu',
-            with_coverage: true,
           },
           {
             os: 'windows-latest',
             rust_target: 'x86_64-pc-windows-msvc',
-            with_coverage: true,
           },
           {
             os: 'windows-latest',
             rust_target: 'i686-pc-windows-msvc',
-            with_coverage: true,
           },
         ]
     steps:
@@ -65,7 +60,7 @@ jobs:
       - name: 'Setup musl'
         run: sudo apt-get install gcc-multilib
         if: ${{ runner.os == 'Linux' }}
-      - name: 'Run doctests for non-musl with coverage'
+      - name: 'Run doctests'
         run: cargo test --doc --target=${{ matrix.platform.rust_target }}
         env:
           CARGO_INCREMENTAL: 0
@@ -75,25 +70,13 @@ jobs:
           RUSTFLAGS: >
             -Zprofile -Ccodegen-units=1 -Copt-level=0 -Coverflow-checks=off
             -Zpanic_abort_tests -Cpanic=abort
-        if: ${{ fromJSON(matrix.platform.with_coverage) &&
-                !endsWith(matrix.platform.rust_target, 'musl') }}
-      - name: 'Run doctests for non-musl without coverage'
-        run: cargo test --doc --target=${{ matrix.platform.rust_target }}
-        if: ${{ !fromJSON(matrix.platform.with_coverage) &&
-                !endsWith(matrix.platform.rust_target, 'musl') }}
-      - name: 'Run tests for non-musl with coverage'
+      - name: 'Run tests'
         run: cargo test --lib --target=${{ matrix.platform.rust_target }}
         env:
           CARGO_INCREMENTAL: 0
           RUSTFLAGS: >
             -Zprofile -Ccodegen-units=1 -Copt-level=0 -Coverflow-checks=off
             -Zpanic_abort_tests -Cpanic=abort
-        if: ${{ fromJSON(matrix.platform.with_coverage) &&
-                !endsWith(matrix.platform.rust_target, 'musl') }}
-      - name: 'Run tests for non-musl without coverage'
-        run: cargo test --all-targets --target=${{ matrix.platform.rust_target }}
-        if: ${{ !fromJSON(matrix.platform.with_coverage) &&
-                !endsWith(matrix.platform.rust_target, 'musl') }}
       - name: 'Install coverage dependencies'
         run: cargo install grcov
       - name: 'Collect coverage'
