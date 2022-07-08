@@ -18,11 +18,6 @@ jobs:
         platform: [
           {
             os: 'macos-latest',
-            rust_target: 'aarch64-apple-darwin',
-            with_coverage: true,
-          },
-          {
-            os: 'macos-latest',
             rust_target: 'x86_64-apple-darwin',
             with_coverage: true,
           },
