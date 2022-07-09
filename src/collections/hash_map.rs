@@ -1,11 +1,19 @@
 use std::collections::HashMap;
 
-use super::traits::{Container, Emptiable, Lengthsome};
+use super::traits::{Capacitary, Container, Emptiable, Lengthsome};
 use std::hash::{BuildHasher, Hash};
 
 impl<Key: Eq + Hash, Value, State: BuildHasher> Container<&Key> for &HashMap<Key, Value, State> {
     fn contains(self, value: &Key) -> bool {
         HashMap::contains_key(self, value)
+    }
+}
+
+impl<Key, Value, State> Capacitary for &HashMap<Key, Value, State> {
+    type Capacity = usize;
+
+    fn capacity(self) -> Self::Capacity {
+        HashMap::capacity(self)
     }
 }
 
