@@ -1,11 +1,19 @@
 use std::collections::HashSet;
 use std::hash::{BuildHasher, Hash};
 
-use super::traits::{Container, Emptiable, Lengthsome};
+use super::traits::{Capacitary, Container, Emptiable, Lengthsome};
 
 impl<Element: Eq + Hash, State: BuildHasher> Container<&Element> for &HashSet<Element, State> {
     fn contains(self, value: &Element) -> bool {
         HashSet::contains(self, value)
+    }
+}
+
+impl<Element> Capacitary for &HashSet<Element> {
+    type Capacity = usize;
+
+    fn capacity(self) -> Self::Capacity {
+        HashSet::capacity(self)
     }
 }
 
