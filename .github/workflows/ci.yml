@@ -86,10 +86,81 @@ jobs:
           files: ./coverage.xml
         continue-on-error: true
 
+  build:
+    name: Build
+    runs-on: ${{ matrix.platform.os }}
+    strategy:
+      matrix:
+        platform: [
+          {
+            os: 'macos-latest',
+            rust_target: 'x86_64-apple-darwin',
+          },
+          {
+            os: 'ubuntu-latest',
+            rust_target: 'aarch64-unknown-linux-gnu',
+          },
+          {
+            os: 'ubuntu-latest',
+            rust_target: 'aarch64-unknown-linux-musl',
+          },
+          {
+            os: 'ubuntu-latest',
+            rust_target: 'i686-unknown-linux-gnu',
+          },
+          {
+            os: 'ubuntu-latest',
+            rust_target: 'powerpc64le-unknown-linux-gnu',
+          },
+          {
+            os: 'ubuntu-latest',
+            rust_target: 's390x-unknown-linux-gnu',
+          },
+          {
+            os: 'ubuntu-latest',
+            rust_target: 'x86_64-unknown-linux-gnu',
+          },
+          {
+            os: 'ubuntu-latest',
+            rust_target: 'x86_64-unknown-linux-musl',
+          },
+          {
+            os: 'windows-latest',
+            rust_target: 'i686-pc-windows-msvc',
+          },
+          {
+            os: 'windows-latest',
+            rust_target: 'x86_64-pc-windows-msvc',
+          },
+        ]
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: 'Setup Rust'
+        uses: actions-rs/toolchain@v1
+        with:
+          default: true
+          profile: minimal
+          target: ${{ matrix.platform.rust_target }}
+          toolchain: nightly
+      - name: 'Setup QEMU'
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
+        if: ${{ runner.os == 'Linux' }}
+      - name: 'Setup cross-compiling dependencies'
+        run: sudo apt-get install gcc-multilib
+        if: ${{ runner.os == 'Linux' &&
+                startsWith(matrix.platform.rust_target, 'i686') }}
+      - name: 'Build'
+        run: cargo build --target=${{ matrix.platform.rust_target }}
+
   pre-deploy:
     name: 'Pre-deploy'
     runs-on: ubuntu-latest
-    needs: test
+    needs: build
     if: github.event_name == 'push' && github.ref_type == 'tag'
     steps:
       - name: '_'
