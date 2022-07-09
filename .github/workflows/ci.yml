@@ -52,11 +52,10 @@ jobs:
           toolchain: nightly
       - name: 'Run Rust linter'
         run: cargo fmt --check
-      - name: 'Setup QEMU'
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: all
-        if: ${{ runner.os == 'Linux' }}
+      - name: 'Setup cross-compiling dependencies'
+        run: sudo apt-get install gcc-multilib
+        if: ${{ runner.os == 'Linux' &&
+                !startsWith(matrix.platform.rust_target, 'i686') }}
       - name: 'Run doctests'
         run: cargo test --doc --target=${{ matrix.platform.rust_target }}
         env:
