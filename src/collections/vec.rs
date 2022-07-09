@@ -1,8 +1,16 @@
-use super::traits::{Container, Emptiable, Lengthsome};
+use super::traits::{Capacitary, Container, Emptiable, Lengthsome};
 
 impl<Element: PartialEq> Container<&Element> for &Vec<Element> {
     fn contains(self, value: &Element) -> bool {
         self.as_slice().contains(value)
+    }
+}
+
+impl<Element> Capacitary for &Vec<Element> {
+    type Capacity = usize;
+
+    fn capacity(self) -> Self::Capacity {
+        Vec::capacity(self)
     }
 }
 
