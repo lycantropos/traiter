@@ -30,11 +30,11 @@ jobs:
           },
           {
             os: 'windows-latest',
-            rust_target: 'x86_64-pc-windows-msvc',
+            rust_target: 'i686-pc-windows-msvc',
           },
           {
             os: 'windows-latest',
-            rust_target: 'i686-pc-windows-msvc',
+            rust_target: 'x86_64-pc-windows-msvc',
           },
         ]
     steps:
@@ -55,7 +55,7 @@ jobs:
       - name: 'Setup cross-compiling dependencies'
         run: sudo apt-get install gcc-multilib
         if: ${{ runner.os == 'Linux' &&
-                !startsWith(matrix.platform.rust_target, 'i686') }}
+                startsWith(matrix.platform.rust_target, 'i686') }}
       - name: 'Run doctests'
         run: cargo test --doc --target=${{ matrix.platform.rust_target }}
         env:
