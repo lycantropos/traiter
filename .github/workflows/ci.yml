@@ -57,9 +57,6 @@ jobs:
         with:
           platforms: all
         if: ${{ runner.os == 'Linux' }}
-      - name: 'Setup musl'
-        run: sudo apt-get install gcc-multilib
-        if: ${{ runner.os == 'Linux' }}
       - name: 'Run doctests'
         run: cargo test --doc --target=${{ matrix.platform.rust_target }}
         env:
