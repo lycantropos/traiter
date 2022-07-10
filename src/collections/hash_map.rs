@@ -1,7 +1,13 @@
 use std::collections::HashMap;
 
-use super::traits::{Capacitary, Container, Emptiable, Lengthsome};
+use super::traits::{Capacitary, Clearable, Container, Emptiable, Lengthsome};
 use std::hash::{BuildHasher, Hash};
+
+impl<Key, Value, State> Clearable for HashMap<Key, Value, State> {
+    fn clear(&mut self) {
+        HashMap::clear(self)
+    }
+}
 
 impl<Key: Eq + Hash, Value, State: BuildHasher> Container<&Key> for HashMap<Key, Value, State> {
     fn contains(&self, value: &Key) -> bool {
