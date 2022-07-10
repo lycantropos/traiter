@@ -6,4 +6,5 @@ pub use self::types::Endianness;
 mod abs;
 mod ceil;
 mod from_bytes;
+mod to_bytes;
 mod types;
