@@ -1,7 +1,7 @@
 use std::collections::HashMap;
+use std::hash::{BuildHasher, Hash};
 
 use super::traits::{Capacitary, Clearable, Container, Emptiable, Lengthsome};
-use std::hash::{BuildHasher, Hash};
 
 impl<Key, Value, State> Capacitary for HashMap<Key, Value, State> {
     type Capacity = usize;
