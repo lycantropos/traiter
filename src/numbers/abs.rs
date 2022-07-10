@@ -1,24 +1,24 @@
-/// Absolute value function.
-///
-/// ```
-/// use traiter::numbers::Abs;
-/// // signed integers
-/// assert_eq!(Abs::abs(-1), 1);
-/// assert_eq!(Abs::abs(0), 0);
-/// assert_eq!(Abs::abs(1), 1);
-#[cfg_attr(
-    feature = "std",
-    doc = r##"
+pub trait Abs {
+    type Output;
+
+    /// Returns absolute value of a number.
+    ///
+    /// ```
+    /// use traiter::numbers::Abs;
+    /// // signed integers
+    /// assert_eq!(Abs::abs(-1), 1);
+    /// assert_eq!(Abs::abs(0), 0);
+    /// assert_eq!(Abs::abs(1), 1);
+    #[cfg_attr(
+        feature = "std",
+        doc = r##"
 // floating point numbers
 assert_eq!(Abs::abs(-1.), 1.);
 assert_eq!(Abs::abs(0.), 0.);
 assert_eq!(Abs::abs(1.), 1.);
 "##
-)]
-/// ```
-pub trait Abs {
-    type Output;
-
+    )]
+    /// ```
     fn abs(self) -> Self::Output;
 }
 
