@@ -1,4 +1,4 @@
-/// Absolute value operator.
+/// Absolute value function.
 ///
 /// ```
 /// use traiter::numbers::Abs;
