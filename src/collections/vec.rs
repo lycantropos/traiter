@@ -1,4 +1,10 @@
-use super::traits::{Capacitary, Container, Emptiable, Lengthsome};
+use super::traits::{Clearable, Capacitary, Container, Emptiable, Lengthsome};
+
+impl<Element: PartialEq> Clearable for Vec<Element> {
+    fn clear(&mut self) {
+        Vec::clear(self)
+    }
+}
 
 impl<Element: PartialEq> Container<&Element> for Vec<Element> {
     fn contains(&self, value: &Element) -> bool {
