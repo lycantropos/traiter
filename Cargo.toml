@@ -7,3 +7,8 @@ edition = "2018"
 
 [lib]
 name = "traiter"
+
+[features]
+collections = []
+numbers = []
+std = []
