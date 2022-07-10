@@ -4,6 +4,7 @@ pub use self::from_bytes::FromBytes;
 pub use self::types::Endianness;
 
 mod abs;
+mod bit_length;
 mod ceil;
 mod from_bytes;
 mod to_bytes;
