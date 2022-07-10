@@ -21,3 +21,7 @@ pub trait Lengthsome {
 
     fn len(&self) -> Self::Length;
 }
+
+pub trait Reservable: Capacitary {
+    fn reserve(&mut self, additional: Self::Capacity);
+}
