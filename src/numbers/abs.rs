@@ -1,3 +1,16 @@
+/// Absolute value operator.
+///
+/// ```
+/// use traiter::numbers::Abs;
+/// // signed integers
+/// assert_eq!(Abs::abs(-1), 1);
+/// assert_eq!(Abs::abs(0), 0);
+/// assert_eq!(Abs::abs(1), 1);
+/// // floating point numbers
+/// assert_eq!(Abs::abs(-1.), 1.);
+/// assert_eq!(Abs::abs(0.), 0.);
+/// assert_eq!(Abs::abs(1.), 1.);
+/// ```
 pub trait Abs {
     type Output;
 
