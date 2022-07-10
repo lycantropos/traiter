@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 use std::hash::{BuildHasher, Hash};
 
-use super::traits::{Capacitary, Clearable, Container, Emptiable, Lengthsome};
+use super::traits::{Capacitary, Clearable, Container, Emptiable, Lengthsome, Reservable};
 
 impl<Element, State> Capacitary for HashSet<Element, State> {
     type Capacity = usize;
@@ -34,5 +34,11 @@ impl<Element, State> Lengthsome for HashSet<Element, State> {
 
     fn len(&self) -> Self::Length {
         HashSet::len(self)
+    }
+}
+
+impl<Element: Eq + Hash, State: BuildHasher> Reservable for HashSet<Element, State> {
+    fn reserve(&mut self, additional: Self::Capacity) {
+        HashSet::reserve(self, additional)
     }
 }
