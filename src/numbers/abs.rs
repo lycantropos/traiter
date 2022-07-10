@@ -1,13 +1,11 @@
-#[doc = r##"
-Absolute value operator.
-
-```
-use traiter::numbers::Abs;
-// signed integers
-assert_eq!(Abs::abs(-1), 1);
-assert_eq!(Abs::abs(0), 0);
-assert_eq!(Abs::abs(1), 1);
-"##]
+/// Absolute value operator.
+///
+/// ```
+/// use traiter::numbers::Abs;
+/// // signed integers
+/// assert_eq!(Abs::abs(-1), 1);
+/// assert_eq!(Abs::abs(0), 0);
+/// assert_eq!(Abs::abs(1), 1);
 #[cfg_attr(
     feature = "std",
     doc = r##"
@@ -17,7 +15,7 @@ assert_eq!(Abs::abs(0.), 0.);
 assert_eq!(Abs::abs(1.), 1.);
 "##
 )]
-#[doc = "```"]
+/// ```
 pub trait Abs {
     type Output;
 
