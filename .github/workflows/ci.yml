@@ -78,10 +78,6 @@ jobs:
         with:
           platforms: all
         if: ${{ runner.os == 'Linux' }}
-      - name: 'Setup cross-compiling dependencies'
-        run: sudo apt-get install gcc-multilib
-        if: ${{ runner.os == 'Linux' &&
-                startsWith(matrix.platform.rust_target, 'i686') }}
       - name: 'Build'
         run: cargo build --target=${{ matrix.platform.rust_target }}
 
@@ -143,7 +139,7 @@ jobs:
             -Zprofile -Ccodegen-units=1 -Copt-level=0 -Coverflow-checks=off
             -Zpanic_abort_tests -Cpanic=abort
       - name: 'Run tests'
-        run: cargo test --lib --target=${{ matrix.platform.rust_target }}
+        run: cargo test --all-targets --target=${{ matrix.platform.rust_target }}
         env:
           CARGO_INCREMENTAL: 0
           RUSTFLAGS: >
