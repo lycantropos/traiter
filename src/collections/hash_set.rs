@@ -3,6 +3,14 @@ use std::hash::{BuildHasher, Hash};
 
 use super::traits::{Capacitary, Clearable, Container, Emptiable, Lengthsome};
 
+impl<Element> Capacitary for HashSet<Element> {
+    type Capacity = usize;
+
+    fn capacity(&self) -> Self::Capacity {
+        HashSet::capacity(self)
+    }
+}
+
 impl<Element, State> Clearable for HashSet<Element, State> {
     fn clear(&mut self) {
         HashSet::clear(self)
@@ -12,14 +20,6 @@ impl<Element, State> Clearable for HashSet<Element, State> {
 impl<Element: Eq + Hash, State: BuildHasher> Container<&Element> for HashSet<Element, State> {
     fn contains(&self, value: &Element) -> bool {
         HashSet::contains(self, value)
-    }
-}
-
-impl<Element> Capacitary for HashSet<Element> {
-    type Capacity = usize;
-
-    fn capacity(&self) -> Self::Capacity {
-        HashSet::capacity(self)
     }
 }
 

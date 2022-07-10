@@ -1,5 +1,13 @@
 use super::traits::{Clearable, Capacitary, Container, Emptiable, Lengthsome};
 
+impl<Element> Capacitary for Vec<Element> {
+    type Capacity = usize;
+
+    fn capacity(&self) -> Self::Capacity {
+        Vec::capacity(self)
+    }
+}
+
 impl<Element: PartialEq> Clearable for Vec<Element> {
     fn clear(&mut self) {
         Vec::clear(self)
@@ -9,14 +17,6 @@ impl<Element: PartialEq> Clearable for Vec<Element> {
 impl<Element: PartialEq> Container<&Element> for Vec<Element> {
     fn contains(&self, value: &Element) -> bool {
         self.as_slice().contains(value)
-    }
-}
-
-impl<Element> Capacitary for Vec<Element> {
-    type Capacity = usize;
-
-    fn capacity(&self) -> Self::Capacity {
-        Vec::capacity(self)
     }
 }
 
