@@ -3,7 +3,7 @@ use std::hash::{BuildHasher, Hash};
 
 use super::traits::{Capacitary, Clearable, Container, Emptiable, Lengthsome};
 
-impl<Element> Capacitary for HashSet<Element> {
+impl<Element, State> Capacitary for HashSet<Element, State> {
     type Capacity = usize;
 
     fn capacity(&self) -> Self::Capacity {
