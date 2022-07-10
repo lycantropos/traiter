@@ -17,4 +17,5 @@ macro_rules! primitive_ceil_impl {
     )*)
 }
 
+#[cfg(feature = "std")]
 primitive_ceil_impl!(f32 f64);

@@ -1,4 +1,4 @@
-use std::ops::{Div, Rem};
+use core::ops::{Div, Rem};
 
 pub trait CheckedDivRem<Divisor = Self> {
     type Output;

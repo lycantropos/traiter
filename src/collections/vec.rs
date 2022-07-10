@@ -1,4 +1,5 @@
 use std::collections::TryReserveError;
+use std::vec::Vec;
 
 use super::traits::{
     Capacitary, Clearable, Container, Emptiable, Lengthsome, Reservable, TryReservable,

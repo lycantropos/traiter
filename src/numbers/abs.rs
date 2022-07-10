@@ -1,16 +1,23 @@
-/// Absolute value operator.
-///
-/// ```
-/// use traiter::numbers::Abs;
-/// // signed integers
-/// assert_eq!(Abs::abs(-1), 1);
-/// assert_eq!(Abs::abs(0), 0);
-/// assert_eq!(Abs::abs(1), 1);
-/// // floating point numbers
-/// assert_eq!(Abs::abs(-1.), 1.);
-/// assert_eq!(Abs::abs(0.), 0.);
-/// assert_eq!(Abs::abs(1.), 1.);
-/// ```
+#[doc = r##"
+Absolute value operator.
+
+```
+use traiter::numbers::Abs;
+// signed integers
+assert_eq!(Abs::abs(-1), 1);
+assert_eq!(Abs::abs(0), 0);
+assert_eq!(Abs::abs(1), 1);
+"##]
+#[cfg_attr(
+    feature = "std",
+    doc = r##"
+// floating point numbers
+assert_eq!(Abs::abs(-1.), 1.);
+assert_eq!(Abs::abs(0.), 0.);
+assert_eq!(Abs::abs(1.), 1.);
+"##
+)]
+#[doc = "```"]
 pub trait Abs {
     type Output;
 
@@ -30,4 +37,6 @@ macro_rules! primitive_abs_impl {
     )*)
 }
 
-primitive_abs_impl!(f32 f64 i8 i16 i32 i64 i128 isize);
+#[cfg(feature = "std")]
+primitive_abs_impl!(f32 f64);
+primitive_abs_impl!(i8 i16 i32 i64 i128 isize);
