@@ -8,6 +8,7 @@ mod bit_length;
 mod ceil;
 mod checked_div;
 mod checked_div_euclid;
+mod checked_div_rem;
 mod div_euclid;
 mod from_bytes;
 mod to_bytes;
