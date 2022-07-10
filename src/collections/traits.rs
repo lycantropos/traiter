@@ -4,6 +4,10 @@ pub trait Capacitary {
     fn capacity(&self) -> Self::Capacity;
 }
 
+pub trait Clearable {
+    fn clear(&mut self);
+}
+
 pub trait Container<Value> {
     fn contains(&self, value: Value) -> bool;
 }
