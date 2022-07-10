@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::hash::{BuildHasher, Hash};
 
-use super::traits::{Capacitary, Clearable, Container, Emptiable, Lengthsome};
+use super::traits::{Capacitary, Clearable, Container, Emptiable, Lengthsome, Reservable};
 
 impl<Key, Value, State> Capacitary for HashMap<Key, Value, State> {
     type Capacity = usize;
@@ -34,5 +34,11 @@ impl<Key, Value, State> Lengthsome for HashMap<Key, Value, State> {
 
     fn len(&self) -> Self::Length {
         HashMap::len(self)
+    }
+}
+
+impl<Key: Eq + Hash, Value, State: BuildHasher> Reservable for HashMap<Key, Value, State> {
+    fn reserve(&mut self, additional: Self::Capacity) {
+        HashMap::reserve(self, additional)
     }
 }
