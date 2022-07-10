@@ -25,3 +25,9 @@ pub trait Lengthsome {
 pub trait Reservable: Capacitary {
     fn reserve(&mut self, additional: Self::Capacity);
 }
+
+pub trait TryReservable: Capacitary {
+    type Error;
+
+    fn try_reserve(&mut self, additional: Self::Capacity) -> Result<(), Self::Error>;
+}
