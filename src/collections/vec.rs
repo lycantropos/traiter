@@ -1,4 +1,8 @@
-use super::traits::{Capacitary, Clearable, Container, Emptiable, Lengthsome, Reservable};
+use std::collections::TryReserveError;
+
+use super::traits::{
+    Capacitary, Clearable, Container, Emptiable, Lengthsome, Reservable, TryReservable,
+};
 
 impl<Element> Capacitary for Vec<Element> {
     type Capacity = usize;
@@ -37,5 +41,13 @@ impl<Element> Lengthsome for Vec<Element> {
 impl<Element> Reservable for Vec<Element> {
     fn reserve(&mut self, additional: Self::Capacity) {
         Vec::reserve(self, additional)
+    }
+}
+
+impl<Element> TryReservable for Vec<Element> {
+    type Error = TryReserveError;
+
+    fn try_reserve(&mut self, additional: Self::Capacity) -> Result<(), Self::Error> {
+        Vec::try_reserve(self, additional)
     }
 }
