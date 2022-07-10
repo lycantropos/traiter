@@ -1,4 +1,4 @@
-use super::traits::{Clearable, Capacitary, Container, Emptiable, Lengthsome};
+use super::traits::{Capacitary, Clearable, Container, Emptiable, Lengthsome, Reservable};
 
 impl<Element> Capacitary for Vec<Element> {
     type Capacity = usize;
@@ -31,5 +31,11 @@ impl<Element> Lengthsome for Vec<Element> {
 
     fn len(&self) -> Self::Length {
         Vec::len(self)
+    }
+}
+
+impl<Element> Reservable for Vec<Element> {
+    fn reserve(&mut self, additional: Self::Capacity) {
+        Vec::reserve(self, additional)
     }
 }
