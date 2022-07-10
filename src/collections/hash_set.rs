@@ -1,7 +1,13 @@
 use std::collections::HashSet;
 use std::hash::{BuildHasher, Hash};
 
-use super::traits::{Capacitary, Container, Emptiable, Lengthsome};
+use super::traits::{Capacitary, Clearable, Container, Emptiable, Lengthsome};
+
+impl<Element, State> Clearable for HashSet<Element, State> {
+    fn clear(&mut self) {
+        HashSet::clear(self)
+    }
+}
 
 impl<Element: Eq + Hash, State: BuildHasher> Container<&Element> for HashSet<Element, State> {
     fn contains(&self, value: &Element) -> bool {
