@@ -12,3 +12,6 @@ name = "traiter"
 collections = []
 numbers = []
 std = []
+
+[package.metadata.docs.rs]
+all-features = true
