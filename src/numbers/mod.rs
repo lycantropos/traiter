@@ -18,6 +18,7 @@ pub use self::from_bytes::FromBytes;
 pub use self::gcd::Gcd;
 pub use self::is_power_of_two::IsPowerOfTwo;
 pub use self::parity::Parity;
+pub use self::pow::Pow;
 pub use self::to_bytes::ToBytes;
 pub use self::types::Endianness;
 
@@ -41,5 +42,6 @@ mod from_bytes;
 mod gcd;
 mod is_power_of_two;
 mod parity;
+mod pow;
 mod to_bytes;
 mod types;
