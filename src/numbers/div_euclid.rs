@@ -1,7 +1,7 @@
 pub trait DivEuclid<Divisor = Self> {
     type Output;
 
-    /// Returns euclidean quotient.
+    /// Returns quotient of euclidean division.
     /// ```
     /// use traiter::numbers::DivEuclid;
     /// // signed integers
