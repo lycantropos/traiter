@@ -84,5 +84,18 @@ assert_eq!(Capacitary::capacity(&collection), 20);
 pub trait TryReservable: Capacitary {
     type Error;
 
+    /// Tries to reserve capacity for at least given number of elements for a collection.
+    #[cfg_attr(
+        feature = "std",
+        doc = r##"
+```
+use traiter::collections::{Capacitary, Reservable};
+let mut collection = Vec::<i8>::with_capacity(10);
+assert_eq!(Capacitary::capacity(&collection), 10);
+Reservable::reserve(&mut collection, 20);
+assert_eq!(Capacitary::capacity(&collection), 20);
+```
+"##
+    )]
     fn try_reserve(&mut self, additional: Self::Capacity) -> Result<(), Self::Error>;
 }
