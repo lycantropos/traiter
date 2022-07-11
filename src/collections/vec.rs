@@ -2,7 +2,8 @@ use std::collections::TryReserveError;
 use std::vec::Vec;
 
 use super::traits::{
-    Capacitary, Clearable, Container, Emptiable, Lengthsome, Reservable, TryReservable,
+    Capacitary, Clearable, Container, Emptiable, Lengthsome, Reservable,
+    TryReservable,
 };
 
 impl<Element> Capacitary for Vec<Element> {
@@ -48,7 +49,10 @@ impl<Element> Reservable for Vec<Element> {
 impl<Element> TryReservable for Vec<Element> {
     type Error = TryReserveError;
 
-    fn try_reserve(&mut self, additional: Self::Capacity) -> Result<(), Self::Error> {
+    fn try_reserve(
+        &mut self,
+        additional: Self::Capacity,
+    ) -> Result<(), Self::Error> {
         Vec::try_reserve(self, additional)
     }
 }

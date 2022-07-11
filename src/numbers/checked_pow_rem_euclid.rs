@@ -1,7 +1,11 @@
 pub trait CheckedPowRemEuclid<Exponent, Divisor> {
     type Output;
 
-    fn checked_pow_rem_euclid(self, exponent: Exponent, divisor: Divisor) -> Self::Output;
+    fn checked_pow_rem_euclid(
+        self,
+        exponent: Exponent,
+        divisor: Divisor,
+    ) -> Self::Output;
 }
 
 macro_rules! primitive_signed_checked_pow_rem_euclid_impl {
@@ -10,7 +14,11 @@ macro_rules! primitive_signed_checked_pow_rem_euclid_impl {
             type Output = Option<$t>;
 
             #[inline]
-            fn checked_pow_rem_euclid(self, exponent: u32, divisor: $t) -> Self::Output {
+            fn checked_pow_rem_euclid(
+                self,
+                exponent: u32,
+                divisor: $t,
+            ) -> Self::Output {
                 if divisor == 0 {
                     return None;
                 }
@@ -20,7 +28,9 @@ macro_rules! primitive_signed_checked_pow_rem_euclid_impl {
                     return Some(0);
                 }
                 let base = if self < 0 || self > divisor {
-                    unsafe { self.checked_rem_euclid(divisor).unwrap_unchecked() }
+                    unsafe {
+                        self.checked_rem_euclid(divisor).unwrap_unchecked()
+                    }
                 } else {
                     self
                 };
@@ -67,14 +77,20 @@ macro_rules! primitive_unsigned_checked_pow_rem_euclid_impl {
             type Output = Option<$t>;
 
             #[inline]
-            fn checked_pow_rem_euclid(self, exponent: u32, divisor: $t) -> Self::Output {
+            fn checked_pow_rem_euclid(
+                self,
+                exponent: u32,
+                divisor: $t,
+            ) -> Self::Output {
                 if divisor == 0 {
                     None
                 } else if divisor == 1 {
                     Some(0)
                 } else {
                     let base = if self > divisor {
-                        unsafe { self.checked_rem_euclid(divisor).unwrap_unchecked() }
+                        unsafe {
+                            self.checked_rem_euclid(divisor).unwrap_unchecked()
+                        }
                     } else {
                         self
                     };

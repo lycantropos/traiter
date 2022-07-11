@@ -12,12 +12,18 @@ macro_rules! primitive_from_bytes_impl {
             #[inline(always)]
             fn from_bytes(bytes: &[u8], endianness: Endianness) -> Self {
                 match endianness {
-                   Endianness::Big => <$t>::from_be_bytes(bytes.try_into().unwrap()),
-                   Endianness::Little => <$t>::from_le_bytes(bytes.try_into().unwrap()),
+                    Endianness::Big => {
+                        <$t>::from_be_bytes(bytes.try_into().unwrap())
+                    }
+                    Endianness::Little => {
+                        <$t>::from_le_bytes(bytes.try_into().unwrap())
+                    }
                 }
             }
         }
     )*)
 }
 
-primitive_from_bytes_impl!(i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize);
+primitive_from_bytes_impl!(
+    i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize
+);

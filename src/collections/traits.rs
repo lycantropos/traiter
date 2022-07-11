@@ -97,5 +97,8 @@ assert_eq!(Capacitary::capacity(&collection), 20);
 ```
 "##
     )]
-    fn try_reserve(&mut self, additional: Self::Capacity) -> Result<(), Self::Error>;
+    fn try_reserve(
+        &mut self,
+        additional: Self::Capacity,
+    ) -> Result<(), Self::Error>;
 }

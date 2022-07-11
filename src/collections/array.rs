@@ -1,6 +1,8 @@
 use super::traits::{Container, Emptiable, Lengthsome};
 
-impl<Element: PartialEq, const LENGTH: usize> Container<&Element> for [Element; LENGTH] {
+impl<Element: PartialEq, const LENGTH: usize> Container<&Element>
+    for [Element; LENGTH]
+{
     fn contains(&self, value: &Element) -> bool {
         <[Element]>::contains(self, value)
     }
