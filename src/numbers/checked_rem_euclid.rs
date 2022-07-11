@@ -1,7 +1,7 @@
 pub trait CheckedRemEuclid<Divisor = Self> {
     type Output;
 
-    /// Returns checked euclidean modulo.
+    /// Returns checked remainder of euclidean division.
     /// ```
     /// use traiter::numbers::CheckedRemEuclid;
     /// // signed integers
