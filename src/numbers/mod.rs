@@ -16,6 +16,7 @@ pub use self::div_rem_euclid::DivRemEuclid;
 pub use self::floor::Floor;
 pub use self::from_bytes::FromBytes;
 pub use self::gcd::Gcd;
+pub use self::is_power_of_two::IsPowerOfTwo;
 pub use self::to_bytes::ToBytes;
 pub use self::types::Endianness;
 
@@ -37,5 +38,6 @@ mod div_rem_euclid;
 mod floor;
 mod from_bytes;
 mod gcd;
+mod is_power_of_two;
 mod to_bytes;
 mod types;
