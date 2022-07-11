@@ -1,6 +1,36 @@
 pub trait CheckedPowRemEuclid<Exponent, Divisor> {
     type Output;
 
+    /// Returns checked remainder of power's euclidean division.
+    /// ```
+    /// use traiter::numbers::CheckedPowRemEuclid;
+    /// // signed integers
+    /// assert_eq!(
+    ///     CheckedPowRemEuclid::checked_pow_rem_euclid(-3i8, 0u32, 2i8),
+    ///     Some(1i8)
+    /// );
+    /// assert_eq!(
+    ///     CheckedPowRemEuclid::checked_pow_rem_euclid(-3i8, 1u32, 1i8),
+    ///     Some(0i8)
+    /// );
+    /// assert_eq!(
+    ///     CheckedPowRemEuclid::checked_pow_rem_euclid(-3i8, 2u32, 0i8),
+    ///     None
+    /// );
+    /// // unsigned integers
+    /// assert_eq!(
+    ///     CheckedPowRemEuclid::checked_pow_rem_euclid(3u8, 0u32, 2u8),
+    ///     Some(1u8)
+    /// );
+    /// assert_eq!(
+    ///     CheckedPowRemEuclid::checked_pow_rem_euclid(3u8, 1u32, 1u8),
+    ///     Some(0u8)
+    /// );
+    /// assert_eq!(
+    ///     CheckedPowRemEuclid::checked_pow_rem_euclid(3u8, 2u32, 0u8),
+    ///     None
+    /// );
+    /// ```
     fn checked_pow_rem_euclid(
         self,
         exponent: Exponent,
@@ -17,7 +47,7 @@ macro_rules! primitive_signed_checked_pow_rem_euclid_impl {
             fn checked_pow_rem_euclid(
                 self,
                 exponent: u32,
-                divisor: $t,
+                divisor: Self,
             ) -> Self::Output {
                 if divisor == 0 {
                     return None;
@@ -80,7 +110,7 @@ macro_rules! primitive_unsigned_checked_pow_rem_euclid_impl {
             fn checked_pow_rem_euclid(
                 self,
                 exponent: u32,
-                divisor: $t,
+                divisor: Self,
             ) -> Self::Output {
                 if divisor == 0 {
                     None
