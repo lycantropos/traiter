@@ -65,7 +65,7 @@ pub trait Lengthsome {
 }
 
 pub trait Reservable: Capacitary {
-    /// Returns number of elements in a collection.
+    /// Reserves capacity for at least given number of elements for a collection.
     #[cfg_attr(
         feature = "std",
         doc = r##"
