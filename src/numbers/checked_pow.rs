@@ -1,6 +1,18 @@
 pub trait CheckedPow<Exponent> {
     type Output;
 
+    /// Returns checked power.
+    /// ```
+    /// use traiter::numbers::CheckedPow;
+    /// // signed integers
+    /// assert_eq!(CheckedPow::checked_pow(-3i8, 2u32), Some(9i8));
+    /// assert_eq!(CheckedPow::checked_pow(-3i8, 1u32), Some(-3i8));
+    /// assert_eq!(CheckedPow::checked_pow(i8::MAX, 2u32), None);
+    /// // unsigned integers
+    /// assert_eq!(CheckedPow::checked_pow(3u8, 2u32), Some(9u8));
+    /// assert_eq!(CheckedPow::checked_pow(3u8, 1u32), Some(3u8));
+    /// assert_eq!(CheckedPow::checked_pow(u8::MAX, 2u32), None);
+    /// ```
     fn checked_pow(self, exponent: Exponent) -> Self::Output;
 }
 
