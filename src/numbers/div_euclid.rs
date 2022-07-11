@@ -1,6 +1,18 @@
 pub trait DivEuclid<Divisor = Self> {
     type Output;
 
+    /// Returns euclidean quotient.
+    /// ```
+    /// use traiter::numbers::DivEuclid;
+    /// // signed integers
+    /// assert_eq!(DivEuclid::div_euclid(-3i8, 3i8), -1i8);
+    /// assert_eq!(DivEuclid::div_euclid(-3i8, 2i8), -2i8);
+    /// assert_eq!(DivEuclid::div_euclid(-3i8, 1i8), -3i8);
+    /// // unsigned integers
+    /// assert_eq!(DivEuclid::div_euclid(3u8, 3u8), 1u8);
+    /// assert_eq!(DivEuclid::div_euclid(3u8, 2u8), 1u8);
+    /// assert_eq!(DivEuclid::div_euclid(3u8, 1u8), 3u8);
+    /// ```
     fn div_euclid(self, divisor: Divisor) -> Self::Output;
 }
 
