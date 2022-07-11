@@ -17,6 +17,7 @@ pub use self::floor::Floor;
 pub use self::from_bytes::FromBytes;
 pub use self::gcd::Gcd;
 pub use self::is_power_of_two::IsPowerOfTwo;
+pub use self::parity::Parity;
 pub use self::to_bytes::ToBytes;
 pub use self::types::Endianness;
 
@@ -39,5 +40,6 @@ mod floor;
 mod from_bytes;
 mod gcd;
 mod is_power_of_two;
+mod parity;
 mod to_bytes;
 mod types;
