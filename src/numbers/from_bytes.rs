@@ -3,6 +3,30 @@ use core::convert::TryInto;
 use super::types::Endianness;
 
 pub trait FromBytes {
+    /// Creates number from its byte array representation in given endianness.
+    /// ```
+    /// use traiter::numbers::{Endianness, FromBytes};
+    /// /// signed integers
+    /// assert_eq!(
+    ///     <i8 as FromBytes>::from_bytes(&[255u8], Endianness::Big), -1i8
+    /// );
+    /// assert_eq!(
+    ///     <i8 as FromBytes>::from_bytes(&[0u8], Endianness::Big), 0i8
+    /// );
+    /// assert_eq!(
+    ///     <i8 as FromBytes>::from_bytes(&[1u8], Endianness::Big), 1i8
+    /// );
+    /// /// unsigned integers
+    /// assert_eq!(
+    ///     <u8 as FromBytes>::from_bytes(&[0u8], Endianness::Big), 0u8
+    /// );
+    /// assert_eq!(
+    ///     <u8 as FromBytes>::from_bytes(&[1u8], Endianness::Big), 1u8
+    /// );
+    /// assert_eq!(
+    ///     <u8 as FromBytes>::from_bytes(&[2u8], Endianness::Big), 2u8
+    /// );
+    /// ```
     fn from_bytes(bytes: &[u8], endianness: Endianness) -> Self;
 }
 
