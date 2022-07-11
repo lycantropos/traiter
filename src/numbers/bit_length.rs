@@ -1,6 +1,19 @@
 pub trait BitLength {
     type Output;
 
+    /// Returns bit length of a number.
+    ///
+    /// ```
+    /// use traiter::numbers::BitLength;
+    /// // signed integers
+    /// assert_eq!(BitLength::bit_length(-1i8), 1usize);
+    /// assert_eq!(BitLength::bit_length(0i8), 0usize);
+    /// assert_eq!(BitLength::bit_length(1i8), 1usize);
+    /// // unsigned integers
+    /// assert_eq!(BitLength::bit_length(0u8), 0usize);
+    /// assert_eq!(BitLength::bit_length(1u8), 1usize);
+    /// assert_eq!(BitLength::bit_length(2u8), 2usize);
+    /// ```
     fn bit_length(self) -> Self::Output;
 }
 
