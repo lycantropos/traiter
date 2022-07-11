@@ -24,7 +24,7 @@ impl<Key: Eq + Hash, Value, State: BuildHasher> Container<&Key>
     for HashMap<Key, Value, State>
 {
     fn contains(&self, value: &Key) -> bool {
-        HashMap::contains_key(&self, value)
+        HashMap::contains_key(self, value)
     }
 }
 
