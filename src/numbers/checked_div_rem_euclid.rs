@@ -1,6 +1,34 @@
 pub trait CheckedDivRemEuclid<Divisor = Self> {
     type Output;
 
+    /// Returns checked quotient and remainder of euclidean division.
+    /// ```
+    /// use traiter::numbers::CheckedDivRemEuclid;
+    /// // signed integers
+    /// assert_eq!(
+    ///     CheckedDivRemEuclid::checked_div_rem_euclid(-3i8, 2i8),
+    ///     Some((-2i8, 1i8))
+    /// );
+    /// assert_eq!(
+    ///     CheckedDivRemEuclid::checked_div_rem_euclid(-3i8, 1i8),
+    ///     Some((-3i8, 0i8))
+    /// );
+    /// assert_eq!(
+    ///     CheckedDivRemEuclid::checked_div_rem_euclid(-3i8, 0i8), None
+    /// );
+    /// // unsigned integers
+    /// assert_eq!(
+    ///     CheckedDivRemEuclid::checked_div_rem_euclid(3u8, 2u8),
+    ///     Some((1u8, 1u8))
+    /// );
+    /// assert_eq!(
+    ///     CheckedDivRemEuclid::checked_div_rem_euclid(3u8, 1u8),
+    ///     Some((3u8, 0u8))
+    /// );
+    /// assert_eq!(
+    ///     CheckedDivRemEuclid::checked_div_rem_euclid(3u8, 0u8), None
+    /// );
+    /// ```
     fn checked_div_rem_euclid(self, divisor: Divisor) -> Self::Output;
 }
 
