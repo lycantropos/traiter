@@ -1,6 +1,22 @@
 pub trait CheckedDivEuclid<Divisor = Self> {
     type Output;
 
+    /// Returns checked quotient of euclidean division.
+    /// ```
+    /// use traiter::numbers::CheckedDivEuclid;
+    /// // signed integers
+    /// assert_eq!(
+    ///     CheckedDivEuclid::checked_div_euclid(-3i8, 2i8), Some(-2i8)
+    /// );
+    /// assert_eq!(
+    ///     CheckedDivEuclid::checked_div_euclid(-3i8, 1i8), Some(-3i8)
+    /// );
+    /// assert_eq!(CheckedDivEuclid::checked_div_euclid(-3i8, 0i8), None);
+    /// // unsigned integers
+    /// assert_eq!(CheckedDivEuclid::checked_div_euclid(3u8, 2u8), Some(1u8));
+    /// assert_eq!(CheckedDivEuclid::checked_div_euclid(3u8, 1u8), Some(3u8));
+    /// assert_eq!(CheckedDivEuclid::checked_div_euclid(3u8, 0u8), None);
+    /// ```
     fn checked_div_euclid(self, divisor: Divisor) -> Self::Output;
 }
 
