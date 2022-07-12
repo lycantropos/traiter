@@ -19,6 +19,7 @@ pub use self::gcd::Gcd;
 pub use self::is_power_of_two::IsPowerOfTwo;
 pub use self::parity::Parity;
 pub use self::pow::Pow;
+pub use self::rem_euclid::RemEuclid;
 pub use self::to_bytes::ToBytes;
 pub use self::types::Endianness;
 
@@ -43,5 +44,6 @@ mod gcd;
 mod is_power_of_two;
 mod parity;
 mod pow;
+mod rem_euclid;
 mod to_bytes;
 mod types;
