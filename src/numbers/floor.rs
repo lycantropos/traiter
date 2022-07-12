@@ -9,9 +9,9 @@ pub trait Floor {
 ```
 use traiter::numbers::Floor;
 // floating point numbers
-assert_eq!(Floor::floor(-0.1), -1.);
-assert_eq!(Floor::floor(0.1), 0.);
-assert_eq!(Floor::floor(1.1), 1.);
+assert_eq!(Floor::floor(-1.1f32), -2f32);
+assert_eq!(Floor::floor(0f32), 0f32);
+assert_eq!(Floor::floor(1.1f32), 1f32);
 ```
 "##
     )]
