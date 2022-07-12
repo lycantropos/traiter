@@ -1,3 +1,7 @@
+use core::mem::size_of;
+
+use super::float_info::FloatInfo;
+
 pub trait FractExp {
     type Output;
 
@@ -12,52 +16,49 @@ pub trait FractExp {
     fn fract_exp(self) -> Self::Output;
 }
 
-impl FractExp for f32 {
-    type Output = (Self, i32);
+macro_rules! primitive_fract_exp_impl {
+    ($f:ty, $t:ty) => (
+        impl FractExp for $f {
+            type Output = (Self, i32);
 
-    fn fract_exp(self) -> Self::Output {
-        let bits = self.to_bits();
-        let exponent_bits = ((bits >> 23) & 0xff) as i32;
-        if exponent_bits == 0 {
-            if self == 0.0_f32 {
-                (self, 0)
-            } else {
-                const _0X1P64: f32 = 1.8446744e19_f32;
-                let (fraction, exponent) = (self * _0X1P64).fract_exp();
-                (fraction, exponent - 64)
+            fn fract_exp(self) -> Self::Output {
+                let bits = self.to_bits();
+                const EXPONENT_MASK: $t =
+                    (1 << <$f>::EXPONENT_BITS_COUNT) - 1;
+                let exponent_bits = ((bits >> <$f>::SIGNIFICAND_BITS_COUNT)
+                    & EXPONENT_MASK)
+                    as i32;
+                if exponent_bits == 0 {
+                    if self == (0.0 as $f) {
+                        (self, 0)
+                    } else {
+                        const EXPONENT_DECREMENT: i32 = 64i32;
+                        const SCALE: $f = (1u128 << EXPONENT_DECREMENT) as $f;
+                        let (fraction, exponent) = (self * SCALE).fract_exp();
+                        (fraction, exponent - EXPONENT_DECREMENT)
+                    }
+                } else if exponent_bits == (EXPONENT_MASK as i32) {
+                    (self, 0)
+                } else {
+                    const SIGNIFICANT_MASK: $t =
+                        (1 << <$f>::SIGNIFICAND_BITS_COUNT) - 1;
+                    const EXPONENT_NULL_MASK: $t = (1
+                        << (<$f>::TOTAL_BITS_COUNT - 1usize))
+                        | SIGNIFICANT_MASK;
+                    const EXPONENT_DECREMENT: i32 = <$f>::MAX_EXP - 2i32;
+                    (
+                        Self::from_bits(
+                            bits & EXPONENT_NULL_MASK
+                                | ((EXPONENT_DECREMENT as $t)
+                                    << <$f>::SIGNIFICAND_BITS_COUNT),
+                        ),
+                        exponent_bits - EXPONENT_DECREMENT,
+                    )
+                }
             }
-        } else if exponent_bits == 0xff {
-            (self, 0)
-        } else {
-            (
-                f32::from_bits(bits & 0x807fffff | 0x3f000000),
-                exponent_bits - 0x7e,
-            )
         }
-    }
+    )
 }
 
-impl FractExp for f64 {
-    type Output = (Self, i32);
-
-    fn fract_exp(self) -> Self::Output {
-        let bits = self.to_bits();
-        let exponent_bits = ((bits >> 52) & 0x7ff) as i32;
-        if exponent_bits == 0 {
-            if self == 0.0_f64 {
-                (self, 0)
-            } else {
-                const _0X1P64: f64 = 1.8446744073709552e19_f64;
-                let (fraction, exponent) = (self * _0X1P64).fract_exp();
-                (fraction, exponent - 64)
-            }
-        } else if exponent_bits == 0x7ff {
-            (self, 0)
-        } else {
-            (
-                f64::from_bits(bits & 0x800fffffffffffff | 0x3fe0000000000000),
-                exponent_bits - 0x3fe,
-            )
-        }
-    }
-}
+primitive_fract_exp_impl!(f32, u32);
+primitive_fract_exp_impl!(f64, u64);
