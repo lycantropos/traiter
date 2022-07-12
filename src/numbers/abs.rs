@@ -5,10 +5,6 @@ pub trait Abs {
     ///
     /// ```
     /// use traiter::numbers::Abs;
-    /// // signed integers
-    /// assert_eq!(Abs::abs(-1i8), 1i8);
-    /// assert_eq!(Abs::abs(0i8), 0i8);
-    /// assert_eq!(Abs::abs(1i8), 1i8);
     #[cfg_attr(
         feature = "std",
         doc = r##"
@@ -18,6 +14,10 @@ assert_eq!(Abs::abs(0f32), 0f32);
 assert_eq!(Abs::abs(1f32), 1f32);
 "##
     )]
+    /// // signed integers
+    /// assert_eq!(Abs::abs(-1i8), 1i8);
+    /// assert_eq!(Abs::abs(0i8), 0i8);
+    /// assert_eq!(Abs::abs(1i8), 1i8);
     /// ```
     fn abs(self) -> Self::Output;
 }
