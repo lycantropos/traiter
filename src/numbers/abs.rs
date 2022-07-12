@@ -6,16 +6,16 @@ pub trait Abs {
     /// ```
     /// use traiter::numbers::Abs;
     /// // signed integers
-    /// assert_eq!(Abs::abs(-1), 1);
-    /// assert_eq!(Abs::abs(0), 0);
-    /// assert_eq!(Abs::abs(1), 1);
+    /// assert_eq!(Abs::abs(-1i8), 1i8);
+    /// assert_eq!(Abs::abs(0i8), 0i8);
+    /// assert_eq!(Abs::abs(1i8), 1i8);
     #[cfg_attr(
         feature = "std",
         doc = r##"
 // floating point numbers
-assert_eq!(Abs::abs(-1.), 1.);
-assert_eq!(Abs::abs(0.), 0.);
-assert_eq!(Abs::abs(1.), 1.);
+assert_eq!(Abs::abs(-1f32), 1f32);
+assert_eq!(Abs::abs(0f32), 0f32);
+assert_eq!(Abs::abs(1f32), 1f32);
 "##
     )]
     /// ```
