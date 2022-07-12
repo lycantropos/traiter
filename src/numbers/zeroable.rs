@@ -3,7 +3,7 @@ pub trait Zeroable {
     /// ```
     /// use traiter::numbers::Zeroable;
     /// /// floating point numbers
-    /// assert_eq!(<f32 as Zeroable>::zero(), 0f32);
+    /// assert_eq!(<f32 as Zeroable>::zero(), 0.0_f32);
     /// /// signed integers
     /// assert_eq!(<i8 as Zeroable>::zero(), 0i8);
     /// /// unsigned integers
@@ -15,9 +15,9 @@ pub trait Zeroable {
     /// ```
     /// use traiter::numbers::Zeroable;
     /// /// floating point numbers
-    /// assert!(!Zeroable::is_zero(&-1f32));
-    /// assert!(Zeroable::is_zero(&0f32));
-    /// assert!(!Zeroable::is_zero(&1f32));
+    /// assert!(!Zeroable::is_zero(&-1.0_f32));
+    /// assert!(Zeroable::is_zero(&0.0_f32));
+    /// assert!(!Zeroable::is_zero(&1.0_f32));
     /// /// signed integers
     /// assert!(!Zeroable::is_zero(&-1i8));
     /// assert!(Zeroable::is_zero(&0i8));

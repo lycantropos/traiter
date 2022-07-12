@@ -9,9 +9,9 @@ pub trait Ceil {
 ```
 use traiter::numbers::Ceil;
 // floating point numbers
-assert_eq!(Ceil::ceil(-1.1f32), -1f32);
-assert_eq!(Ceil::ceil(0f32), 0f32);
-assert_eq!(Ceil::ceil(1.1f32), 2f32);
+assert_eq!(Ceil::ceil(-1.1_f32), -1.0_f32);
+assert_eq!(Ceil::ceil(0.0_f32), 0.0_f32);
+assert_eq!(Ceil::ceil(1.1_f32), 2.0_f32);
 ```
 "##
     )]

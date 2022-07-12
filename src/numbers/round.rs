@@ -11,10 +11,10 @@ pub trait Round {
 ```
 // floating point numbers
 use traiter::numbers::{Round, TieBreaking};
-assert_eq!(Round::round(-0.5f32, TieBreaking::AwayFromZero), -1f32);
-assert_eq!(Round::round(-0.5f32, TieBreaking::ToEven), 0f32);
-assert_eq!(Round::round(-0.5f32, TieBreaking::ToOdd), -1f32);
-assert_eq!(Round::round(-0.5f32, TieBreaking::TowardZero), 0f32);
+assert_eq!(Round::round(-0.5_f32, TieBreaking::AwayFromZero), -1.0_f32);
+assert_eq!(Round::round(-0.5_f32, TieBreaking::ToEven), 0.0_f32);
+assert_eq!(Round::round(-0.5_f32, TieBreaking::ToOdd), -1.0_f32);
+assert_eq!(Round::round(-0.5_f32, TieBreaking::TowardZero), 0.0_f32);
 ```
 "##
     )]

@@ -9,9 +9,9 @@ pub trait Abs {
         feature = "std",
         doc = r##"
 // floating point numbers
-assert_eq!(Abs::abs(-1f32), 1f32);
-assert_eq!(Abs::abs(0f32), 0f32);
-assert_eq!(Abs::abs(1f32), 1f32);
+assert_eq!(Abs::abs(-1.0_f32), 1.0_f32);
+assert_eq!(Abs::abs(0.0_f32), 0.0_f32);
+assert_eq!(Abs::abs(1.0_f32), 1.0_f32);
 "##
     )]
     /// // signed integers

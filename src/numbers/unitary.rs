@@ -3,7 +3,7 @@ pub trait Unitary {
     /// ```
     /// use traiter::numbers::Unitary;
     /// /// floating point numbers
-    /// assert_eq!(<f32 as Unitary>::one(), 1f32);
+    /// assert_eq!(<f32 as Unitary>::one(), 1.0_f32);
     /// /// signed integers
     /// assert_eq!(<i8 as Unitary>::one(), 1i8);
     /// /// unsigned integers
@@ -15,9 +15,9 @@ pub trait Unitary {
     /// ```
     /// use traiter::numbers::Unitary;
     /// /// floating point numbers
-    /// assert!(!Unitary::is_one(&-1f32));
-    /// assert!(!Unitary::is_one(&0f32));
-    /// assert!(Unitary::is_one(&1f32));
+    /// assert!(!Unitary::is_one(&-1.0_f32));
+    /// assert!(!Unitary::is_one(&0.0_f32));
+    /// assert!(Unitary::is_one(&1.0_f32));
     /// /// signed integers
     /// assert!(!Unitary::is_one(&-1i8));
     /// assert!(!Unitary::is_one(&0i8));

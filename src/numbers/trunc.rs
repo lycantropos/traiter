@@ -9,9 +9,9 @@ pub trait Trunc {
 ```
 use traiter::numbers::Trunc;
 // floating point numbers
-assert_eq!(Trunc::trunc(-1.1f32), -1f32);
-assert_eq!(Trunc::trunc(0f32), 0f32);
-assert_eq!(Trunc::trunc(1.1f32), 1f32);
+assert_eq!(Trunc::trunc(-1.1_f32), -1.0_f32);
+assert_eq!(Trunc::trunc(0.0_f32), 0.0_f32);
+assert_eq!(Trunc::trunc(1.1_f32), 1.0_f32);
 ```
 "##
     )]
