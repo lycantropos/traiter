@@ -30,10 +30,11 @@ impl LoadExp<i32> for f32 {
         } else if exponent < -126 {
             const _0X1P_126: f32 = 1.1754944e-38_f32;
             const _0X1P24: f32 = 16777216.0_f32;
-            self *= _0X1P_126 * _0X1P24;
+            const SCALE: f32 = _0X1P_126 * _0X1P24;
+            self *= SCALE;
             exponent += 126 - 24;
             if exponent < -126 {
-                self *= _0X1P_126 * _0X1P24;
+                self *= SCALE;
                 exponent += 126 - 24;
                 if exponent < -126 {
                     exponent = -126;
