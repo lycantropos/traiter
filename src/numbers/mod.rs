@@ -23,6 +23,7 @@ pub use self::rem_euclid::RemEuclid;
 pub use self::round::Round;
 pub use self::to_bytes::ToBytes;
 pub use self::types::{Endianness, TieBreaking};
+pub use self::zeroable::Zeroable;
 
 mod abs;
 mod bit_length;
@@ -49,3 +50,4 @@ mod rem_euclid;
 mod round;
 mod to_bytes;
 mod types;
+mod zeroable;
