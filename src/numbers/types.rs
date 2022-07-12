@@ -5,6 +5,13 @@ pub enum Endianness {
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum Sign {
+    Negative,
+    Positive,
+    Zero,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum TieBreaking {
     AwayFromZero,
     ToEven,
