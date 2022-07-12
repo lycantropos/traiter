@@ -20,8 +20,9 @@ pub use self::is_power_of_two::IsPowerOfTwo;
 pub use self::parity::Parity;
 pub use self::pow::Pow;
 pub use self::rem_euclid::RemEuclid;
+pub use self::round::Round;
 pub use self::to_bytes::ToBytes;
-pub use self::types::Endianness;
+pub use self::types::{Endianness, TieBreaking};
 
 mod abs;
 mod bit_length;
@@ -45,5 +46,6 @@ mod is_power_of_two;
 mod parity;
 mod pow;
 mod rem_euclid;
+mod round;
 mod to_bytes;
 mod types;
