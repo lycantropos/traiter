@@ -3,7 +3,7 @@ traiter
 
 [![](https://github.com/lycantropos/traiter/workflows/CI/badge.svg)](https://github.com/lycantropos/traiter/actions/workflows/ci.yml "Github Actions")
 [![](https://codecov.io/gh/lycantropos/traiter/branch/master/graph/badge.svg)](https://codecov.io/gh/lycantropos/traiter "Codecov")
-[![docs.rs](https://docs.rs/traiter/badge.svg)](https://docs.rs/traiter/)
+[![](https://docs.rs/traiter/badge.svg)](https://docs.rs/traiter/ "docs.rs")
 [![](https://img.shields.io/github/license/lycantropos/traiter.svg)](https://github.com/lycantropos/traiter/blob/master/LICENSE "License")
 [![](https://img.shields.io/crates/v/traiter.svg)](https://crates.io/crates/traiter "crates.io")
 
