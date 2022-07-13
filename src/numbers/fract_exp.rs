@@ -17,17 +17,15 @@ pub trait FractExp {
 }
 
 macro_rules! primitive_fract_exp_impl {
-    ($f:ty, $t:ty) => (
+    ($f:ty, $t:ty) => {
         impl FractExp for $f {
             type Output = (Self, i32);
 
             fn fract_exp(self) -> Self::Output {
                 let bits = self.to_bits();
-                const EXPONENT_MASK: $t =
-                    (1 << <$f>::EXPONENT_BITS_COUNT) - 1;
+                const EXPONENT_MASK: $t = (1 << <$f>::EXPONENT_BITS_COUNT) - 1;
                 let exponent_bits = ((bits >> <$f>::SIGNIFICAND_BITS_COUNT)
-                    & EXPONENT_MASK)
-                    as i32;
+                    & EXPONENT_MASK) as i32;
                 if exponent_bits == 0 {
                     if self == (0.0 as $f) {
                         (self, 0)
@@ -57,7 +55,7 @@ macro_rules! primitive_fract_exp_impl {
                 }
             }
         }
-    )
+    };
 }
 
 primitive_fract_exp_impl!(f32, u32);
