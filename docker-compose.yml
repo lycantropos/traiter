@@ -13,5 +13,4 @@ services:
       - ./README.md:/opt/traiter/README.md
       - ./rust-toolchain.toml:/opt/traiter/rust-toolchain.toml
       - ./src:/opt/traiter/src
-      - ./traiter:/opt/traiter/traiter
-    entrypoint: cargo test
+    entrypoint: cargo test --all-features

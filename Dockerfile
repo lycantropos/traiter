@@ -9,4 +9,5 @@ COPY rust-toolchain.toml .
 COPY README.md .
 COPY Cargo.toml .
 COPY src src
-COPY tests tests
+
+RUN cargo build --all-features
