@@ -21,6 +21,7 @@ macro_rules! primitive_load_exp_impl {
         impl LoadExp<i32> for $f {
             type Output = Self;
 
+            #[inline]
             fn load_exp(mut self, mut exponent: i32) -> Self::Output {
                 const EXPONENT_BASE: $t =
                     (1 << (<$f>::EXPONENT_BITS_COUNT - 1usize)) - 1;

@@ -21,6 +21,7 @@ macro_rules! primitive_fract_exp_impl {
         impl FractExp for $f {
             type Output = (Self, i32);
 
+            #[inline]
             fn fract_exp(self) -> Self::Output {
                 let bits = self.to_bits();
                 const EXPONENT_MASK: $t = (1 << <$f>::EXPONENT_BITS_COUNT) - 1;
