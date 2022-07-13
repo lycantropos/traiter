@@ -7,22 +7,18 @@ pub trait FloatInfo {
     const TOTAL_BITS_COUNT: usize;
 }
 
-impl FloatInfo for f32 {
-    const EXPONENT_BITS_COUNT: usize = Self::TOTAL_BITS_COUNT
-        - Self::SIGNIFICAND_BITS_COUNT
-        - Self::SIGN_BITS_COUNT;
-    const SIGN_BITS_COUNT: usize = 1usize;
-    const SIGNIFICAND_BITS_COUNT: usize =
-        (Self::MANTISSA_DIGITS as usize) - Self::SIGN_BITS_COUNT;
-    const TOTAL_BITS_COUNT: usize = size_of::<Self>() * 8usize;
+macro_rules! primitive_float_info_impl {
+    ($($float:ty)*) => ($(
+        impl FloatInfo for $float {
+            const EXPONENT_BITS_COUNT: usize = Self::TOTAL_BITS_COUNT
+                - Self::SIGNIFICAND_BITS_COUNT
+                - Self::SIGN_BITS_COUNT;
+            const SIGN_BITS_COUNT: usize = 1usize;
+            const SIGNIFICAND_BITS_COUNT: usize =
+                (Self::MANTISSA_DIGITS as usize) - Self::SIGN_BITS_COUNT;
+            const TOTAL_BITS_COUNT: usize = size_of::<Self>() * 8usize;
+        }
+    )*)
 }
 
-impl FloatInfo for f64 {
-    const EXPONENT_BITS_COUNT: usize = Self::TOTAL_BITS_COUNT
-        - Self::SIGNIFICAND_BITS_COUNT
-        - Self::SIGN_BITS_COUNT;
-    const SIGN_BITS_COUNT: usize = 1usize;
-    const SIGNIFICAND_BITS_COUNT: usize =
-        (Self::MANTISSA_DIGITS as usize) - Self::SIGN_BITS_COUNT;
-    const TOTAL_BITS_COUNT: usize = size_of::<Self>() * 8usize;
-}
+primitive_float_info_impl!(f32 f64);
