@@ -31,9 +31,9 @@ macro_rules! primitive_fract_exp_impl {
                     if self == (0.0 as $f) {
                         (self, 0)
                     } else {
-                        const EXPONENT_DECREMENT: i32 = 64i32;
                         const EXPONENT_BASE: $t =
                             (1 << (<$f>::EXPONENT_BITS_COUNT - 1usize)) - 1;
+                        const EXPONENT_DECREMENT: i32 = 64i32;
                         const SCALE: $f = unsafe {
                             transmute::<$t, $f>(
                                 (((EXPONENT_BASE as i32) + EXPONENT_DECREMENT)
