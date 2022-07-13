@@ -1,3 +1,7 @@
+use core::transmute;
+
+use super::float_info::FloatInfo;
+
 pub trait LoadExp<Exponent> {
     type Output;
 
@@ -12,68 +16,71 @@ pub trait LoadExp<Exponent> {
     fn load_exp(self, exponent: Exponent) -> Self::Output;
 }
 
-impl LoadExp<i32> for f32 {
-    type Output = Self;
+macro_rules! primitive_load_exp_impl {
+    ($f:ty, $t:ty) => {
+        impl LoadExp<i32> for $f {
+            type Output = Self;
 
-    fn load_exp(mut self, mut exponent: i32) -> f32 {
-        if exponent > 127 {
-            const _0X1P127: f32 = 1.7014118e38_f32;
-            self *= _0X1P127;
-            exponent -= 127;
-            if exponent > 127 {
-                self *= _0X1P127;
-                exponent -= 127;
-                if exponent > 127 {
-                    exponent = 127;
+            fn load_exp(mut self, mut exponent: i32) -> Self::Output {
+                const EXPONENT_BASE: $t =
+                    (1 << (<$f>::EXPONENT_BITS_COUNT - 1usize)) - 1;
+                const EXPONENT_LOWER_BOUND: i32 = <$f>::MIN_EXP - 1;
+                const EXPONENT_UPPER_BOUND: i32 = <$f>::MAX_EXP - 1;
+                if exponent > EXPONENT_UPPER_BOUND {
+                    const SCALE: $f = unsafe {
+                        transmute::<$t, $f>(
+                            (((EXPONENT_BASE as i32) + EXPONENT_UPPER_BOUND)
+                                as $t)
+                                << <$f>::SIGNIFICAND_BITS_COUNT,
+                        )
+                    };
+                    self *= SCALE;
+                    exponent -= EXPONENT_UPPER_BOUND;
+                    if exponent > EXPONENT_UPPER_BOUND {
+                        self *= SCALE;
+                        exponent -= EXPONENT_UPPER_BOUND;
+                        if exponent > EXPONENT_UPPER_BOUND {
+                            exponent = EXPONENT_UPPER_BOUND;
+                        }
+                    }
+                } else if exponent < EXPONENT_LOWER_BOUND {
+                    const NON_EXPONENT_BITS_COUNT: usize =
+                        <$f>::SIGN_BITS_COUNT + <$f>::SIGNIFICAND_BITS_COUNT;
+                    const FIRST_MULTIPLIER: $f = unsafe {
+                        transmute::<$t, $f>(
+                            (EXPONENT_BASE + (NON_EXPONENT_BITS_COUNT as $t))
+                                << <$f>::SIGNIFICAND_BITS_COUNT,
+                        )
+                    };
+                    const SECOND_MULTIPLIER: $f = unsafe {
+                        transmute::<$t, $f>(
+                            (((EXPONENT_BASE as i32) + EXPONENT_LOWER_BOUND)
+                                as $t)
+                                << <$f>::SIGNIFICAND_BITS_COUNT,
+                        )
+                    };
+                    const SCALE: $f = FIRST_MULTIPLIER * SECOND_MULTIPLIER;
+                    self *= SCALE;
+                    const EXPONENT_DECREMENT: i32 = (NON_EXPONENT_BITS_COUNT
+                        as i32)
+                        + EXPONENT_LOWER_BOUND;
+                    exponent -= EXPONENT_DECREMENT;
+                    if exponent < EXPONENT_LOWER_BOUND {
+                        self *= SCALE;
+                        exponent -= EXPONENT_DECREMENT;
+                        if exponent < EXPONENT_LOWER_BOUND {
+                            exponent = EXPONENT_LOWER_BOUND;
+                        }
+                    }
                 }
-            }
-        } else if exponent < -126 {
-            const _0X1P_126: f32 = 1.1754944e-38_f32;
-            const _0X1P24: f32 = 16777216.0_f32;
-            const SCALE: f32 = _0X1P_126 * _0X1P24;
-            self *= SCALE;
-            exponent += 126 - 24;
-            if exponent < -126 {
-                self *= SCALE;
-                exponent += 126 - 24;
-                if exponent < -126 {
-                    exponent = -126;
-                }
+                self * Self::from_bits(
+                    (((EXPONENT_BASE as i32) + exponent) as $t)
+                        << <$f>::SIGNIFICAND_BITS_COUNT,
+                )
             }
         }
-        self * f32::from_bits(((0x7f + exponent) as u32) << 23)
-    }
+    };
 }
 
-impl LoadExp<i32> for f64 {
-    type Output = Self;
-
-    fn load_exp(mut self, mut exponent: i32) -> Self::Output {
-        if exponent > 1023 {
-            const _0X1P1023: f64 = 8.98846567431158e307_f64;
-            self *= _0X1P1023;
-            exponent -= 1023;
-            if exponent > 1023 {
-                self *= _0X1P1023;
-                exponent -= 1023;
-                if exponent > 1023 {
-                    exponent = 1023;
-                }
-            }
-        } else if exponent < -1022 {
-            const _0X1P53: f64 = 9007199254740992.0_f64;
-            const _0X1P_1022: f64 = 2.2250738585072014e-308_f64;
-            const SCALE: f64 = _0X1P_1022 * _0X1P53;
-            self *= SCALE;
-            exponent += 1022 - 53;
-            if exponent < -1022 {
-                self *= SCALE;
-                exponent += 1022 - 53;
-                if exponent < -1022 {
-                    exponent = -1022;
-                }
-            }
-        }
-        self * f64::from_bits(((0x3ff + exponent) as u64) << 52)
-    }
-}
+primitive_load_exp_impl!(f32, u32);
+primitive_load_exp_impl!(f64, u64);
