@@ -21,13 +21,13 @@ pub trait CheckedDivEuclid<Divisor = Self> {
 }
 
 macro_rules! primitive_checked_div_euclid_impl {
-    ($($t:ty)*) => ($(
-        impl CheckedDivEuclid for $t {
+    ($($integer:ty)*) => ($(
+        impl CheckedDivEuclid for $integer {
             type Output = Option<Self>;
 
             #[inline(always)]
             fn checked_div_euclid(self, divisor: Self) -> Self::Output {
-                <$t>::checked_div_euclid(self, divisor)
+                <$integer>::checked_div_euclid(self, divisor)
             }
         }
     )*)

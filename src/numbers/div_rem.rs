@@ -19,13 +19,16 @@ pub trait DivRem<Divisor = Self> {
 }
 
 macro_rules! primitive_div_rem_impl {
-    ($($t:ty)*) => ($(
-        impl DivRem for $t {
+    ($($integer:ty)*) => ($(
+        impl DivRem for $integer {
             type Output = (Self, Self);
 
             #[inline(always)]
             fn div_rem(self, divisor: Self) -> Self::Output {
-                (<$t>::div(self, divisor), <$t>::rem(self, divisor))
+                (
+                    <$integer>::div(self, divisor),
+                    <$integer>::rem(self, divisor),
+                )
             }
         }
     )*)

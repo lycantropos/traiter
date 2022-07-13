@@ -23,8 +23,8 @@ pub trait CheckedDivRem<Divisor = Self> {
 }
 
 macro_rules! primitive_checked_div_rem_impl {
-    ($($t:ty)*) => ($(
-        impl CheckedDivRem for $t {
+    ($($integer:ty)*) => ($(
+        impl CheckedDivRem for $integer {
             type Output = Option<(Self, Self)>;
 
             #[inline(always)]
@@ -32,7 +32,10 @@ macro_rules! primitive_checked_div_rem_impl {
                 if divisor == 0 {
                     None
                 } else {
-                    Some((<$t>::div(self, divisor), <$t>::rem(self, divisor)))
+                    Some((
+                        <$integer>::div(self, divisor),
+                        <$integer>::rem(self, divisor),
+                    ))
                 }
             }
         }

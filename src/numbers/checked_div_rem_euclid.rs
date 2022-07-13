@@ -33,8 +33,8 @@ pub trait CheckedDivRemEuclid<Divisor = Self> {
 }
 
 macro_rules! primitive_checked_div_rem_euclid_impl {
-    ($($t:ty)*) => ($(
-        impl CheckedDivRemEuclid for $t {
+    ($($integer:ty)*) => ($(
+        impl CheckedDivRemEuclid for $integer {
             type Output = Option<(Self, Self)>;
 
             #[inline(always)]
@@ -43,8 +43,8 @@ macro_rules! primitive_checked_div_rem_euclid_impl {
                     None
                 } else {
                     Some((
-                        <$t>::div_euclid(self, divisor),
-                        <$t>::rem_euclid(self, divisor),
+                        <$integer>::div_euclid(self, divisor),
+                        <$integer>::rem_euclid(self, divisor),
                     ))
                 }
             }

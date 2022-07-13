@@ -35,21 +35,21 @@ pub trait Signed: Zeroable {
 }
 
 macro_rules! primitive_signed_impl {
-    ($($t:ty)*) => ($(
-        impl Signed for $t {
+    ($($integer:ty)*) => ($(
+        impl Signed for $integer {
             #[inline(always)]
             fn is_negative(&self) -> bool {
-                <$t>::is_negative(*self)
+                <$integer>::is_negative(*self)
             }
 
             #[inline(always)]
             fn is_positive(&self) -> bool {
-                <$t>::is_positive(*self)
+                <$integer>::is_positive(*self)
             }
 
             #[inline(always)]
             fn sign(&self) -> Sign {
-                match self.cmp(&(0 as $t)) {
+                match self.cmp(&(0 as $integer)) {
                     Ordering::Equal => Sign::Zero,
                     Ordering::Greater => Sign::Positive,
                     Ordering::Less => Sign::Negative,

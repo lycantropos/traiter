@@ -18,13 +18,14 @@ pub trait BitLength {
 }
 
 macro_rules! primitive_signed_bit_length_impl {
-    ($($t:ty)*) => ($(
-        impl BitLength for $t {
+    ($($integer:ty)*) => ($(
+        impl BitLength for $integer {
             type Output = usize;
 
             #[inline(always)]
             fn bit_length(self) -> Self::Output {
-                (<$t>::BITS as usize) - (self.abs().leading_zeros() as usize)
+                (<$integer>::BITS as usize)
+                    - (self.abs().leading_zeros() as usize)
             }
         }
     )*)
@@ -33,13 +34,13 @@ macro_rules! primitive_signed_bit_length_impl {
 primitive_signed_bit_length_impl!(i8 i16 i32 i64 i128 isize);
 
 macro_rules! primitive_unsigned_bit_length_impl {
-    ($($t:ty)*) => ($(
-        impl BitLength for $t {
+    ($($integer:ty)*) => ($(
+        impl BitLength for $integer {
             type Output = usize;
 
             #[inline(always)]
             fn bit_length(self) -> Self::Output {
-                (<$t>::BITS as usize) - (self.leading_zeros() as usize)
+                (<$integer>::BITS as usize) - (self.leading_zeros() as usize)
             }
         }
     )*)

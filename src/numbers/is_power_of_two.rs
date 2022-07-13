@@ -15,11 +15,11 @@ pub trait IsPowerOfTwo {
 }
 
 macro_rules! unsigned_primitive_is_power_of_two_impl {
-    ($($t:ty)*) => ($(
-        impl IsPowerOfTwo for $t {
+    ($($integer:ty)*) => ($(
+        impl IsPowerOfTwo for $integer {
             #[inline(always)]
             fn is_power_of_two(&self) -> bool {
-                <$t>::is_power_of_two(*self)
+                <$integer>::is_power_of_two(*self)
             }
         }
     )*)
@@ -78,14 +78,14 @@ impl Unsigned for u128 {
 impl Unsigned for usize {
     type Output = usize;
 }
-
 macro_rules! signed_primitive_is_power_of_two_impl {
-    ($($t:ty)*) => ($(
-        impl IsPowerOfTwo for $t {
+    ($($integer:ty)*) => ($(
+        impl IsPowerOfTwo for $integer {
             #[inline(always)]
             fn is_power_of_two(&self) -> bool {
-                <$t>::is_positive(*self)
-                    && (*self as <$t as Unsigned>::Output).is_power_of_two()
+                <$integer>::is_positive(*self)
+                    && (*self as <$integer as Unsigned>::Output)
+                        .is_power_of_two()
             }
         }
     )*)

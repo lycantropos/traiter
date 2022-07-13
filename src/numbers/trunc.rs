@@ -19,13 +19,13 @@ assert_eq!(Trunc::trunc(1.1_f32), 1.0_f32);
 }
 
 macro_rules! primitive_trunc_impl {
-    ($($t:ty)*) => ($(
-        impl Trunc for $t {
-            type Output = $t;
+    ($($float:ty)*) => ($(
+        impl Trunc for $float {
+            type Output = Self;
 
             #[inline(always)]
             fn trunc(self) -> Self::Output {
-                <$t>::trunc(self)
+                <$float>::trunc(self)
             }
         }
     )*)

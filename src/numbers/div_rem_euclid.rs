@@ -17,13 +17,16 @@ pub trait DivRemEuclid<Divisor = Self> {
 }
 
 macro_rules! primitive_div_rem_euclid_impl {
-    ($($t:ty)*) => ($(
-        impl DivRemEuclid for $t {
+    ($($integer:ty)*) => ($(
+        impl DivRemEuclid for $integer {
             type Output = (Self, Self);
 
             #[inline(always)]
             fn div_rem_euclid(self, divisor: Self) -> Self::Output {
-                (<$t>::div_euclid(self, divisor), <$t>::rem_euclid(self, divisor))
+                (
+                    <$integer>::div_euclid(self, divisor),
+                    <$integer>::rem_euclid(self, divisor),
+                )
             }
         }
     )*)

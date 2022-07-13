@@ -31,14 +31,14 @@ pub trait Unitary {
 }
 
 macro_rules! primitive_unitary_impl {
-    ($($t:ty)*) => ($(
-        impl Unitary for $t {
+    ($($number:ty)*) => ($(
+        impl Unitary for $number {
             #[inline(always)]
-            fn one() -> $t {1 as $t}
+            fn one() -> $number {1 as $number}
 
             #[inline(always)]
             fn is_one(&self) -> bool {
-                *self == (1 as $t)
+                *self == (1 as $number)
             }
         }
     )*)

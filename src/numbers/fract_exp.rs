@@ -17,28 +17,31 @@ pub trait FractExp {
 }
 
 macro_rules! primitive_fract_exp_impl {
-    ($f:ty, $t:ty) => {
-        impl FractExp for $f {
+    ($float:ty, $bits:ty) => {
+        impl FractExp for $float {
             type Output = (Self, i32);
 
             #[inline]
             fn fract_exp(self) -> Self::Output {
                 let bits = self.to_bits();
-                const EXPONENT_MASK: $t = (1 << <$f>::EXPONENT_BITS_COUNT) - 1;
-                let exponent_bits = ((bits >> <$f>::SIGNIFICAND_BITS_COUNT)
+                const EXPONENT_MASK: $bits =
+                    (1 << <$float>::EXPONENT_BITS_COUNT) - 1;
+                let exponent_bits = ((bits
+                    >> <$float>::SIGNIFICAND_BITS_COUNT)
                     & EXPONENT_MASK) as i32;
                 if exponent_bits == 0 {
-                    if self == (0.0 as $f) {
+                    if self == (0.0 as $float) {
                         (self, 0)
                     } else {
-                        const EXPONENT_BASE: $t =
-                            (1 << (<$f>::EXPONENT_BITS_COUNT - 1usize)) - 1;
+                        const EXPONENT_BASE: $bits = (1
+                            << (<$float>::EXPONENT_BITS_COUNT - 1usize))
+                            - 1;
                         const EXPONENT_DECREMENT: i32 = 64i32;
-                        const SCALE: $f = unsafe {
-                            transmute::<$t, $f>(
+                        const SCALE: $float = unsafe {
+                            transmute::<$bits, $float>(
                                 (((EXPONENT_BASE as i32) + EXPONENT_DECREMENT)
-                                    as $t)
-                                    << <$f>::SIGNIFICAND_BITS_COUNT,
+                                    as $bits)
+                                    << <$float>::SIGNIFICAND_BITS_COUNT,
                             )
                         };
                         let (fraction, exponent) = (self * SCALE).fract_exp();
@@ -47,17 +50,17 @@ macro_rules! primitive_fract_exp_impl {
                 } else if exponent_bits == (EXPONENT_MASK as i32) {
                     (self, 0)
                 } else {
-                    const SIGNIFICANT_MASK: $t =
-                        (1 << <$f>::SIGNIFICAND_BITS_COUNT) - 1;
-                    const EXPONENT_NULL_MASK: $t = (1
-                        << (<$f>::TOTAL_BITS_COUNT - 1usize))
+                    const SIGNIFICANT_MASK: $bits =
+                        (1 << <$float>::SIGNIFICAND_BITS_COUNT) - 1;
+                    const EXPONENT_NULL_MASK: $bits = (1
+                        << (<$float>::TOTAL_BITS_COUNT - 1usize))
                         | SIGNIFICANT_MASK;
-                    const EXPONENT_DECREMENT: i32 = <$f>::MAX_EXP - 2i32;
+                    const EXPONENT_DECREMENT: i32 = <$float>::MAX_EXP - 2i32;
                     (
                         Self::from_bits(
                             bits & EXPONENT_NULL_MASK
-                                | ((EXPONENT_DECREMENT as $t)
-                                    << <$f>::SIGNIFICAND_BITS_COUNT),
+                                | ((EXPONENT_DECREMENT as $bits)
+                                    << <$float>::SIGNIFICAND_BITS_COUNT),
                         ),
                         exponent_bits - EXPONENT_DECREMENT,
                     )

@@ -31,14 +31,14 @@ pub trait CheckedRemEuclidInv<Divisor = Self> {
 }
 
 macro_rules! primitive_signed_checked_rem_euclid_inv_impl {
-    ($($t:ty)*) => ($(
-        impl CheckedRemEuclidInv for $t {
+    ($($integer:ty)*) => ($(
+        impl CheckedRemEuclidInv for $integer {
             type Output = Option<Self>;
 
             #[inline(always)]
             fn checked_rem_euclid_inv(self, divisor: Self) -> Self::Output {
-                let mut candidate = 0 as $t;
-                let mut result = 1 as $t;
+                let mut candidate = 0;
+                let mut result = 1;
                 let mut step_dividend = self;
                 let mut step_divisor = divisor;
                 while step_divisor != 0 {
@@ -66,14 +66,14 @@ macro_rules! primitive_signed_checked_rem_euclid_inv_impl {
 primitive_signed_checked_rem_euclid_inv_impl!(i8 i16 i32 i64 i128 isize);
 
 macro_rules! primitive_unsigned_checked_rem_euclid_inv_impl {
-    ($($t:ty)*) => ($(
-        impl CheckedRemEuclidInv for $t {
+    ($($integer:ty)*) => ($(
+        impl CheckedRemEuclidInv for $integer {
             type Output = Option<Self>;
 
             #[inline(always)]
             fn checked_rem_euclid_inv(self, divisor: Self) -> Self::Output {
-                let mut candidate_modulus = 0 as $t;
-                let mut result_modulus = 1 as $t;
+                let mut candidate_modulus = 0;
+                let mut result_modulus = 1;
                 let mut is_result_negative = false;
                 let mut is_candidate_negative = false;
                 let mut step_dividend = self;

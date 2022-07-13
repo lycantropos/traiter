@@ -29,8 +29,8 @@ pub trait Parity {
 }
 
 macro_rules! primitive_parity_impl {
-    ($($t:ty)*) => ($(
-        impl Parity for $t {
+    ($($integer:ty)*) => ($(
+        impl Parity for $integer {
             #[inline(always)]
             fn is_even(&self) -> bool {
                 self & 1 == 0

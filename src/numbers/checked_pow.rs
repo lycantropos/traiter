@@ -17,13 +17,13 @@ pub trait CheckedPow<Exponent> {
 }
 
 macro_rules! primitive_checked_pow_impl {
-    ($($t:ty)*) => ($(
-        impl CheckedPow<u32> for $t {
-            type Output = Option<$t>;
+    ($($integer:ty)*) => ($(
+        impl CheckedPow<u32> for $integer {
+            type Output = Option<$integer>;
 
             #[inline(always)]
             fn checked_pow(self, exponent: u32) -> Self::Output {
-                <$t>::checked_pow(self, exponent)
+                <$integer>::checked_pow(self, exponent)
             }
         }
     )*)

@@ -17,13 +17,13 @@ pub trait Pow<Exponent> {
 }
 
 macro_rules! primitive_pow_impl {
-    ($($t:ty)*) => ($(
-        impl Pow<u32> for $t {
-            type Output = $t;
+    ($($integer:ty)*) => ($(
+        impl Pow<u32> for $integer {
+            type Output = Self;
 
             #[inline(always)]
             fn pow(self, exponent: u32) -> Self::Output {
-                <$t>::pow(self, exponent)
+                <$integer>::pow(self, exponent)
             }
         }
     )*)

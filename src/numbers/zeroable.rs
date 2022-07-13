@@ -31,14 +31,14 @@ pub trait Zeroable {
 }
 
 macro_rules! primitive_zeroable_impl {
-    ($($t:ty)*) => ($(
-        impl Zeroable for $t {
+    ($($number:ty)*) => ($(
+        impl Zeroable for $number {
             #[inline(always)]
-            fn zero() -> $t {0 as $t}
+            fn zero() -> $number {0 as $number}
 
             #[inline(always)]
             fn is_zero(&self) -> bool {
-                *self == (0 as $t)
+                *self == (0 as $number)
             }
         }
     )*)

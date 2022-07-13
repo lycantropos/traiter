@@ -19,13 +19,13 @@ assert_eq!(Floor::floor(1.1_f32), 1.0_f32);
 }
 
 macro_rules! primitive_floor_impl {
-    ($($t:ty)*) => ($(
-        impl Floor for $t {
-            type Output = $t;
+    ($($float:ty)*) => ($(
+        impl Floor for $float {
+            type Output = Self;
 
             #[inline(always)]
             fn floor(self) -> Self::Output {
-                <$t>::floor(self)
+                <$float>::floor(self)
             }
         }
     )*)

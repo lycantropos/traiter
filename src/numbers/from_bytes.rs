@@ -31,16 +31,16 @@ pub trait FromBytes {
 }
 
 macro_rules! primitive_from_bytes_impl {
-    ($($t:ty)*) => ($(
-        impl FromBytes for $t {
+    ($($integer:ty)*) => ($(
+        impl FromBytes for $integer {
             #[inline(always)]
             fn from_bytes(bytes: &[u8], endianness: Endianness) -> Self {
                 match endianness {
                     Endianness::Big => {
-                        <$t>::from_be_bytes(bytes.try_into().unwrap())
+                        <$integer>::from_be_bytes(bytes.try_into().unwrap())
                     }
                     Endianness::Little => {
-                        <$t>::from_le_bytes(bytes.try_into().unwrap())
+                        <$integer>::from_le_bytes(bytes.try_into().unwrap())
                     }
                 }
             }

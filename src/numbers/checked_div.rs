@@ -17,13 +17,13 @@ pub trait CheckedDiv<Divisor = Self> {
 }
 
 macro_rules! primitive_checked_div_impl {
-    ($($t:ty)*) => ($(
-        impl CheckedDiv for $t {
+    ($($integer:ty)*) => ($(
+        impl CheckedDiv for $integer {
             type Output = Option<Self>;
 
             #[inline(always)]
             fn checked_div(self, divisor: Self) -> Self::Output {
-                <$t>::checked_div(self, divisor)
+                <$integer>::checked_div(self, divisor)
             }
         }
     )*)

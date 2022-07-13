@@ -17,13 +17,13 @@ pub trait CheckedRemEuclid<Divisor = Self> {
 }
 
 macro_rules! primitive_checked_rem_euclid_impl {
-    ($($t:ty)*) => ($(
-        impl CheckedRemEuclid for $t {
+    ($($integer:ty)*) => ($(
+        impl CheckedRemEuclid for $integer {
             type Output = Option<Self>;
 
             #[inline(always)]
             fn checked_rem_euclid(self, divisor: Self) -> Self::Output {
-                <$t>::checked_rem_euclid(self, divisor)
+                <$integer>::checked_rem_euclid(self, divisor)
             }
         }
     )*)

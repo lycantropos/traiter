@@ -19,8 +19,8 @@ pub trait Gcd<Other = Self> {
 }
 
 macro_rules! primitive_signed_gcd_impl {
-    ($($t:ty)*) => ($(
-        impl Gcd for $t {
+    ($($integer:ty)*) => ($(
+        impl Gcd for $integer {
             type Output = Self;
 
             #[inline(always)]
@@ -39,8 +39,8 @@ macro_rules! primitive_signed_gcd_impl {
 primitive_signed_gcd_impl!(i8 i16 i32 i64 i128 isize);
 
 macro_rules! primitive_unsigned_gcd_impl {
-    ($($t:ty)*) => ($(
-        impl Gcd for $t {
+    ($($integer:ty)*) => ($(
+        impl Gcd for $integer {
             type Output = Self;
 
             #[inline(always)]

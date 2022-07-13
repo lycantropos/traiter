@@ -39,9 +39,9 @@ pub trait CheckedPowRemEuclid<Exponent, Divisor> {
 }
 
 macro_rules! primitive_signed_checked_pow_rem_euclid_impl {
-    ($($t:ty)*) => ($(
-        impl CheckedPowRemEuclid<u32, $t> for $t {
-            type Output = Option<$t>;
+    ($($integer:ty)*) => ($(
+        impl CheckedPowRemEuclid<u32, $integer> for $integer {
+            type Output = Option<$integer>;
 
             #[inline]
             fn checked_pow_rem_euclid(
@@ -102,9 +102,9 @@ macro_rules! primitive_signed_checked_pow_rem_euclid_impl {
 primitive_signed_checked_pow_rem_euclid_impl!(i8 i16 i32 i64 i128 isize);
 
 macro_rules! primitive_unsigned_checked_pow_rem_euclid_impl {
-    ($($t:ty)*) => ($(
-        impl CheckedPowRemEuclid<u32, $t> for $t {
-            type Output = Option<$t>;
+    ($($integer:ty)*) => ($(
+        impl CheckedPowRemEuclid<u32, Self> for $integer {
+            type Output = Option<Self>;
 
             #[inline]
             fn checked_pow_rem_euclid(

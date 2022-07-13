@@ -23,13 +23,13 @@ assert_eq!(Abs::abs(1.0_f32), 1.0_f32);
 }
 
 macro_rules! primitive_abs_impl {
-    ($($t:ty)*) => ($(
-        impl Abs for $t {
-            type Output = $t;
+    ($($number:ty)*) => ($(
+        impl Abs for $number {
+            type Output = Self;
 
             #[inline(always)]
             fn abs(self) -> Self::Output {
-                <$t>::abs(self)
+                <$number>::abs(self)
             }
         }
     )*)

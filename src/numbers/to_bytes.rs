@@ -21,8 +21,8 @@ pub trait ToBytes {
 }
 
 macro_rules! primitive_to_bytes_impl {
-    ($($t:ty)*) => ($(
-        impl ToBytes for $t {
+    ($($integer:ty)*) => ($(
+        impl ToBytes for $integer {
             type Output = [u8; mem::size_of::<Self>()];
 
             #[inline(always)]
