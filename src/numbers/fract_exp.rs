@@ -1,4 +1,4 @@
-use core::mem::size_of;
+use core::mem::{size_of, transmute};
 
 use super::float_info::FloatInfo;
 
@@ -31,7 +31,15 @@ macro_rules! primitive_fract_exp_impl {
                         (self, 0)
                     } else {
                         const EXPONENT_DECREMENT: i32 = 64i32;
-                        const SCALE: $f = (1u128 << EXPONENT_DECREMENT) as $f;
+                        const EXPONENT_BASE: $t =
+                            (1 << (<$f>::EXPONENT_BITS_COUNT - 1usize)) - 1;
+                        const SCALE: $f = unsafe {
+                            transmute::<$t, $f>(
+                                (((EXPONENT_BASE as i32) + EXPONENT_DECREMENT)
+                                    as $t)
+                                    << <$f>::SIGNIFICAND_BITS_COUNT,
+                            )
+                        };
                         let (fraction, exponent) = (self * SCALE).fract_exp();
                         (fraction, exponent - EXPONENT_DECREMENT)
                     }
