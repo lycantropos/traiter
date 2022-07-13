@@ -1,4 +1,4 @@
-use core::mem::{size_of, transmute};
+use core::mem::transmute;
 
 use super::float_info::FloatInfo;
 
