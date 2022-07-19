@@ -78,6 +78,7 @@ impl Unsigned for u128 {
 impl Unsigned for usize {
     type Output = usize;
 }
+
 macro_rules! signed_primitive_is_power_of_two_impl {
     ($($integer:ty)*) => ($(
         impl IsPowerOfTwo for $integer {
