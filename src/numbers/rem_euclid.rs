@@ -16,7 +16,7 @@ pub trait RemEuclid<Divisor = Self> {
     fn rem_euclid(self, divisor: Divisor) -> Self::Output;
 }
 
-macro_rules! primitive_rem_euclid_impl {
+macro_rules! integer_rem_euclid_impl {
     ($($integer:ty)*) => ($(
         impl RemEuclid for $integer {
             type Output = Self;
@@ -29,6 +29,6 @@ macro_rules! primitive_rem_euclid_impl {
     )*)
 }
 
-primitive_rem_euclid_impl!(
+integer_rem_euclid_impl!(
     i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize
 );

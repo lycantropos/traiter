@@ -30,7 +30,7 @@ pub trait Zeroable {
     fn is_zero(&self) -> bool;
 }
 
-macro_rules! primitive_zeroable_impl {
+macro_rules! number_zeroable_impl {
     ($($number:ty)*) => ($(
         impl Zeroable for $number {
             #[inline(always)]
@@ -44,6 +44,6 @@ macro_rules! primitive_zeroable_impl {
     )*)
 }
 
-primitive_zeroable_impl!(
+number_zeroable_impl!(
     f32 f64 i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize
 );

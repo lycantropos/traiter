@@ -21,7 +21,7 @@ assert_eq!(Round::round(-0.5_f32, TieBreaking::TowardZero), 0.0_f32);
     fn round(self, tie_breaking: TieBreaking) -> Self::Output;
 }
 
-macro_rules! primitive_round_impl {
+macro_rules! float_round_impl {
     ($($float:ty)*) => ($(
         impl Round for $float {
             type Output = Self;
@@ -58,4 +58,4 @@ macro_rules! primitive_round_impl {
 }
 
 #[cfg(feature = "std")]
-primitive_round_impl!(f32 f64);
+float_round_impl!(f32 f64);

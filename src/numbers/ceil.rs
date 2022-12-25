@@ -18,7 +18,7 @@ assert_eq!(Ceil::ceil(1.1_f32), 2.0_f32);
     fn ceil(self) -> Self::Output;
 }
 
-macro_rules! primitive_ceil_impl {
+macro_rules! float_ceil_impl {
     ($($float:ty)*) => ($(
         impl Ceil for $float {
             type Output = Self;
@@ -32,4 +32,4 @@ macro_rules! primitive_ceil_impl {
 }
 
 #[cfg(feature = "std")]
-primitive_ceil_impl!(f32 f64);
+float_ceil_impl!(f32 f64);

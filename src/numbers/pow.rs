@@ -16,7 +16,7 @@ pub trait Pow<Exponent> {
     fn pow(self, exponent: Exponent) -> Self::Output;
 }
 
-macro_rules! primitive_pow_impl {
+macro_rules! integer_pow_impl {
     ($($integer:ty)*) => ($(
         impl Pow<u32> for $integer {
             type Output = Self;
@@ -29,4 +29,4 @@ macro_rules! primitive_pow_impl {
     )*)
 }
 
-primitive_pow_impl!(i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize);
+integer_pow_impl!(i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize);

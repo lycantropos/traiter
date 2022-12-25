@@ -28,7 +28,7 @@ pub trait Parity {
     fn is_odd(&self) -> bool;
 }
 
-macro_rules! primitive_parity_impl {
+macro_rules! integer_parity_impl {
     ($($integer:ty)*) => ($(
         impl Parity for $integer {
             #[inline(always)]
@@ -44,4 +44,4 @@ macro_rules! primitive_parity_impl {
     )*)
 }
 
-primitive_parity_impl!(i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize);
+integer_parity_impl!(i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize);

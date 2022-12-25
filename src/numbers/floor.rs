@@ -18,7 +18,7 @@ assert_eq!(Floor::floor(1.1_f32), 1.0_f32);
     fn floor(self) -> Self::Output;
 }
 
-macro_rules! primitive_floor_impl {
+macro_rules! float_floor_impl {
     ($($float:ty)*) => ($(
         impl Floor for $float {
             type Output = Self;
@@ -32,4 +32,4 @@ macro_rules! primitive_floor_impl {
 }
 
 #[cfg(feature = "std")]
-primitive_floor_impl!(f32 f64);
+float_floor_impl!(f32 f64);

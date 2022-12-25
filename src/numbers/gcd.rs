@@ -18,7 +18,7 @@ pub trait Gcd<Other = Self> {
     fn gcd(self, other: Other) -> Self::Output;
 }
 
-macro_rules! primitive_signed_gcd_impl {
+macro_rules! signed_integer_gcd_impl {
     ($($integer:ty)*) => ($(
         impl Gcd for $integer {
             type Output = Self;
@@ -36,9 +36,9 @@ macro_rules! primitive_signed_gcd_impl {
     )*)
 }
 
-primitive_signed_gcd_impl!(i8 i16 i32 i64 i128 isize);
+signed_integer_gcd_impl!(i8 i16 i32 i64 i128 isize);
 
-macro_rules! primitive_unsigned_gcd_impl {
+macro_rules! unsigned_integer_gcd_impl {
     ($($integer:ty)*) => ($(
         impl Gcd for $integer {
             type Output = Self;
@@ -56,4 +56,4 @@ macro_rules! primitive_unsigned_gcd_impl {
     )*)
 }
 
-primitive_unsigned_gcd_impl!(u8 u16 u32 u64 u128 usize);
+unsigned_integer_gcd_impl!(u8 u16 u32 u64 u128 usize);

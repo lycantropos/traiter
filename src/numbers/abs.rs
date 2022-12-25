@@ -22,7 +22,7 @@ assert_eq!(Abs::abs(1.0_f32), 1.0_f32);
     fn abs(self) -> Self::Output;
 }
 
-macro_rules! primitive_abs_impl {
+macro_rules! number_abs_impl {
     ($($number:ty)*) => ($(
         impl Abs for $number {
             type Output = Self;
@@ -36,5 +36,5 @@ macro_rules! primitive_abs_impl {
 }
 
 #[cfg(feature = "std")]
-primitive_abs_impl!(f32 f64);
-primitive_abs_impl!(i8 i16 i32 i64 i128 isize);
+number_abs_impl!(f32 f64);
+number_abs_impl!(i8 i16 i32 i64 i128 isize);

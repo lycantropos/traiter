@@ -20,7 +20,7 @@ pub trait ToBytes {
     fn to_bytes(&self, endianness: Endianness) -> Self::Output;
 }
 
-macro_rules! primitive_to_bytes_impl {
+macro_rules! integer_to_bytes_impl {
     ($($integer:ty)*) => ($(
         impl ToBytes for $integer {
             type Output = [u8; mem::size_of::<Self>()];
@@ -36,4 +36,4 @@ macro_rules! primitive_to_bytes_impl {
     )*)
 }
 
-primitive_to_bytes_impl!(i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize);
+integer_to_bytes_impl!(i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize);

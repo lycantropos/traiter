@@ -18,7 +18,7 @@ pub trait FromStrRadix: Sized {
     fn from_str_radix(string: &str, radix: u32) -> Result<Self, Self::Error>;
 }
 
-macro_rules! primitive_from_str_radix_impl {
+macro_rules! integer_from_str_radix_impl {
     ($($integer:ty)*) => ($(
         impl FromStrRadix for $integer {
             type Error = ParseIntError;
@@ -34,6 +34,6 @@ macro_rules! primitive_from_str_radix_impl {
     )*)
 }
 
-primitive_from_str_radix_impl!(
+integer_from_str_radix_impl!(
     i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize
 );

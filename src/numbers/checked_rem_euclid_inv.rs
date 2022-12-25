@@ -30,7 +30,7 @@ pub trait CheckedRemEuclidInv<Divisor = Self> {
     fn checked_rem_euclid_inv(self, divisor: Divisor) -> Self::Output;
 }
 
-macro_rules! primitive_signed_checked_rem_euclid_inv_impl {
+macro_rules! signed_integer_checked_rem_euclid_inv_impl {
     ($($integer:ty)*) => ($(
         impl CheckedRemEuclidInv for $integer {
             type Output = Option<Self>;
@@ -63,9 +63,9 @@ macro_rules! primitive_signed_checked_rem_euclid_inv_impl {
     )*)
 }
 
-primitive_signed_checked_rem_euclid_inv_impl!(i8 i16 i32 i64 i128 isize);
+signed_integer_checked_rem_euclid_inv_impl!(i8 i16 i32 i64 i128 isize);
 
-macro_rules! primitive_unsigned_checked_rem_euclid_inv_impl {
+macro_rules! unsigned_integer_checked_rem_euclid_inv_impl {
     ($($integer:ty)*) => ($(
         impl CheckedRemEuclidInv for $integer {
             type Output = Option<Self>;
@@ -127,4 +127,4 @@ macro_rules! primitive_unsigned_checked_rem_euclid_inv_impl {
     )*)
 }
 
-primitive_unsigned_checked_rem_euclid_inv_impl!(u8 u16 u32 u64 u128 usize);
+unsigned_integer_checked_rem_euclid_inv_impl!(u8 u16 u32 u64 u128 usize);

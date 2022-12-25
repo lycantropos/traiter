@@ -16,7 +16,7 @@ pub trait CheckedPow<Exponent> {
     fn checked_pow(self, exponent: Exponent) -> Self::Output;
 }
 
-macro_rules! primitive_checked_pow_impl {
+macro_rules! integer_checked_pow_impl {
     ($($integer:ty)*) => ($(
         impl CheckedPow<u32> for $integer {
             type Output = Option<$integer>;
@@ -29,6 +29,6 @@ macro_rules! primitive_checked_pow_impl {
     )*)
 }
 
-primitive_checked_pow_impl!(
+integer_checked_pow_impl!(
     i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize
 );

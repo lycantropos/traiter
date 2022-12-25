@@ -16,7 +16,7 @@ pub trait FractExp {
     fn fract_exp(self) -> Self::Output;
 }
 
-macro_rules! primitive_fract_exp_impl {
+macro_rules! float_fract_exp_impl {
     ($float:ty, $bits:ty) => {
         impl FractExp for $float {
             type Output = (Self, i32);
@@ -70,5 +70,5 @@ macro_rules! primitive_fract_exp_impl {
     };
 }
 
-primitive_fract_exp_impl!(f32, u32);
-primitive_fract_exp_impl!(f64, u64);
+float_fract_exp_impl!(f32, u32);
+float_fract_exp_impl!(f64, u64);

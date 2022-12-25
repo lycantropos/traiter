@@ -18,7 +18,7 @@ assert_eq!(Trunc::trunc(1.1_f32), 1.0_f32);
     fn trunc(self) -> Self::Output;
 }
 
-macro_rules! primitive_trunc_impl {
+macro_rules! float_trunc_impl {
     ($($float:ty)*) => ($(
         impl Trunc for $float {
             type Output = Self;
@@ -32,4 +32,4 @@ macro_rules! primitive_trunc_impl {
 }
 
 #[cfg(feature = "std")]
-primitive_trunc_impl!(f32 f64);
+float_trunc_impl!(f32 f64);

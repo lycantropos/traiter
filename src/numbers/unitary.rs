@@ -30,7 +30,7 @@ pub trait Unitary {
     fn is_one(&self) -> bool;
 }
 
-macro_rules! primitive_unitary_impl {
+macro_rules! number_unitary_impl {
     ($($number:ty)*) => ($(
         impl Unitary for $number {
             #[inline(always)]
@@ -44,6 +44,6 @@ macro_rules! primitive_unitary_impl {
     )*)
 }
 
-primitive_unitary_impl!(
+number_unitary_impl!(
     f32 f64 i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize
 );

@@ -34,7 +34,7 @@ pub trait Signed: Zeroable {
     fn sign(&self) -> Sign;
 }
 
-macro_rules! primitive_signed_impl {
+macro_rules! signed_integer_impl {
     ($($integer:ty)*) => ($(
         impl Signed for $integer {
             #[inline(always)]
@@ -59,4 +59,4 @@ macro_rules! primitive_signed_impl {
     )*)
 }
 
-primitive_signed_impl!(i8 i16 i32 i64 i128 isize);
+signed_integer_impl!(i8 i16 i32 i64 i128 isize);

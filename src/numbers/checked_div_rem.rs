@@ -22,7 +22,7 @@ pub trait CheckedDivRem<Divisor = Self> {
     fn checked_div_rem(self, divisor: Divisor) -> Self::Output;
 }
 
-macro_rules! primitive_checked_div_rem_impl {
+macro_rules! integer_checked_div_rem_impl {
     ($($integer:ty)*) => ($(
         impl CheckedDivRem for $integer {
             type Output = Option<(Self, Self)>;
@@ -42,6 +42,6 @@ macro_rules! primitive_checked_div_rem_impl {
     )*)
 }
 
-primitive_checked_div_rem_impl!(
+integer_checked_div_rem_impl!(
     i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize
 );

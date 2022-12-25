@@ -16,7 +16,7 @@ pub trait LoadExp<Exponent> {
     fn load_exp(self, exponent: Exponent) -> Self::Output;
 }
 
-macro_rules! primitive_load_exp_impl {
+macro_rules! float_load_exp_impl {
     ($float:ty, $bits:ty) => {
         impl LoadExp<i32> for $float {
             type Output = Self;
@@ -85,5 +85,5 @@ macro_rules! primitive_load_exp_impl {
     };
 }
 
-primitive_load_exp_impl!(f32, u32);
-primitive_load_exp_impl!(f64, u64);
+float_load_exp_impl!(f32, u32);
+float_load_exp_impl!(f64, u64);

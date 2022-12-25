@@ -30,7 +30,7 @@ pub trait FromBytes {
     fn from_bytes(bytes: &[u8], endianness: Endianness) -> Self;
 }
 
-macro_rules! primitive_from_bytes_impl {
+macro_rules! integer_from_bytes_impl {
     ($($integer:ty)*) => ($(
         impl FromBytes for $integer {
             #[inline(always)]
@@ -48,6 +48,6 @@ macro_rules! primitive_from_bytes_impl {
     )*)
 }
 
-primitive_from_bytes_impl!(
+integer_from_bytes_impl!(
     i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize
 );

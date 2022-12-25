@@ -18,7 +18,7 @@ pub trait CheckedShr<Shift = Self> {
     fn checked_shr(self, shift: Shift) -> Self::Output;
 }
 
-macro_rules! signed_checked_shr_impl {
+macro_rules! signed_integer_checked_shr_impl {
     ($base:ty, $shift:ty) => {
         impl CheckedShr<$shift> for $base {
             type Output = Option<$base>;
@@ -35,7 +35,7 @@ macro_rules! signed_checked_shr_impl {
     };
 }
 
-macro_rules! unsigned_checked_shr_impl {
+macro_rules! unsigned_integer_checked_shr_impl {
     ($base:ty, $shift:ty) => {
         impl CheckedShr<$shift> for $base {
             type Output = Option<Self>;
@@ -48,24 +48,24 @@ macro_rules! unsigned_checked_shr_impl {
     };
 }
 
-macro_rules! primitive_checked_shr_impl {
+macro_rules! integer_checked_shr_impl {
     ($($base:ty)*) => ($(
-        signed_checked_shr_impl! { $base, i8 }
-        signed_checked_shr_impl! { $base, i16 }
-        signed_checked_shr_impl! { $base, i32 }
-        signed_checked_shr_impl! { $base, i64 }
-        signed_checked_shr_impl! { $base, i128 }
-        signed_checked_shr_impl! { $base, isize }
+        signed_integer_checked_shr_impl! { $base, i8 }
+        signed_integer_checked_shr_impl! { $base, i16 }
+        signed_integer_checked_shr_impl! { $base, i32 }
+        signed_integer_checked_shr_impl! { $base, i64 }
+        signed_integer_checked_shr_impl! { $base, i128 }
+        signed_integer_checked_shr_impl! { $base, isize }
 
-        unsigned_checked_shr_impl! { $base, u8 }
-        unsigned_checked_shr_impl! { $base, u16 }
-        unsigned_checked_shr_impl! { $base, u32 }
-        unsigned_checked_shr_impl! { $base, u64 }
-        unsigned_checked_shr_impl! { $base, u128 }
-        unsigned_checked_shr_impl! { $base, usize }
+        unsigned_integer_checked_shr_impl! { $base, u8 }
+        unsigned_integer_checked_shr_impl! { $base, u16 }
+        unsigned_integer_checked_shr_impl! { $base, u32 }
+        unsigned_integer_checked_shr_impl! { $base, u64 }
+        unsigned_integer_checked_shr_impl! { $base, u128 }
+        unsigned_integer_checked_shr_impl! { $base, usize }
     )*)
 }
 
-primitive_checked_shr_impl!(
+integer_checked_shr_impl!(
     i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize
 );

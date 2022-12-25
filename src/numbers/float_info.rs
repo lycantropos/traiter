@@ -7,7 +7,7 @@ pub trait FloatInfo {
     const TOTAL_BITS_COUNT: usize;
 }
 
-macro_rules! primitive_float_info_impl {
+macro_rules! float_float_info_impl {
     ($($float:ty)*) => ($(
         impl FloatInfo for $float {
             const EXPONENT_BITS_COUNT: usize = Self::TOTAL_BITS_COUNT
@@ -21,4 +21,4 @@ macro_rules! primitive_float_info_impl {
     )*)
 }
 
-primitive_float_info_impl!(f32 f64);
+float_float_info_impl!(f32 f64);
