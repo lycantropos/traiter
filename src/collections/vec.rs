@@ -1,10 +1,10 @@
 use std::collections::TryReserveError;
-use std::slice::Iter;
+use std::slice::{Iter, IterMut};
 use std::vec::Vec;
 
 use super::traits::{
     Capacitary, Clearable, Container, Emptiable, Iterable, Lengthsome,
-    Reservable, TryReservable,
+    MutIterable, Reservable, TryReservable,
 };
 
 impl<Element> Capacitary for Vec<Element> {
@@ -63,5 +63,13 @@ impl<Element> TryReservable for Vec<Element> {
         additional: Self::Capacity,
     ) -> Result<(), Self::Error> {
         Vec::try_reserve(self, additional)
+    }
+}
+
+impl<'a, Element: 'a> MutIterable<'a> for Vec<Element> {
+    type Output = IterMut<'a, Element>;
+
+    fn iter_mut(&'a mut self) -> Self::Output {
+        self.as_mut_slice().iter_mut()
     }
 }
