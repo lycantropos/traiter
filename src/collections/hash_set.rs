@@ -4,7 +4,7 @@ use std::hash::{BuildHasher, Hash};
 
 use super::traits::{
     Capacitary, Clearable, Container, Emptiable, Iterable, Lengthsome,
-    Removable, Reservable, TryReservable,
+    Reservable, TryReservable, ValueRemovable,
 };
 
 impl<Element, State> Capacitary for HashSet<Element, State> {
@@ -53,13 +53,13 @@ impl<Element, State> Lengthsome for HashSet<Element, State> {
     }
 }
 
-impl<'a, Element: 'a + Hash + Eq, State: BuildHasher> Removable<'a>
+impl<'a, Element: 'a + Hash + Eq, State: BuildHasher> ValueRemovable<'a>
     for HashSet<Element, State>
 {
     type Output = bool;
     type Value = &'a Element;
 
-    fn remove(&'a mut self, value: Self::Value) -> Self::Output {
+    fn remove_value(&'a mut self, value: Self::Value) -> Self::Output {
         HashSet::remove(self, value)
     }
 }

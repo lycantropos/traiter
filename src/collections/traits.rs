@@ -92,7 +92,7 @@ pub trait MutIterable<'a> {
         <<Self as MutIterable<'a>>::Output as Iterator>::Item: 'a;
 }
 
-pub trait Removable<'a> {
+pub trait ValueRemovable<'a> {
     type Output;
     type Value;
 
@@ -101,12 +101,16 @@ pub trait Removable<'a> {
         feature = "std",
         doc = r##"
 ```
-use traiter::collections::Removable;
-assert_eq!(Removable::remove(&mut vec![10], 0), 10);
+use std::collections::HashSet;
+use traiter::collections::ValueRemovable;
+let mut collection = HashSet::new();
+collection.insert(10);
+assert!(ValueRemovable::remove_value(&mut collection, &10));
+assert!(!ValueRemovable::remove_value(&mut collection, &10));
 ```
 "##
     )]
-    fn remove(&'a mut self, value: Self::Value) -> Self::Output;
+    fn remove_value(&'a mut self, value: Self::Value) -> Self::Output;
 }
 
 pub trait Reservable: Capacitary {
