@@ -4,7 +4,7 @@ use std::vec::Vec;
 
 use super::traits::{
     Capacitary, Clearable, Container, Emptiable, Iterable, Lengthsome,
-    MutIterable, Reservable, TryReservable,
+    MutIterable, Removable, Reservable, TryReservable,
 };
 
 impl<Element> Capacitary for Vec<Element> {
@@ -56,6 +56,15 @@ impl<'a, Element: 'a> MutIterable<'a> for Vec<Element> {
 
     fn iter_mut(&'a mut self) -> Self::Output {
         self.as_mut_slice().iter_mut()
+    }
+}
+
+impl<Element> Removable<'_> for Vec<Element> {
+    type Output = Element;
+    type Value = usize;
+
+    fn remove(&mut self, value: Self::Value) -> Self::Output {
+        Vec::remove(self, value)
     }
 }
 
