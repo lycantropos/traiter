@@ -3,8 +3,8 @@ use std::collections::{HashMap, TryReserveError};
 use std::hash::{BuildHasher, Hash};
 
 use super::traits::{
-    Capacitary, Clearable, Emptiable, Iterable, Lengthsome, MutIterable,
-    Reservable, TryReservable,
+    Capacitary, Clearable, Emptiable, ItemRemovable, Iterable, Lengthsome,
+    MutIterable, Reservable, TryReservable,
 };
 
 impl<Key, Value, State> Capacitary for HashMap<Key, Value, State> {
@@ -42,6 +42,17 @@ impl<Key, Value, State> Lengthsome for HashMap<Key, Value, State> {
 
     fn len(&self) -> Self::Length {
         HashMap::len(self)
+    }
+}
+
+impl<'a, Key: 'a + Eq + Hash, Value, State: BuildHasher> ItemRemovable<'a>
+    for HashMap<Key, Value, State>
+{
+    type Output = Option<Value>;
+    type Key = &'a Key;
+
+    fn remove_item(&'a mut self, key: Self::Key) -> Self::Output {
+        HashMap::remove(self, key)
     }
 }
 
