@@ -1,9 +1,10 @@
+use std::collections::hash_set::Iter;
 use std::collections::{HashSet, TryReserveError};
 use std::hash::{BuildHasher, Hash};
 
 use super::traits::{
-    Capacitary, Clearable, Container, Emptiable, Lengthsome, Reservable,
-    TryReservable,
+    Capacitary, Clearable, Container, Emptiable, Iterable, Lengthsome,
+    Reservable, TryReservable,
 };
 
 impl<Element, State> Capacitary for HashSet<Element, State> {
@@ -31,6 +32,14 @@ impl<Element: Eq + Hash, State: BuildHasher> Container<&Element>
 impl<Element, State> Emptiable for HashSet<Element, State> {
     fn is_empty(&self) -> bool {
         HashSet::is_empty(self)
+    }
+}
+
+impl<'a, Element: 'a, State> Iterable<'a> for HashSet<Element, State> {
+    type Output = Iter<'a, Element>;
+
+    fn iter(&'a self) -> Self::Output {
+        HashSet::iter(self)
     }
 }
 
