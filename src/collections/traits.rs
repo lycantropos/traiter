@@ -92,23 +92,6 @@ pub trait MutIterable<'a> {
         <<Self as MutIterable<'a>>::Output as Iterator>::Item: 'a;
 }
 
-pub trait Reservable: Capacitary {
-    /// Reserves capacity for at least given number of elements for a collection.
-    #[cfg_attr(
-        feature = "std",
-        doc = r##"
-```
-use traiter::collections::{Capacitary, Reservable};
-let mut collection = Vec::<i8>::with_capacity(10);
-assert_eq!(Capacitary::capacity(&collection), 10);
-Reservable::reserve(&mut collection, 20);
-assert_eq!(Capacitary::capacity(&collection), 20);
-```
-"##
-    )]
-    fn reserve(&mut self, additional: Self::Capacity);
-}
-
 pub trait Removable<'a> {
     type Output;
     type Value;
@@ -124,6 +107,23 @@ assert_eq!(Removable::remove(&mut vec![10], 0), 10);
 "##
     )]
     fn remove(&'a mut self, value: Self::Value) -> Self::Output;
+}
+
+pub trait Reservable: Capacitary {
+    /// Reserves capacity for at least given number of elements for a collection.
+    #[cfg_attr(
+        feature = "std",
+        doc = r##"
+```
+use traiter::collections::{Capacitary, Reservable};
+let mut collection = Vec::<i8>::with_capacity(10);
+assert_eq!(Capacitary::capacity(&collection), 10);
+Reservable::reserve(&mut collection, 20);
+assert_eq!(Capacitary::capacity(&collection), 20);
+```
+"##
+    )]
+    fn reserve(&mut self, additional: Self::Capacity);
 }
 
 pub trait TryReservable: Capacitary {
