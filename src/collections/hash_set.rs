@@ -21,16 +21,6 @@ impl<Element, State> Clearable for HashSet<Element, State> {
     }
 }
 
-impl<'a, Element: 'a + Eq + Hash, State: BuildHasher> ValueContainer<'a>
-    for HashSet<Element, State>
-{
-    type Value = &'a Element;
-
-    fn contains_value(&'a self, value: Self::Value) -> bool {
-        HashSet::contains(self, value)
-    }
-}
-
 impl<Element, State> Emptiable for HashSet<Element, State> {
     fn is_empty(&self) -> bool {
         HashSet::is_empty(self)
@@ -53,17 +43,6 @@ impl<Element, State> Lengthsome for HashSet<Element, State> {
     }
 }
 
-impl<'a, Element: 'a + Hash + Eq, State: BuildHasher> ValueRemovable<'a>
-    for HashSet<Element, State>
-{
-    type Output = bool;
-    type Value = &'a Element;
-
-    fn remove_value(&'a mut self, value: Self::Value) -> Self::Output {
-        HashSet::remove(self, value)
-    }
-}
-
 impl<Element: Eq + Hash, State: BuildHasher> Reservable
     for HashSet<Element, State>
 {
@@ -82,5 +61,26 @@ impl<Element: Eq + Hash, State: BuildHasher> TryReservable
         additional: Self::Capacity,
     ) -> Result<(), Self::Error> {
         HashSet::try_reserve(self, additional)
+    }
+}
+
+impl<'a, Element: 'a + Eq + Hash, State: BuildHasher> ValueContainer<'a>
+    for HashSet<Element, State>
+{
+    type Value = &'a Element;
+
+    fn contains_value(&'a self, value: Self::Value) -> bool {
+        HashSet::contains(self, value)
+    }
+}
+
+impl<'a, Element: 'a + Hash + Eq, State: BuildHasher> ValueRemovable<'a>
+    for HashSet<Element, State>
+{
+    type Output = bool;
+    type Value = &'a Element;
+
+    fn remove_value(&'a mut self, value: Self::Value) -> Self::Output {
+        HashSet::remove(self, value)
     }
 }

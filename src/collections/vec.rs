@@ -21,14 +21,6 @@ impl<Element: PartialEq> Clearable for Vec<Element> {
     }
 }
 
-impl<'a, Element: 'a + PartialEq> ValueContainer<'a> for Vec<Element> {
-    type Value = &'a Element;
-
-    fn contains_value(&'a self, value: Self::Value) -> bool {
-        self.as_slice().contains(value)
-    }
-}
-
 impl<Element> Emptiable for Vec<Element> {
     fn is_empty(&self) -> bool {
         Vec::is_empty(self)
@@ -46,6 +38,15 @@ impl<Element> ItemInsertable for Vec<Element> {
         value: Self::Value,
     ) -> Self::Output {
         Vec::insert(self, key, value)
+    }
+}
+
+impl<Element> ItemRemovable<'_> for Vec<Element> {
+    type Output = Element;
+    type Key = usize;
+
+    fn remove_item(&mut self, key: Self::Key) -> Self::Output {
+        Vec::remove(self, key)
     }
 }
 
@@ -73,15 +74,6 @@ impl<'a, Element: 'a> MutIterable<'a> for Vec<Element> {
     }
 }
 
-impl<Element> ItemRemovable<'_> for Vec<Element> {
-    type Output = Element;
-    type Key = usize;
-
-    fn remove_item(&mut self, key: Self::Key) -> Self::Output {
-        Vec::remove(self, key)
-    }
-}
-
 impl<Element> Reservable for Vec<Element> {
     fn reserve(&mut self, additional: Self::Capacity) {
         Vec::reserve(self, additional)
@@ -96,5 +88,13 @@ impl<Element> TryReservable for Vec<Element> {
         additional: Self::Capacity,
     ) -> Result<(), Self::Error> {
         Vec::try_reserve(self, additional)
+    }
+}
+
+impl<'a, Element: 'a + PartialEq> ValueContainer<'a> for Vec<Element> {
+    type Value = &'a Element;
+
+    fn contains_value(&'a self, value: Self::Value) -> bool {
+        self.as_slice().contains(value)
     }
 }

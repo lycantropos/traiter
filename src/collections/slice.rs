@@ -4,14 +4,6 @@ use super::traits::{
     Emptiable, Iterable, Lengthsome, MutIterable, ValueContainer,
 };
 
-impl<'a, Element: 'a + PartialEq> ValueContainer<'a> for [Element] {
-    type Value = &'a Element;
-
-    fn contains_value(&'a self, value: Self::Value) -> bool {
-        <[Element]>::contains(self, value)
-    }
-}
-
 impl<Element> Emptiable for [Element] {
     fn is_empty(&self) -> bool {
         <[Element]>::is_empty(self)
@@ -39,5 +31,13 @@ impl<'a, Element: 'a> MutIterable<'a> for [Element] {
 
     fn iter_mut(&'a mut self) -> Self::Output {
         <[Element]>::iter_mut(self)
+    }
+}
+
+impl<'a, Element: 'a + PartialEq> ValueContainer<'a> for [Element] {
+    type Value = &'a Element;
+
+    fn contains_value(&'a self, value: Self::Value) -> bool {
+        <[Element]>::contains(self, value)
     }
 }

@@ -27,6 +27,33 @@ impl<Key, Value, State> Emptiable for HashMap<Key, Value, State> {
     }
 }
 
+impl<'a, Key: 'a + Eq + Hash, Value, State: BuildHasher> ItemInsertable
+    for HashMap<Key, Value, State>
+{
+    type Key = Key;
+    type Output = Option<Value>;
+    type Value = Value;
+
+    fn insert_item(
+        &mut self,
+        key: Self::Key,
+        value: Self::Value,
+    ) -> Self::Output {
+        HashMap::insert(self, key, value)
+    }
+}
+
+impl<'a, Key: 'a + Eq + Hash, Value, State: BuildHasher> ItemRemovable<'a>
+    for HashMap<Key, Value, State>
+{
+    type Output = Option<Value>;
+    type Key = &'a Key;
+
+    fn remove_item(&'a mut self, key: Self::Key) -> Self::Output {
+        HashMap::remove(self, key)
+    }
+}
+
 impl<'a, Key: 'a, Value: 'a, State> Iterable<'a>
     for HashMap<Key, Value, State>
 {
@@ -45,30 +72,13 @@ impl<Key, Value, State> Lengthsome for HashMap<Key, Value, State> {
     }
 }
 
-impl<'a, Key: 'a + Eq + Hash, Value, State: BuildHasher> ItemRemovable<'a>
+impl<'a, Key: 'a, Value: 'a, State> MutIterable<'a>
     for HashMap<Key, Value, State>
 {
-    type Output = Option<Value>;
-    type Key = &'a Key;
+    type Output = IterMut<'a, Key, Value>;
 
-    fn remove_item(&'a mut self, key: Self::Key) -> Self::Output {
-        HashMap::remove(self, key)
-    }
-}
-
-impl<'a, Key: 'a + Eq + Hash, Value, State: BuildHasher> ItemInsertable
-    for HashMap<Key, Value, State>
-{
-    type Key = Key;
-    type Output = Option<Value>;
-    type Value = Value;
-
-    fn insert_item(
-        &mut self,
-        key: Self::Key,
-        value: Self::Value,
-    ) -> Self::Output {
-        HashMap::insert(self, key, value)
+    fn iter_mut(&'a mut self) -> Self::Output {
+        HashMap::iter_mut(self)
     }
 }
 
@@ -90,15 +100,5 @@ impl<Key: Eq + Hash, Value, State: BuildHasher> TryReservable
         additional: Self::Capacity,
     ) -> Result<(), Self::Error> {
         HashMap::try_reserve(self, additional)
-    }
-}
-
-impl<'a, Key: 'a, Value: 'a, State> MutIterable<'a>
-    for HashMap<Key, Value, State>
-{
-    type Output = IterMut<'a, Key, Value>;
-
-    fn iter_mut(&'a mut self) -> Self::Output {
-        HashMap::iter_mut(self)
     }
 }
