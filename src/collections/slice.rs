@@ -1,4 +1,6 @@
-use super::traits::{Container, Emptiable, Lengthsome};
+use core::slice::Iter;
+
+use super::traits::{Container, Emptiable, Iterable, Lengthsome};
 
 impl<Element: PartialEq> Container<&Element> for [Element] {
     fn contains(&self, value: &Element) -> bool {
@@ -9,6 +11,14 @@ impl<Element: PartialEq> Container<&Element> for [Element] {
 impl<Element> Emptiable for [Element] {
     fn is_empty(&self) -> bool {
         <[Element]>::is_empty(self)
+    }
+}
+
+impl<'a, Element: 'a> Iterable<'a> for [Element] {
+    type Output = Iter<'a, Element>;
+
+    fn iter(&'a self) -> Self::Output {
+        <[Element]>::iter(self)
     }
 }
 
