@@ -51,6 +51,14 @@ impl<Element> Lengthsome for Vec<Element> {
     }
 }
 
+impl<'a, Element: 'a> MutIterable<'a> for Vec<Element> {
+    type Output = IterMut<'a, Element>;
+
+    fn iter_mut(&'a mut self) -> Self::Output {
+        self.as_mut_slice().iter_mut()
+    }
+}
+
 impl<Element> Reservable for Vec<Element> {
     fn reserve(&mut self, additional: Self::Capacity) {
         Vec::reserve(self, additional)
@@ -65,13 +73,5 @@ impl<Element> TryReservable for Vec<Element> {
         additional: Self::Capacity,
     ) -> Result<(), Self::Error> {
         Vec::try_reserve(self, additional)
-    }
-}
-
-impl<'a, Element: 'a> MutIterable<'a> for Vec<Element> {
-    type Output = IterMut<'a, Element>;
-
-    fn iter_mut(&'a mut self) -> Self::Output {
-        self.as_mut_slice().iter_mut()
     }
 }
