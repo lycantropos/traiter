@@ -55,6 +55,19 @@ pub trait Iterable<'a> {
         <<Self as Iterable<'a>>::Output as Iterator>::Item: 'a;
 }
 
+pub trait MutIterable<'a> {
+    type Output: Iterator;
+
+    /// Returns an iterator over mutable elements in a collection.
+    /// ```
+    /// use traiter::collections::MutIterable;
+    /// assert_eq!(MutIterable::iter_mut(&mut [0; 0]).next(), None);
+    /// ```
+    fn iter_mut(&'a mut self) -> Self::Output
+    where
+        <<Self as MutIterable<'a>>::Output as Iterator>::Item: 'a;
+}
+
 pub trait Emptiable {
     /// Checks if collection is empty.
     /// ```
