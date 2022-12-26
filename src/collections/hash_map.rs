@@ -1,10 +1,10 @@
-use std::collections::hash_map::Iter;
+use std::collections::hash_map::{Iter, IterMut};
 use std::collections::{HashMap, TryReserveError};
 use std::hash::{BuildHasher, Hash};
 
 use super::traits::{
     Capacitary, Clearable, Container, Emptiable, Iterable, Lengthsome,
-    Reservable, TryReservable,
+    MutIterable, Reservable, TryReservable,
 };
 
 impl<Key, Value, State> Capacitary for HashMap<Key, Value, State> {
@@ -71,5 +71,15 @@ impl<Key: Eq + Hash, Value, State: BuildHasher> TryReservable
         additional: Self::Capacity,
     ) -> Result<(), Self::Error> {
         HashMap::try_reserve(self, additional)
+    }
+}
+
+impl<'a, Key: 'a, Value: 'a, State> MutIterable<'a>
+    for HashMap<Key, Value, State>
+{
+    type Output = IterMut<'a, Key, Value>;
+
+    fn iter_mut(&'a mut self) -> Self::Output {
+        HashMap::iter_mut(self)
     }
 }
