@@ -1,3 +1,4 @@
+use collections::Removable;
 use std::collections::hash_map::{Iter, IterMut};
 use std::collections::{HashMap, TryReserveError};
 use std::hash::{BuildHasher, Hash};
@@ -42,6 +43,17 @@ impl<Key, Value, State> Lengthsome for HashMap<Key, Value, State> {
 
     fn len(&self) -> Self::Length {
         HashMap::len(self)
+    }
+}
+
+impl<'a, Key: 'a + Eq + Hash, Value, State: BuildHasher> Removable<'a>
+    for HashMap<Key, Value, State>
+{
+    type Output = Option<Value>;
+    type Value = &'a Key;
+
+    fn remove(&'a mut self, value: Self::Value) -> Self::Output {
+        HashMap::remove(self, value)
     }
 }
 
