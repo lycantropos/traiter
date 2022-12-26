@@ -1,6 +1,6 @@
-use core::slice::Iter;
+use core::slice::{Iter, IterMut};
 
-use super::traits::{Container, Emptiable, Iterable, Lengthsome};
+use super::traits::{Container, Emptiable, Iterable, Lengthsome, MutIterable};
 
 impl<Element: PartialEq> Container<&Element> for [Element] {
     fn contains(&self, value: &Element) -> bool {
@@ -27,5 +27,13 @@ impl<Element> Lengthsome for [Element] {
 
     fn len(&self) -> Self::Length {
         <[Element]>::len(self)
+    }
+}
+
+impl<'a, Element: 'a> MutIterable<'a> for [Element] {
+    type Output = IterMut<'a, Element>;
+
+    fn iter_mut(&'a mut self) -> Self::Output {
+        <[Element]>::iter_mut(self)
     }
 }
