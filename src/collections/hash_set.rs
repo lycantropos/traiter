@@ -3,8 +3,8 @@ use std::collections::{HashSet, TryReserveError};
 use std::hash::{BuildHasher, Hash};
 
 use super::traits::{
-    Capacitary, Clearable, Container, Emptiable, Iterable, Lengthsome,
-    Reservable, TryReservable, ValueRemovable,
+    Capacitary, Clearable, Emptiable, Iterable, Lengthsome, Reservable,
+    TryReservable, ValueContainer, ValueRemovable,
 };
 
 impl<Element, State> Capacitary for HashSet<Element, State> {
@@ -21,12 +21,12 @@ impl<Element, State> Clearable for HashSet<Element, State> {
     }
 }
 
-impl<Element: Eq + Hash, State: BuildHasher> Container
+impl<'a, Element: 'a + Eq + Hash, State: BuildHasher> ValueContainer<'a>
     for HashSet<Element, State>
 {
-    type Value = Element;
+    type Value = &'a Element;
 
-    fn contains(&self, value: &Self::Value) -> bool {
+    fn contains_value(&'a self, value: Self::Value) -> bool {
         HashSet::contains(self, value)
     }
 }

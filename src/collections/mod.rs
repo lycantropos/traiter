@@ -1,6 +1,6 @@
 pub use self::traits::{
-    Capacitary, Clearable, Container, Emptiable, Iterable, Lengthsome,
-    MutIterable, Reservable, TryReservable, ValueRemovable,
+    Capacitary, Clearable, Emptiable, Iterable, Lengthsome, MutIterable,
+    Reservable, TryReservable, ValueContainer, ValueRemovable,
 };
 
 mod array;

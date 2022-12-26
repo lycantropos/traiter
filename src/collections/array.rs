@@ -1,11 +1,15 @@
 use core::slice::{Iter, IterMut};
 
-use super::traits::{Container, Emptiable, Iterable, Lengthsome, MutIterable};
+use super::traits::{
+    Emptiable, Iterable, Lengthsome, MutIterable, ValueContainer,
+};
 
-impl<Element: PartialEq, const LENGTH: usize> Container for [Element; LENGTH] {
-    type Value = Element;
+impl<'a, Element: 'a + PartialEq, const LENGTH: usize> ValueContainer<'a>
+    for [Element; LENGTH]
+{
+    type Value = &'a Element;
 
-    fn contains(&self, value: &Self::Value) -> bool {
+    fn contains_value(&'a self, value: Self::Value) -> bool {
         <[Element]>::contains(self, value)
     }
 }

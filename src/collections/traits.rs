@@ -32,16 +32,16 @@ assert!(Emptiable::is_empty(&collection));
     fn clear(&mut self);
 }
 
-pub trait Container {
+pub trait ValueContainer<'a> {
     type Value;
 
     /// Checks if collection contains a value.
     /// ```
-    /// use traiter::collections::Container;
-    /// assert!(Container::contains(&[0], &0));
-    /// assert!(!Container::contains(&[0], &1));
+    /// use traiter::collections::ValueContainer;
+    /// assert!(ValueContainer::contains_value(&[0], &0));
+    /// assert!(!ValueContainer::contains_value(&[0], &1));
     /// ```
-    fn contains(&self, value: &Self::Value) -> bool;
+    fn contains_value(&'a self, value: Self::Value) -> bool;
 }
 
 pub trait Emptiable {

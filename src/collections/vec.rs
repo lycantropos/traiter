@@ -3,8 +3,8 @@ use std::slice::{Iter, IterMut};
 use std::vec::Vec;
 
 use super::traits::{
-    Capacitary, Clearable, Container, Emptiable, Iterable, Lengthsome,
-    MutIterable, Reservable, TryReservable,
+    Capacitary, Clearable, Emptiable, Iterable, Lengthsome, MutIterable,
+    Reservable, TryReservable, ValueContainer, ValueRemovable,
 };
 
 impl<Element> Capacitary for Vec<Element> {
@@ -21,10 +21,10 @@ impl<Element: PartialEq> Clearable for Vec<Element> {
     }
 }
 
-impl<Element: PartialEq> Container for Vec<Element> {
-    type Value = Element;
+impl<'a, Element: 'a + PartialEq> ValueContainer<'a> for Vec<Element> {
+    type Value = &'a Element;
 
-    fn contains(&self, value: &Self::Value) -> bool {
+    fn contains_value(&'a self, value: Self::Value) -> bool {
         self.as_slice().contains(value)
     }
 }
