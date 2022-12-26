@@ -44,6 +44,16 @@ pub trait Container {
     fn contains(&self, value: &Self::Value) -> bool;
 }
 
+pub trait Emptiable {
+    /// Checks if collection is empty.
+    /// ```
+    /// use traiter::collections::Emptiable;
+    /// assert!(Emptiable::is_empty(&[0; 0]));
+    /// assert!(!Emptiable::is_empty(&[0]));
+    /// ```
+    fn is_empty(&self) -> bool;
+}
+
 pub trait Iterable<'a> {
     type Output: Iterator;
 
@@ -55,16 +65,6 @@ pub trait Iterable<'a> {
     fn iter(&'a self) -> Self::Output
     where
         <<Self as Iterable<'a>>::Output as Iterator>::Item: 'a;
-}
-
-pub trait Emptiable {
-    /// Checks if collection is empty.
-    /// ```
-    /// use traiter::collections::Emptiable;
-    /// assert!(Emptiable::is_empty(&[0; 0]));
-    /// assert!(!Emptiable::is_empty(&[0]));
-    /// ```
-    fn is_empty(&self) -> bool;
 }
 
 pub trait Lengthsome {
