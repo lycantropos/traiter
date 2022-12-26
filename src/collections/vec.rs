@@ -1,9 +1,10 @@
 use std::collections::TryReserveError;
+use std::slice::Iter;
 use std::vec::Vec;
 
 use super::traits::{
-    Capacitary, Clearable, Container, Emptiable, Lengthsome, Reservable,
-    TryReservable,
+    Capacitary, Clearable, Container, Emptiable, Iterable, Lengthsome,
+    Reservable, TryReservable,
 };
 
 impl<Element> Capacitary for Vec<Element> {
@@ -29,6 +30,14 @@ impl<Element: PartialEq> Container<&Element> for Vec<Element> {
 impl<Element> Emptiable for Vec<Element> {
     fn is_empty(&self) -> bool {
         Vec::is_empty(self)
+    }
+}
+
+impl<'a, Element: 'a> Iterable<'a> for Vec<Element> {
+    type Output = Iter<'a, Element>;
+
+    fn iter(&'a self) -> Self::Output {
+        self.as_slice().iter()
     }
 }
 
