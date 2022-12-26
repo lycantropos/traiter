@@ -54,6 +54,28 @@ pub trait Emptiable {
     fn is_empty(&self) -> bool;
 }
 
+pub trait ItemInsertable {
+    type Key;
+    type Output;
+    type Value;
+
+    /// Inserts value into a collection.
+    #[cfg_attr(
+        feature = "std",
+        doc = r##"
+```
+use traiter::collections::ItemInsertable;
+assert_eq!(ItemInsertable::insert_item(&mut vec![10], 0, 20), ());
+```
+"##
+    )]
+    fn insert_item(
+        &mut self,
+        key: Self::Key,
+        value: Self::Value,
+    ) -> Self::Output;
+}
+
 pub trait Iterable<'a> {
     type Output: Iterator;
 
