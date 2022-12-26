@@ -88,8 +88,8 @@ pub trait MutIterable<'a> {
     /// assert_eq!(MutIterable::iter_mut(&mut [0; 0]).next(), None);
     /// ```
     fn iter_mut(&'a mut self) -> Self::Output
-        where
-            <<Self as MutIterable<'a>>::Output as Iterator>::Item: 'a;
+    where
+        <<Self as MutIterable<'a>>::Output as Iterator>::Item: 'a;
 }
 
 pub trait Reservable: Capacitary {
