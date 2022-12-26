@@ -113,6 +113,23 @@ assert!(!ValueRemovable::remove_value(&mut collection, &10));
     fn remove_value(&'a mut self, value: Self::Value) -> Self::Output;
 }
 
+pub trait ItemRemovable<'a> {
+    type Output;
+    type Key;
+
+    /// Removes item from a collection by key.
+    #[cfg_attr(
+        feature = "std",
+        doc = r##"
+```
+use traiter::collections::ItemRemovable;
+assert_eq!(ItemRemovable::remove_item(&mut vec![10], 0), 10);
+```
+"##
+    )]
+    fn remove_item(&'a mut self, key: Self::Key) -> Self::Output;
+}
+
 pub trait Reservable: Capacitary {
     /// Reserves capacity for at least given number of elements for a collection.
     #[cfg_attr(
