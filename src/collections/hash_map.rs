@@ -1,9 +1,10 @@
+use std::collections::hash_map::Iter;
 use std::collections::{HashMap, TryReserveError};
 use std::hash::{BuildHasher, Hash};
 
 use super::traits::{
-    Capacitary, Clearable, Container, Emptiable, Lengthsome, Reservable,
-    TryReservable,
+    Capacitary, Clearable, Container, Emptiable, Iterable, Lengthsome,
+    Reservable, TryReservable,
 };
 
 impl<Key, Value, State> Capacitary for HashMap<Key, Value, State> {
@@ -31,6 +32,16 @@ impl<Key: Eq + Hash, Value, State: BuildHasher> Container<&Key>
 impl<Key, Value, State> Emptiable for HashMap<Key, Value, State> {
     fn is_empty(&self) -> bool {
         HashMap::is_empty(self)
+    }
+}
+
+impl<'a, Key: 'a, Value: 'a, State> Iterable<'a>
+    for HashMap<Key, Value, State>
+{
+    type Output = Iter<'a, Key, Value>;
+
+    fn iter(&'a self) -> Self::Output {
+        HashMap::iter(self)
     }
 }
 
