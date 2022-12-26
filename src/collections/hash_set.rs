@@ -21,10 +21,12 @@ impl<Element, State> Clearable for HashSet<Element, State> {
     }
 }
 
-impl<Element: Eq + Hash, State: BuildHasher> Container<&Element>
+impl<Element: Eq + Hash, State: BuildHasher> Container
     for HashSet<Element, State>
 {
-    fn contains(&self, value: &Element) -> bool {
+    type Value = Element;
+
+    fn contains(&self, value: &Self::Value) -> bool {
         HashSet::contains(self, value)
     }
 }

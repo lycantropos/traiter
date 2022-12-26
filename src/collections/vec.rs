@@ -21,8 +21,10 @@ impl<Element: PartialEq> Clearable for Vec<Element> {
     }
 }
 
-impl<Element: PartialEq> Container<&Element> for Vec<Element> {
-    fn contains(&self, value: &Element) -> bool {
+impl<Element: PartialEq> Container for Vec<Element> {
+    type Value = Element;
+
+    fn contains(&self, value: &Self::Value) -> bool {
         self.as_slice().contains(value)
     }
 }

@@ -2,10 +2,10 @@ use core::slice::{Iter, IterMut};
 
 use super::traits::{Container, Emptiable, Iterable, Lengthsome, MutIterable};
 
-impl<Element: PartialEq, const LENGTH: usize> Container<&Element>
-    for [Element; LENGTH]
-{
-    fn contains(&self, value: &Element) -> bool {
+impl<Element: PartialEq, const LENGTH: usize> Container for [Element; LENGTH] {
+    type Value = Element;
+
+    fn contains(&self, value: &Self::Value) -> bool {
         <[Element]>::contains(self, value)
     }
 }
