@@ -109,6 +109,23 @@ assert_eq!(Capacitary::capacity(&collection), 20);
     fn reserve(&mut self, additional: Self::Capacity);
 }
 
+pub trait Removable<'a> {
+    type Output;
+    type Value;
+
+    /// Removes value from a collection.
+    #[cfg_attr(
+        feature = "std",
+        doc = r##"
+```
+use traiter::collections::Removable;
+assert_eq!(Removable::remove(&mut vec![10], 0), 10);
+```
+"##
+    )]
+    fn remove(&'a mut self, value: Self::Value) -> Self::Output;
+}
+
 pub trait TryReservable: Capacitary {
     type Error;
 
