@@ -3,8 +3,8 @@ use std::slice::{Iter, IterMut};
 use std::vec::Vec;
 
 use super::traits::{
-    Capacitary, Clearable, Emptiable, ItemRemovable, Iterable, Lengthsome,
-    MutIterable, Reservable, TryReservable, ValueContainer,
+    Capacitary, Clearable, Emptiable, ItemInsertable, ItemRemovable, Iterable,
+    Lengthsome, MutIterable, Reservable, TryReservable, ValueContainer,
 };
 
 impl<Element> Capacitary for Vec<Element> {
@@ -32,6 +32,20 @@ impl<'a, Element: 'a + PartialEq> ValueContainer<'a> for Vec<Element> {
 impl<Element> Emptiable for Vec<Element> {
     fn is_empty(&self) -> bool {
         Vec::is_empty(self)
+    }
+}
+
+impl<Element> ItemInsertable for Vec<Element> {
+    type Key = usize;
+    type Output = ();
+    type Value = Element;
+
+    fn insert_item(
+        &mut self,
+        key: Self::Key,
+        value: Self::Value,
+    ) -> Self::Output {
+        Vec::insert(self, key, value)
     }
 }
 
