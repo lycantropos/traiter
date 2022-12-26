@@ -42,6 +42,19 @@ pub trait Container<Value> {
     fn contains(&self, value: Value) -> bool;
 }
 
+pub trait Iterable<'a> {
+    type Output: Iterator;
+
+    /// Returns an iterator over elements in a collection.
+    /// ```
+    /// use traiter::collections::Iterable;
+    /// assert_eq!(Iterable::iter(&[0; 0]).next(), None);
+    /// ```
+    fn iter(&'a self) -> Self::Output
+    where
+        <<Self as Iterable<'a>>::Output as Iterator>::Item: 'a;
+}
+
 pub trait Emptiable {
     /// Checks if collection is empty.
     /// ```
