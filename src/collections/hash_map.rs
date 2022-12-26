@@ -3,8 +3,8 @@ use std::collections::{HashMap, TryReserveError};
 use std::hash::{BuildHasher, Hash};
 
 use super::traits::{
-    Capacitary, Clearable, Container, Emptiable, Iterable, Lengthsome,
-    MutIterable, Reservable, TryReservable,
+    Capacitary, Clearable, Emptiable, Iterable, Lengthsome, MutIterable,
+    Reservable, TryReservable,
 };
 
 impl<Key, Value, State> Capacitary for HashMap<Key, Value, State> {
@@ -18,14 +18,6 @@ impl<Key, Value, State> Capacitary for HashMap<Key, Value, State> {
 impl<Key, Value, State> Clearable for HashMap<Key, Value, State> {
     fn clear(&mut self) {
         HashMap::clear(self)
-    }
-}
-
-impl<Key: Eq + Hash, Value, State: BuildHasher> Container<&Key>
-    for HashMap<Key, Value, State>
-{
-    fn contains(&self, value: &Key) -> bool {
-        HashMap::contains_key(self, value)
     }
 }
 
