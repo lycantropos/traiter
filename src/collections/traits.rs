@@ -94,6 +94,26 @@ pub trait Iterable<'a> {
         <<Self as Iterable<'a>>::Output as Iterator>::Item: 'a;
 }
 
+pub trait KeyContainer<'a> {
+    type Key;
+
+    /// Checks if collection contains a key.
+    #[cfg_attr(
+        feature = "std",
+        doc = r##"
+```
+use std::collections::HashMap;
+use traiter::collections::{KeyContainer, ItemInsertable};
+let mut collection = HashMap::new();
+assert!(!KeyContainer::contains_key(&collection, &10));
+assert_eq!(ItemInsertable::insert_item(&mut collection, 10, 20), None);
+assert!(KeyContainer::contains_key(&collection, &10));
+```
+"##
+    )]
+    fn contains_key(&'a self, key: Self::Key) -> bool;
+}
+
 pub trait Lengthsome {
     type Length;
 
