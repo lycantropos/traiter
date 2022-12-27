@@ -170,6 +170,27 @@ pub trait ValueContainer<'a> {
     fn contains_value(&'a self, value: Self::Value) -> bool;
 }
 
+pub trait ValueInsertable {
+    type Output;
+    type Value;
+
+    /// Inserts value into a collection.
+    #[cfg_attr(
+        feature = "std",
+        doc = r##"
+```
+use std::collections::HashSet;
+use traiter::collections::{ValueContainer, ValueInsertable};
+let mut collection = HashSet::new();
+assert!(!ValueContainer::contains_value(&collection, &10));
+assert!(ValueInsertable::insert_value(&mut collection, 10));
+assert!(ValueContainer::contains_value(&collection, &10));
+```
+"##
+    )]
+    fn insert_value(&mut self, value: Self::Value) -> Self::Output;
+}
+
 pub trait ValueRemovable<'a> {
     type Output;
     type Value;
