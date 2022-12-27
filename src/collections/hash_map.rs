@@ -4,7 +4,7 @@ use std::hash::{BuildHasher, Hash};
 
 use super::traits::{
     Capacitary, Clearable, Emptiable, ItemInsertable, ItemRemovable, Iterable,
-    Lengthsome, MutIterable, Reservable, TryReservable,
+    KeyContainer, Lengthsome, MutIterable, Reservable, TryReservable,
 };
 
 impl<Key, Value, State> Capacitary for HashMap<Key, Value, State> {
@@ -61,6 +61,16 @@ impl<'a, Key: 'a, Value: 'a, State> Iterable<'a>
 
     fn iter(&'a self) -> Self::Output {
         HashMap::iter(self)
+    }
+}
+
+impl<'a, Key: 'a + Eq + Hash, Value, State: BuildHasher> KeyContainer<'a>
+    for HashMap<Key, Value, State>
+{
+    type Key = &'a Key;
+
+    fn contains_key(&'a self, key: Self::Key) -> bool {
+        HashMap::contains_key(self, key)
     }
 }
 
