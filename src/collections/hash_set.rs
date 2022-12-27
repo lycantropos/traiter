@@ -4,7 +4,7 @@ use std::hash::{BuildHasher, Hash};
 
 use super::traits::{
     Capacitary, Clearable, Emptiable, Iterable, Lengthsome, Reservable,
-    TryReservable, ValueContainer, ValueRemovable,
+    TryReservable, ValueContainer, ValueInsertable, ValueRemovable,
 };
 
 impl<Element, State> Capacitary for HashSet<Element, State> {
@@ -71,6 +71,17 @@ impl<'a, Element: 'a + Eq + Hash, State: BuildHasher> ValueContainer<'a>
 
     fn contains_value(&'a self, value: Self::Value) -> bool {
         HashSet::contains(self, value)
+    }
+}
+
+impl<Element: Eq + Hash, State: BuildHasher> ValueInsertable
+    for HashSet<Element, State>
+{
+    type Output = bool;
+    type Value = Element;
+
+    fn insert_value(&mut self, value: Self::Value) -> Self::Output {
+        HashSet::insert(self, value)
     }
 }
 
