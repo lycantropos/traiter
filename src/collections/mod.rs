@@ -13,3 +13,5 @@ mod slice;
 mod traits;
 #[cfg(feature = "std")]
 mod vec;
+#[cfg(feature = "std")]
+mod vec_deque;
