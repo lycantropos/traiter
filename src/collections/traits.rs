@@ -47,7 +47,7 @@ pub trait ItemInsertable {
     type Output;
     type Value;
 
-    /// Inserts value into a collection.
+    /// Inserts item into a collection.
     #[cfg_attr(
         feature = "std",
         doc = r##"
