@@ -1,7 +1,7 @@
 use core::slice::{Iter, IterMut};
 
 use super::traits::{
-    Emptiable, Iterable, Lengthsome, MutIterable, ValueContainer,
+    Emptiable, Iterable, Lengthsome, MutablyIterable, ValueContainer,
 };
 
 impl<Element, const LENGTH: usize> Emptiable for [Element; LENGTH] {
@@ -26,7 +26,7 @@ impl<Element, const LENGTH: usize> Lengthsome for [Element; LENGTH] {
     }
 }
 
-impl<'a, Element: 'a, const LENGTH: usize> MutIterable<'a>
+impl<'a, Element: 'a, const LENGTH: usize> MutablyIterable<'a>
     for [Element; LENGTH]
 {
     type Output = IterMut<'a, Element>;

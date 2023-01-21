@@ -4,7 +4,7 @@ use std::hash::{BuildHasher, Hash};
 
 use super::traits::{
     Capacitary, Clearable, Emptiable, ItemInsertable, ItemRemovable, Iterable,
-    KeyContainer, Lengthsome, MutIterable, Reservable, TryReservable,
+    KeyContainer, Lengthsome, MutablyIterable, Reservable, TryReservable,
 };
 
 impl<Key, Value, State> Capacitary for HashMap<Key, Value, State> {
@@ -82,7 +82,7 @@ impl<Key, Value, State> Lengthsome for HashMap<Key, Value, State> {
     }
 }
 
-impl<'a, Key: 'a, Value: 'a, State> MutIterable<'a>
+impl<'a, Key: 'a, Value: 'a, State> MutablyIterable<'a>
     for HashMap<Key, Value, State>
 {
     type Output = IterMut<'a, Key, Value>;

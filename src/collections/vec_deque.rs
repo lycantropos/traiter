@@ -3,7 +3,7 @@ use std::collections::{TryReserveError, VecDeque};
 
 use super::traits::{
     Capacitary, Clearable, Emptiable, ItemInsertable, ItemRemovable, Iterable,
-    Lengthsome, MutIterable, Reservable, TryReservable, ValueContainer,
+    Lengthsome, MutablyIterable, Reservable, TryReservable, ValueContainer,
 };
 
 impl<Element> Capacitary for VecDeque<Element> {
@@ -65,7 +65,7 @@ impl<Element> Lengthsome for VecDeque<Element> {
     }
 }
 
-impl<'a, Element: 'a> MutIterable<'a> for VecDeque<Element> {
+impl<'a, Element: 'a> MutablyIterable<'a> for VecDeque<Element> {
     type Output = IterMut<'a, Element>;
 
     fn iter_mut(&'a mut self) -> Self::Output {

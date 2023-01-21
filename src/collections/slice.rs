@@ -1,7 +1,7 @@
 use core::slice::{Iter, IterMut};
 
 use super::traits::{
-    Emptiable, Iterable, Lengthsome, MutIterable, ValueContainer,
+    Emptiable, Iterable, Lengthsome, MutablyIterable, ValueContainer,
 };
 
 impl<Element> Emptiable for [Element] {
@@ -26,7 +26,7 @@ impl<Element> Lengthsome for [Element] {
     }
 }
 
-impl<'a, Element: 'a> MutIterable<'a> for [Element] {
+impl<'a, Element: 'a> MutablyIterable<'a> for [Element] {
     type Output = IterMut<'a, Element>;
 
     fn iter_mut(&'a mut self) -> Self::Output {

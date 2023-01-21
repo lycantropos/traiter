@@ -1,6 +1,6 @@
 pub use self::traits::{
     Capacitary, Clearable, Emptiable, ItemInsertable, ItemRemovable, Iterable,
-    KeyContainer, Lengthsome, MutIterable, Reservable, TryReservable,
+    KeyContainer, Lengthsome, MutablyIterable, Reservable, TryReservable,
     ValueContainer, ValueInsertable, ValueRemovable,
 };
 
