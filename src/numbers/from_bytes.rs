@@ -1,5 +1,4 @@
-use core::convert::TryInto;
-
+use super::try_from_bytes::TryFromBytes;
 use super::types::Endianness;
 
 pub trait FromBytes {
@@ -35,14 +34,7 @@ macro_rules! integer_from_bytes_impl {
         impl FromBytes for $integer {
             #[inline(always)]
             fn from_bytes(bytes: &[u8], endianness: Endianness) -> Self {
-                match endianness {
-                    Endianness::Big => {
-                        <$integer>::from_be_bytes(bytes.try_into().unwrap())
-                    }
-                    Endianness::Little => {
-                        <$integer>::from_le_bytes(bytes.try_into().unwrap())
-                    }
-                }
+                <$integer>::try_from_bytes(bytes, endianness).unwrap()
             }
         }
     )*)
