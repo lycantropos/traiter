@@ -33,6 +33,7 @@ pub use self::trunc::Trunc;
 pub use self::try_from_bytes::TryFromBytes;
 pub use self::types::{Endianness, Sign, TieBreaking};
 pub use self::unitary::Unitary;
+pub use self::wrapping_div::WrappingDiv;
 pub use self::zeroable::Zeroable;
 
 mod abs;
@@ -70,4 +71,5 @@ mod trunc;
 mod try_from_bytes;
 mod types;
 mod unitary;
+mod wrapping_div;
 mod zeroable;
