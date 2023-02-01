@@ -25,13 +25,16 @@ pub trait TryFromBytes: Sized {
     /// );
     /// /// unsigned integers
     /// assert_eq!(
-    ///     <u8 as TryFromBytes>::try_from_bytes(&[0u8], Endianness::Big), Ok(0u8)
+    ///     <u8 as TryFromBytes>::try_from_bytes(&[0u8], Endianness::Big),
+    ///     Ok(0u8)
     /// );
     /// assert_eq!(
-    ///     <u8 as TryFromBytes>::try_from_bytes(&[1u8], Endianness::Big), Ok(1u8)
+    ///     <u8 as TryFromBytes>::try_from_bytes(&[1u8], Endianness::Big),
+    ///     Ok(1u8)
     /// );
     /// assert_eq!(
-    ///     <u8 as TryFromBytes>::try_from_bytes(&[2u8], Endianness::Big), Ok(2u8)
+    ///     <u8 as TryFromBytes>::try_from_bytes(&[2u8], Endianness::Big),
+    ///     Ok(2u8)
     /// );
     /// assert!(
     ///     <u8 as TryFromBytes>::try_from_bytes(&[], Endianness::Big).is_err()
@@ -75,7 +78,7 @@ impl Display for TryFromBytesError {
     }
 }
 
-macro_rules! integer_from_bytes_impl {
+macro_rules! integer_try_from_bytes_impl {
     ($($integer:ty)*) => ($(
         impl TryFromBytes for $integer {
             type Error = TryFromBytesError;
@@ -103,6 +106,6 @@ macro_rules! integer_from_bytes_impl {
     )*)
 }
 
-integer_from_bytes_impl!(
+integer_try_from_bytes_impl!(
     i8 i16 i32 i64 i128 isize u8 u16 u32 u64 u128 usize
 );
