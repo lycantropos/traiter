@@ -34,6 +34,7 @@ pub use self::try_from_bytes::TryFromBytes;
 pub use self::types::{Endianness, Sign, TieBreaking};
 pub use self::unitary::Unitary;
 pub use self::wrapping_div::WrappingDiv;
+pub use self::wrapping_rem::WrappingRem;
 pub use self::zeroable::Zeroable;
 
 mod abs;
@@ -72,4 +73,5 @@ mod try_from_bytes;
 mod types;
 mod unitary;
 mod wrapping_div;
+mod wrapping_rem;
 mod zeroable;
