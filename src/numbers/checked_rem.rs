@@ -1,7 +1,7 @@
 pub trait CheckedRem<Divisor = Self> {
     type Output;
 
-    /// Returns checked remainder of division.
+    /// Returns remainder of checked division.
     /// ```
     /// use traiter::numbers::CheckedRem;
     /// // signed integers

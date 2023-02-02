@@ -1,7 +1,7 @@
 pub trait CheckedPowRemEuclid<Exponent, Divisor> {
     type Output;
 
-    /// Returns checked remainder of power's euclidean division.
+    /// Returns remainder of checked power's euclidean division.
     /// ```
     /// use traiter::numbers::CheckedPowRemEuclid;
     /// // signed integers

@@ -3,7 +3,7 @@ use super::div_rem_euclid::DivRemEuclid;
 pub trait CheckedRemEuclidInv<Divisor = Self> {
     type Output;
 
-    /// Returns multiplicative inverse of euclidean division.
+    /// Returns multiplicative inverse of checked euclidean division.
     /// ```
     /// use traiter::numbers::CheckedRemEuclidInv;
     /// // signed integers

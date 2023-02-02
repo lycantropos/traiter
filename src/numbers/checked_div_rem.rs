@@ -3,7 +3,7 @@ use core::ops::{Div, Rem};
 pub trait CheckedDivRem<Divisor = Self> {
     type Output;
 
-    /// Returns checked quotient and remainder of division.
+    /// Returns quotient and remainder of checked division.
     /// ```
     /// use traiter::numbers::CheckedDivRem;
     /// // signed integers

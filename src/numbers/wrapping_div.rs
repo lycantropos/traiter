@@ -1,7 +1,7 @@
 pub trait WrappingDiv<Divisor = Self> {
     type Output;
 
-    /// Returns checked quotient of division.
+    /// Returns quotient of wrapping division.
     /// ```
     /// use traiter::numbers::WrappingDiv;
     /// // signed integers

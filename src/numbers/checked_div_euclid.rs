@@ -1,7 +1,7 @@
 pub trait CheckedDivEuclid<Divisor = Self> {
     type Output;
 
-    /// Returns checked quotient of euclidean division.
+    /// Returns quotient of checked euclidean division.
     /// ```
     /// use traiter::numbers::CheckedDivEuclid;
     /// // signed integers
