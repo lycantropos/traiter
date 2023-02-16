@@ -8,6 +8,7 @@ pub trait CheckedRem<Divisor = Self> {
     /// assert_eq!(CheckedRem::checked_rem(-3i8, 2i8), Some(-1i8));
     /// assert_eq!(CheckedRem::checked_rem(-3i8, 1i8), Some(0i8));
     /// assert_eq!(CheckedRem::checked_rem(-3i8, 0i8), None);
+    /// assert_eq!(CheckedRem::checked_rem(i8::MIN, -1i8), None);
     /// // unsigned integers
     /// assert_eq!(CheckedRem::checked_rem(3u8, 2u8), Some(1u8));
     /// assert_eq!(CheckedRem::checked_rem(3u8, 1u8), Some(0u8));

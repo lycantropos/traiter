@@ -9,6 +9,7 @@ pub trait WrappingRemEuclid<Divisor = Self> {
     /// assert_eq!(WrappingRemEuclid::wrapping_rem_euclid(-3i8, 1i8), 0i8);
     /// assert_eq!(WrappingRemEuclid::wrapping_rem_euclid(i8::MIN, -1i8), 0i8);
     /// // unsigned integers
+    /// assert_eq!(WrappingRemEuclid::wrapping_rem_euclid(3u8, 3u8), 0u8);
     /// assert_eq!(WrappingRemEuclid::wrapping_rem_euclid(3u8, 2u8), 1u8);
     /// assert_eq!(WrappingRemEuclid::wrapping_rem_euclid(3u8, 1u8), 0u8);
     /// ```

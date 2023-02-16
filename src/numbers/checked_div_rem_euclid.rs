@@ -16,6 +16,9 @@ pub trait CheckedDivRemEuclid<Divisor = Self> {
     /// assert_eq!(
     ///     CheckedDivRemEuclid::checked_div_rem_euclid(-3i8, 0i8), None
     /// );
+    /// assert_eq!(
+    ///     CheckedDivRemEuclid::checked_div_rem_euclid(i8::MIN, -1i8), None
+    /// );
     /// // unsigned integers
     /// assert_eq!(
     ///     CheckedDivRemEuclid::checked_div_rem_euclid(3u8, 2u8),

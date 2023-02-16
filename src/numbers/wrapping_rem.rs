@@ -9,6 +9,7 @@ pub trait WrappingRem<Divisor = Self> {
     /// assert_eq!(WrappingRem::wrapping_rem(-3i8, 1i8), 0i8);
     /// assert_eq!(WrappingRem::wrapping_rem(i8::MIN, -1i8), 0i8);
     /// // unsigned integers
+    /// assert_eq!(WrappingRem::wrapping_rem(3u8, 3u8), 0u8);
     /// assert_eq!(WrappingRem::wrapping_rem(3u8, 2u8), 1u8);
     /// assert_eq!(WrappingRem::wrapping_rem(3u8, 1u8), 0u8);
     /// ```

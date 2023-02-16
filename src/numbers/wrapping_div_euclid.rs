@@ -12,6 +12,7 @@ pub trait WrappingDivEuclid<Divisor = Self> {
     ///     i8::MIN
     /// );
     /// // unsigned integers
+    /// assert_eq!(WrappingDivEuclid::wrapping_div_euclid(3u8, 3u8), 1u8);
     /// assert_eq!(WrappingDivEuclid::wrapping_div_euclid(3u8, 2u8), 1u8);
     /// assert_eq!(WrappingDivEuclid::wrapping_div_euclid(3u8, 1u8), 3u8);
     /// ```

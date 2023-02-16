@@ -14,6 +14,7 @@ pub trait CheckedDivRem<Divisor = Self> {
     ///     CheckedDivRem::checked_div_rem(-3i8, 1i8), Some((-3i8, 0i8))
     /// );
     /// assert_eq!(CheckedDivRem::checked_div_rem(-3i8, 0i8), None);
+    /// assert_eq!(CheckedDivRem::checked_div_rem(i8::MIN, -1i8), None);
     /// // unsigned integers
     /// assert_eq!(CheckedDivRem::checked_div_rem(3u8, 2u8), Some((1u8, 1u8)));
     /// assert_eq!(CheckedDivRem::checked_div_rem(3u8, 1u8), Some((3u8, 0u8)));

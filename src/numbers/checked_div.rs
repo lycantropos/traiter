@@ -8,6 +8,7 @@ pub trait CheckedDiv<Divisor = Self> {
     /// assert_eq!(CheckedDiv::checked_div(-3i8, 2i8), Some(-1i8));
     /// assert_eq!(CheckedDiv::checked_div(-3i8, 1i8), Some(-3i8));
     /// assert_eq!(CheckedDiv::checked_div(-3i8, 0i8), None);
+    /// assert_eq!(CheckedDiv::checked_div(i8::MIN, -1i8), None);
     /// // unsigned integers
     /// assert_eq!(CheckedDiv::checked_div(3u8, 2u8), Some(1u8));
     /// assert_eq!(CheckedDiv::checked_div(3u8, 1u8), Some(3u8));
