@@ -64,24 +64,17 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
-        with:
-          submodules: true
       - name: 'Setup Rust'
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@nightly
         with:
-          default: true
-          profile: minimal
           target: ${{ matrix.platform.rust_target }}
-          toolchain: nightly
       - name: 'Setup QEMU'
         uses: docker/setup-qemu-action@v2
         with:
           platforms: all
         if: ${{ runner.os == 'Linux' }}
       - name: 'Build'
-        run: >
-          cargo build --all-features
-          --target=${{ matrix.platform.rust_target }}
+        run: cargo build --all-features
 
   test:
     name: Test
@@ -114,16 +107,11 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
-        with:
-          submodules: true
       - name: 'Setup Rust'
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@nightly
         with:
           components: rustfmt
-          default: true
-          profile: minimal
           target: ${{ matrix.platform.rust_target }}
-          toolchain: nightly
       - name: 'Run Rust linter'
         run: cargo fmt --check
       - name: 'Setup cross-compiling dependencies'
@@ -131,9 +119,7 @@ jobs:
         if: ${{ runner.os == 'Linux' &&
                 startsWith(matrix.platform.rust_target, 'i686') }}
       - name: 'Run doctests'
-        run: >
-          cargo test --all-features --doc
-          --target=${{ matrix.platform.rust_target }}
+        run: cargo test --all-features --doc
         env:
           CARGO_INCREMENTAL: 0
           RUSTDOCFLAGS: >
@@ -182,10 +168,7 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v3
       - name: 'Setup Rust'
-        uses: actions-rs/toolchain@v1
-        with:
-          default: true
-          toolchain: nightly
+        uses: dtolnay/rust-toolchain@nightly
       - name: 'Upload'
         run: cargo publish --no-verify
         env:
