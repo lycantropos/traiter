@@ -63,10 +63,10 @@ macro_rules! float_load_exp_impl {
                         )
                     };
                     const SCALE: $float = FIRST_MULTIPLIER * SECOND_MULTIPLIER;
-                    self *= SCALE;
                     const EXPONENT_DECREMENT: i32 = (NON_EXPONENT_BITS_COUNT
                         as i32)
                         + EXPONENT_LOWER_BOUND;
+                    self *= SCALE;
                     exponent -= EXPONENT_DECREMENT;
                     if exponent < EXPONENT_LOWER_BOUND {
                         self *= SCALE;

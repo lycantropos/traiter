@@ -23,9 +23,9 @@ macro_rules! float_fract_exp_impl {
 
             #[inline]
             fn fract_exp(self) -> Self::Output {
-                let bits = self.to_bits();
                 const EXPONENT_MASK: $bits =
                     (1 << <$float>::EXPONENT_BITS_COUNT) - 1;
+                let bits = self.to_bits();
                 let exponent_bits = ((bits
                     >> <$float>::SIGNIFICAND_BITS_COUNT)
                     & EXPONENT_MASK) as i32;
