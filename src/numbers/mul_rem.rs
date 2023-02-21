@@ -3,7 +3,7 @@ use std::ops::Rem;
 pub trait MulRem<Other = Self, Divisor = Self> {
     type Output;
 
-    /// Returns remainder of checked power's euclidean division.
+    /// Returns remainder of multiplication followed by division.
     /// ```
     /// use traiter::numbers::MulRem;
     /// // signed integers
