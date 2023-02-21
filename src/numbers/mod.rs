@@ -1,6 +1,7 @@
 pub use self::abs::Abs;
 pub use self::bit_length::BitLength;
 pub use self::ceil::Ceil;
+pub use self::checked_abs::CheckedAbs;
 pub use self::checked_add::CheckedAdd;
 pub use self::checked_div::CheckedDiv;
 pub use self::checked_div_euclid::CheckedDivEuclid;
@@ -51,6 +52,7 @@ pub use self::zeroable::Zeroable;
 mod abs;
 mod bit_length;
 mod ceil;
+mod checked_abs;
 mod checked_add;
 mod checked_div;
 mod checked_div_euclid;
