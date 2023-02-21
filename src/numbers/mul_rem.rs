@@ -25,7 +25,7 @@ macro_rules! unsigned_integer_mul_rem_impl {
 
             fn mul_rem(self, other: Self, divisor: Self) -> Self::Output {
                 if divisor <= 1 << (Self::BITS / 2) {
-                    ((self.rem(divisor)) * (other.rem(divisor))).rem(divisor)
+                    (self.rem(divisor) * other.rem(divisor)).rem(divisor)
                 } else {
                     let add = |left: Self, right: Self| -> Self {
                         left.checked_sub(divisor - right)
