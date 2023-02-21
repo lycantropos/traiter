@@ -42,14 +42,9 @@ macro_rules! integer_checked_div_rem_euclid_impl {
 
             #[inline(always)]
             fn checked_div_rem_euclid(self, divisor: Self) -> Self::Output {
-                if divisor == 0 {
-                    None
-                } else {
-                    Some((
-                        <$integer>::div_euclid(self, divisor),
-                        <$integer>::rem_euclid(self, divisor),
-                    ))
-                }
+                <$integer>::checked_div_euclid(self, divisor).map(
+                    |quotient| (quotient, <$integer>::rem_euclid(self, divisor))
+                )
             }
         }
     )*)
