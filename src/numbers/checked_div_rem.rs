@@ -1,4 +1,4 @@
-use core::ops::{Div, Rem};
+use core::ops::Rem;
 
 pub trait CheckedDivRem<Divisor = Self> {
     type Output;
@@ -30,14 +30,8 @@ macro_rules! integer_checked_div_rem_impl {
 
             #[inline(always)]
             fn checked_div_rem(self, divisor: Self) -> Self::Output {
-                if divisor == 0 {
-                    None
-                } else {
-                    Some((
-                        <$integer>::div(self, divisor),
-                        <$integer>::rem(self, divisor),
-                    ))
-                }
+                <$integer>::checked_div(self, divisor)
+                    .map(|quotient| (quotient, <$integer>::rem(self, divisor)))
             }
         }
     )*)
