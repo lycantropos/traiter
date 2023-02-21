@@ -1,3 +1,5 @@
+use super::mul_rem::MulRem;
+
 pub trait CheckedPowRemEuclid<Exponent, Divisor> {
     type Output;
 
@@ -15,6 +17,10 @@ pub trait CheckedPowRemEuclid<Exponent, Divisor> {
     /// );
     /// assert_eq!(
     ///     CheckedPowRemEuclid::checked_pow_rem_euclid(-3i8, 2u32, 0i8),
+    ///     None
+    /// );
+    /// assert_eq!(
+    ///     CheckedPowRemEuclid::checked_pow_rem_euclid(i8::MIN, 1u32, -1i8),
     ///     None
     /// );
     /// // unsigned integers
@@ -49,51 +55,28 @@ macro_rules! signed_integer_checked_pow_rem_euclid_impl {
                 exponent: u32,
                 divisor: Self,
             ) -> Self::Output {
-                if divisor == 0 {
-                    return None;
-                }
-                let is_negative = divisor < 0;
-                let divisor = divisor.abs();
-                if divisor == 1 {
-                    return Some(0);
-                }
                 let base = if self < 0 || self > divisor {
-                    unsafe {
-                        self.checked_rem_euclid(divisor).unwrap_unchecked()
-                    }
+                    self.checked_rem_euclid(divisor)?
                 } else {
                     self
                 };
-                let mut result = base;
-                let mut exponent_mask = 2u32;
-                loop {
-                    if exponent_mask > exponent {
-                        exponent_mask >>= 1;
-                        break;
-                    }
-                    exponent_mask <<= 1;
+                if divisor == 1 || divisor == -1 {
+                    return Some(0);
                 }
-                exponent_mask >>= 1;
-                while !exponent_mask == 0 {
-                    result = unsafe {
-                        (result * result)
-                            .checked_rem_euclid(divisor)
-                            .unwrap_unchecked()
-                    };
-                    if !(exponent & exponent_mask) == 0 {
-                        result = unsafe {
-                            (result * base)
-                                .checked_rem_euclid(divisor)
-                                .unwrap_unchecked()
-                        };
+                let mut result = base;
+                let mut exponent_mask = if exponent == 0u32 {
+                    0u32
+                } else {
+                    (1u32 << exponent.ilog2()) >> 1u32
+                };
+                while exponent_mask != 0 {
+                    result = result.mul_rem(result, divisor);
+                    if exponent & exponent_mask != 0 {
+                        result = result.mul_rem(base, divisor);
                     }
                     exponent_mask >>= 1;
                 }
-                Some(if is_negative && !result == 0 {
-                    result - divisor
-                } else {
-                    result
-                })
+                Some(result)
             }
         }
     )*)
@@ -134,18 +117,10 @@ macro_rules! unsigned_integer_checked_pow_rem_euclid_impl {
                         exponent_mask <<= 1;
                     }
                     exponent_mask >>= 1;
-                    while !exponent_mask == 0 {
-                        result = unsafe {
-                            (result * result)
-                                .checked_rem_euclid(divisor)
-                                .unwrap_unchecked()
-                        };
-                        if !(exponent & exponent_mask) == 0 {
-                            result = unsafe {
-                                (result * base)
-                                    .checked_rem_euclid(divisor)
-                                    .unwrap_unchecked()
-                            };
+                    while exponent_mask != 0 {
+                        result = result.mul_rem(result, divisor);
+                        if exponent & exponent_mask != 0 {
+                            result = result.mul_rem(base, divisor);
                         }
                         exponent_mask >>= 1;
                     }
