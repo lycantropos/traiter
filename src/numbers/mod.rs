@@ -37,7 +37,7 @@ pub use self::unitary::Unitary;
 pub use self::wrapping_div::WrappingDiv;
 pub use self::wrapping_div_euclid::WrappingDivEuclid;
 pub use self::wrapping_rem::WrappingRem;
-pub use self::wrapping_rem_euclidean::WrappingRemEuclid;
+pub use self::wrapping_rem_euclid::WrappingRemEuclid;
 pub use self::zeroable::Zeroable;
 
 mod abs;
@@ -79,5 +79,5 @@ mod unitary;
 mod wrapping_div;
 mod wrapping_div_euclid;
 mod wrapping_rem;
-mod wrapping_rem_euclidean;
+mod wrapping_rem_euclid;
 mod zeroable;
