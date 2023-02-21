@@ -44,6 +44,7 @@ pub use self::wrapping_mul::WrappingMul;
 pub use self::wrapping_rem::WrappingRem;
 pub use self::wrapping_rem_euclid::WrappingRemEuclid;
 pub use self::wrapping_shl::WrappingShl;
+pub use self::wrapping_shr::WrappingShr;
 pub use self::wrapping_sub::WrappingSub;
 pub use self::zeroable::Zeroable;
 
@@ -93,5 +94,6 @@ mod wrapping_mul;
 mod wrapping_rem;
 mod wrapping_rem_euclid;
 mod wrapping_shl;
+mod wrapping_shr;
 mod wrapping_sub;
 mod zeroable;
