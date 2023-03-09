@@ -1,4 +1,4 @@
-pub trait CheckedSub<Other = Self> {
+pub trait CheckedSub<Subtrahend = Self> {
     type Output;
 
     /// Returns checked subtraction.
@@ -13,7 +13,7 @@ pub trait CheckedSub<Other = Self> {
     /// assert_eq!(CheckedSub::checked_sub(1u8, 1u8), Some(0u8));
     /// assert_eq!(CheckedSub::checked_sub(u8::MAX, 1u8), Some(254u8));
     /// ```
-    fn checked_sub(self, other: Other) -> Self::Output;
+    fn checked_sub(self, subtrahend: Subtrahend) -> Self::Output;
 }
 
 macro_rules! integer_checked_sub_impl {
@@ -22,8 +22,8 @@ macro_rules! integer_checked_sub_impl {
             type Output = Option<Self>;
 
             #[inline(always)]
-            fn checked_sub(self, other: Self) -> Self::Output {
-                <$integer>::checked_sub(self, other)
+            fn checked_sub(self, subtrahend: Self) -> Self::Output {
+                <$integer>::checked_sub(self, subtrahend)
             }
         }
     )*)

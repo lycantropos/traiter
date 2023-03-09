@@ -1,4 +1,4 @@
-pub trait WrappingSub<Other = Self> {
+pub trait WrappingSub<Subtrahend = Self> {
     type Output;
 
     /// Returns wrapping subtraction.
@@ -13,7 +13,7 @@ pub trait WrappingSub<Other = Self> {
     /// assert_eq!(WrappingSub::wrapping_sub(1u8, 1u8), 0u8);
     /// assert_eq!(WrappingSub::wrapping_sub(u8::MAX, 1u8), 254u8);
     /// ```
-    fn wrapping_sub(self, other: Other) -> Self::Output;
+    fn wrapping_sub(self, subtrahend: Subtrahend) -> Self::Output;
 }
 
 macro_rules! integer_wrapping_sub_impl {
@@ -22,7 +22,7 @@ macro_rules! integer_wrapping_sub_impl {
             type Output = Self;
 
             #[inline(always)]
-            fn wrapping_sub(self, other: Self) -> Self::Output {
+            fn wrapping_sub(self, subtrahend: Self) -> Self::Output {
                 <$integer>::wrapping_sub(self, other)
             }
         }
