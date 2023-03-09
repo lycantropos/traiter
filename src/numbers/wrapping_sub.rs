@@ -23,7 +23,7 @@ macro_rules! integer_wrapping_sub_impl {
 
             #[inline(always)]
             fn wrapping_sub(self, subtrahend: Self) -> Self::Output {
-                <$integer>::wrapping_sub(self, other)
+                <$integer>::wrapping_sub(self, subtrahend)
             }
         }
     )*)
