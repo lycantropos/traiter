@@ -121,7 +121,7 @@ jobs:
       - name: 'Run Rust linter'
         run: cargo fmt --check
       - name: 'Setup cross-compiling dependencies'
-        run: sudo apt-get install gcc-multilib
+        run: sudo apt-get update && sudo apt-get install gcc-multilib
         if: ${{ runner.os == 'Linux' &&
                 startsWith(matrix.platform.rust_target, 'i686') }}
       - name: 'Install cargo-hack'
