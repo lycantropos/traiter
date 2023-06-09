@@ -124,6 +124,13 @@ jobs:
         run: sudo apt-get install gcc-multilib
         if: ${{ runner.os == 'Linux' &&
                 startsWith(matrix.platform.rust_target, 'i686') }}
+      - name: 'Install cargo-hack'
+        run: cargo install cargo-hack
+      - name: 'Run cargo-hack'
+        run: >
+          cargo hack --feature-powerset --depth 
+          $(cargo metadata --format-version=1 --no-deps | jq '.packages[0].features | length')
+          check --all-targets
       - name: 'Run doctests'
         run: cargo test --all-features --doc
         env:
