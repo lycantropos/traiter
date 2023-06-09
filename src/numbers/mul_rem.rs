@@ -1,4 +1,4 @@
-use std::ops::Rem;
+use core::ops::Rem;
 
 pub trait MulRem<Other = Self, Divisor = Self> {
     type Output;
