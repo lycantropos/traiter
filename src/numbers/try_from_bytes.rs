@@ -1,5 +1,5 @@
 use core::convert::TryInto;
-use std::fmt::{Debug, Display, Formatter};
+use core::fmt::{Debug, Display, Formatter};
 
 use super::types::Endianness;
 
@@ -67,13 +67,13 @@ impl TryFromBytesError {
 }
 
 impl Debug for TryFromBytesError {
-    fn fmt(&self, formatter: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, formatter: &mut Formatter<'_>) -> core::fmt::Result {
         formatter.write_str(self.description())
     }
 }
 
 impl Display for TryFromBytesError {
-    fn fmt(&self, formatter: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, formatter: &mut Formatter<'_>) -> core::fmt::Result {
         Display::fmt(&self.description(), formatter)
     }
 }
