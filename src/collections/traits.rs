@@ -12,7 +12,7 @@ assert_eq!(Capacitary::capacity(&collection), 10);
 ```
 "##
     )]
-    fn capacity(&self) -> Self::Capacity;
+    fn capacity(self) -> Self::Capacity;
 }
 
 pub trait Clearable {
@@ -29,7 +29,7 @@ assert!(Emptiable::is_empty(&collection));
 ```
 "##
     )]
-    fn clear(&mut self);
+    fn clear(self);
 }
 
 pub trait Emptiable {
@@ -39,7 +39,7 @@ pub trait Emptiable {
     /// assert!(Emptiable::is_empty(&[0; 0]));
     /// assert!(!Emptiable::is_empty(&[0]));
     /// ```
-    fn is_empty(&self) -> bool;
+    fn is_empty(self) -> bool;
 }
 
 pub trait ItemInsertable {
@@ -57,14 +57,10 @@ assert_eq!(ItemInsertable::insert_item(&mut vec![10], 0, 20), ());
 ```
 "##
     )]
-    fn insert_item(
-        &mut self,
-        key: Self::Key,
-        value: Self::Value,
-    ) -> Self::Output;
+    fn insert_item(self, key: Self::Key, value: Self::Value) -> Self::Output;
 }
 
-pub trait ItemRemovable<'a> {
+pub trait ItemRemovable {
     type Output;
     type Key;
 
@@ -78,10 +74,10 @@ assert_eq!(ItemRemovable::remove_item(&mut vec![10], 0), 10);
 ```
 "##
     )]
-    fn remove_item(&'a mut self, key: Self::Key) -> Self::Output;
+    fn remove_item(self, key: Self::Key) -> Self::Output;
 }
 
-pub trait Iterable<'a> {
+pub trait Iterable {
     type Output: Iterator;
 
     /// Returns an iterator over elements in a collection.
@@ -89,12 +85,10 @@ pub trait Iterable<'a> {
     /// use traiter::collections::Iterable;
     /// assert_eq!(Iterable::iter(&[0; 0]).next(), None);
     /// ```
-    fn iter(&'a self) -> Self::Output
-    where
-        <<Self as Iterable<'a>>::Output as Iterator>::Item: 'a;
+    fn iter(self) -> Self::Output;
 }
 
-pub trait KeyContainer<'a> {
+pub trait KeyContainer {
     type Key;
 
     /// Checks if collection contains a key.
@@ -111,7 +105,7 @@ assert!(KeyContainer::contains_key(&collection, &10));
 ```
 "##
     )]
-    fn contains_key(&'a self, key: Self::Key) -> bool;
+    fn contains_key(self, key: Self::Key) -> bool;
 }
 
 pub trait Lengthsome {
@@ -120,13 +114,13 @@ pub trait Lengthsome {
     /// Returns number of elements in a collection.
     /// ```
     /// use traiter::collections::Lengthsome;
-    /// assert_eq!(Lengthsome::len(&[0; 0]), 0);
-    /// assert_eq!(Lengthsome::len(&[0]), 1);
+    /// assert_eq!(Lengthsome::len([0; 0]), 0);
+    /// assert_eq!(Lengthsome::len([0]), 1);
     /// ```
-    fn len(&self) -> Self::Length;
+    fn len(self) -> Self::Length;
 }
 
-pub trait MutablyIterable<'a> {
+pub trait MutablyIterable {
     type Output: Iterator;
 
     /// Returns an iterator over mutable elements in a collection.
@@ -134,9 +128,7 @@ pub trait MutablyIterable<'a> {
     /// use traiter::collections::MutablyIterable;
     /// assert_eq!(MutablyIterable::iter_mut(&mut [0; 0]).next(), None);
     /// ```
-    fn iter_mut(&'a mut self) -> Self::Output
-    where
-        <<Self as MutablyIterable<'a>>::Output as Iterator>::Item: 'a;
+    fn iter_mut(self) -> Self::Output;
 }
 
 pub trait Reservable: Capacitary {
@@ -153,7 +145,7 @@ assert_eq!(Capacitary::capacity(&collection), 20);
 ```
 "##
     )]
-    fn reserve(&mut self, additional: Self::Capacity);
+    fn reserve(self, additional: Self::Capacity);
 }
 
 pub trait TryReservable: Capacitary {
@@ -173,12 +165,12 @@ assert_eq!(Capacitary::capacity(&collection), 20);
 "##
     )]
     fn try_reserve(
-        &mut self,
+        self,
         additional: Self::Capacity,
     ) -> Result<(), Self::Error>;
 }
 
-pub trait ValueContainer<'a> {
+pub trait ValueContainer {
     type Value;
 
     /// Checks if collection contains a value.
@@ -187,7 +179,7 @@ pub trait ValueContainer<'a> {
     /// assert!(ValueContainer::contains_value(&[0], &0));
     /// assert!(!ValueContainer::contains_value(&[0], &1));
     /// ```
-    fn contains_value(&'a self, value: Self::Value) -> bool;
+    fn contains_value(self, value: Self::Value) -> bool;
 }
 
 pub trait ValueInsertable {
@@ -208,10 +200,10 @@ assert!(ValueContainer::contains_value(&collection, &10));
 ```
 "##
     )]
-    fn insert_value(&mut self, value: Self::Value) -> Self::Output;
+    fn insert_value(self, value: Self::Value) -> Self::Output;
 }
 
-pub trait ValueRemovable<'a> {
+pub trait ValueRemovable {
     type Output;
     type Value;
 
@@ -229,5 +221,5 @@ assert!(!ValueRemovable::remove_value(&mut collection, &10));
 ```
 "##
     )]
-    fn remove_value(&'a mut self, value: Self::Value) -> Self::Output;
+    fn remove_value(self, value: Self::Value) -> Self::Output;
 }

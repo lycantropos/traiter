@@ -10,66 +10,106 @@ use super::traits::{
 impl<Key, Value, State> Capacitary for HashMap<Key, Value, State> {
     type Capacity = usize;
 
-    fn capacity(&self) -> Self::Capacity {
+    fn capacity(self) -> Self::Capacity {
+        HashMap::capacity(&self)
+    }
+}
+
+impl<Key, Value, State> Capacitary for &HashMap<Key, Value, State> {
+    type Capacity = usize;
+
+    fn capacity(self) -> Self::Capacity {
         HashMap::capacity(self)
     }
 }
 
-impl<Key, Value, State> Clearable for HashMap<Key, Value, State> {
-    fn clear(&mut self) {
+impl<Key, Value, State> Capacitary for &mut HashMap<Key, Value, State> {
+    type Capacity = usize;
+
+    fn capacity(self) -> Self::Capacity {
+        HashMap::capacity(self)
+    }
+}
+
+impl<Key, Value, State> Clearable for &mut HashMap<Key, Value, State> {
+    fn clear(self) {
         HashMap::clear(self)
     }
 }
 
 impl<Key, Value, State> Emptiable for HashMap<Key, Value, State> {
-    fn is_empty(&self) -> bool {
+    fn is_empty(self) -> bool {
+        HashMap::is_empty(&self)
+    }
+}
+
+impl<Key, Value, State> Emptiable for &HashMap<Key, Value, State> {
+    fn is_empty(self) -> bool {
         HashMap::is_empty(self)
     }
 }
 
-impl<'a, Key: 'a + Eq + Hash, Value, State: BuildHasher> ItemInsertable
-    for HashMap<Key, Value, State>
+impl<Key, Value, State> Emptiable for &mut HashMap<Key, Value, State> {
+    fn is_empty(self) -> bool {
+        HashMap::is_empty(self)
+    }
+}
+
+impl<Key: Eq + Hash, Value, State: BuildHasher> ItemInsertable
+    for &mut HashMap<Key, Value, State>
 {
     type Key = Key;
     type Output = Option<Value>;
     type Value = Value;
 
-    fn insert_item(
-        &mut self,
-        key: Self::Key,
-        value: Self::Value,
-    ) -> Self::Output {
+    fn insert_item(self, key: Self::Key, value: Self::Value) -> Self::Output {
         HashMap::insert(self, key, value)
     }
 }
 
-impl<'a, Key: 'a + Eq + Hash, Value, State: BuildHasher> ItemRemovable<'a>
-    for HashMap<Key, Value, State>
+impl<'a, Key: Eq + Hash, Value, State: BuildHasher> ItemRemovable
+    for &'a mut HashMap<Key, Value, State>
 {
     type Output = Option<Value>;
     type Key = &'a Key;
 
-    fn remove_item(&'a mut self, key: Self::Key) -> Self::Output {
+    fn remove_item(self, key: Self::Key) -> Self::Output {
         HashMap::remove(self, key)
     }
 }
 
-impl<'a, Key: 'a, Value: 'a, State> Iterable<'a>
-    for HashMap<Key, Value, State>
-{
+impl<'a, Key, Value, State> Iterable for &'a HashMap<Key, Value, State> {
     type Output = Iter<'a, Key, Value>;
 
-    fn iter(&'a self) -> Self::Output {
+    fn iter(self) -> Self::Output {
         HashMap::iter(self)
     }
 }
 
-impl<'a, Key: 'a + Eq + Hash, Value, State: BuildHasher> KeyContainer<'a>
-    for HashMap<Key, Value, State>
+impl<'a, Key, Value, State> Iterable for &'a mut HashMap<Key, Value, State> {
+    type Output = Iter<'a, Key, Value>;
+
+    fn iter(self) -> Self::Output {
+        HashMap::iter(self)
+    }
+}
+
+impl<'a, Key: Eq + Hash, Value, State: BuildHasher> KeyContainer
+    for &'a HashMap<Key, Value, State>
 {
     type Key = &'a Key;
 
-    fn contains_key(&'a self, key: Self::Key) -> bool {
+    fn contains_key(self, key: Self::Key) -> bool {
+        HashMap::contains_key(self, key)
+    }
+}
+
+impl<'a, Key: Eq + Hash, Value, State: BuildHasher> KeyContainer
+    for &'a mut HashMap<Key, Value, State>
+{
+    type Key = &'a Key;
+
+    fn contains_key(self, key: Self::Key) -> bool {
         HashMap::contains_key(self, key)
     }
 }
@@ -77,36 +117,52 @@ impl<'a, Key: 'a + Eq + Hash, Value, State: BuildHasher> KeyContainer<'a>
 impl<Key, Value, State> Lengthsome for HashMap<Key, Value, State> {
     type Length = usize;
 
-    fn len(&self) -> Self::Length {
+    fn len(self) -> Self::Length {
+        HashMap::len(&self)
+    }
+}
+
+impl<Key, Value, State> Lengthsome for &HashMap<Key, Value, State> {
+    type Length = usize;
+
+    fn len(self) -> Self::Length {
         HashMap::len(self)
     }
 }
 
-impl<'a, Key: 'a, Value: 'a, State> MutablyIterable<'a>
-    for HashMap<Key, Value, State>
+impl<Key, Value, State> Lengthsome for &mut HashMap<Key, Value, State> {
+    type Length = usize;
+
+    fn len(self) -> Self::Length {
+        HashMap::len(self)
+    }
+}
+
+impl<'a, Key, Value, State> MutablyIterable
+    for &'a mut HashMap<Key, Value, State>
 {
     type Output = IterMut<'a, Key, Value>;
 
-    fn iter_mut(&'a mut self) -> Self::Output {
+    fn iter_mut(self) -> Self::Output {
         HashMap::iter_mut(self)
     }
 }
 
 impl<Key: Eq + Hash, Value, State: BuildHasher> Reservable
-    for HashMap<Key, Value, State>
+    for &mut HashMap<Key, Value, State>
 {
-    fn reserve(&mut self, additional: Self::Capacity) {
+    fn reserve(self, additional: Self::Capacity) {
         HashMap::reserve(self, additional)
     }
 }
 
 impl<Key: Eq + Hash, Value, State: BuildHasher> TryReservable
-    for HashMap<Key, Value, State>
+    for &mut HashMap<Key, Value, State>
 {
     type Error = TryReserveError;
 
     fn try_reserve(
-        &mut self,
+        self,
         additional: Self::Capacity,
     ) -> Result<(), Self::Error> {
         HashMap::try_reserve(self, additional)
