@@ -3,23 +3,23 @@ pub trait IsPowerOfTwo {
     /// ```
     /// use traiter::numbers::IsPowerOfTwo;
     /// // signed integers
-    /// assert!(!IsPowerOfTwo::is_power_of_two(&-1i8));
-    /// assert!(!IsPowerOfTwo::is_power_of_two(&0i8));
-    /// assert!(IsPowerOfTwo::is_power_of_two(&1i8));
+    /// assert!(!IsPowerOfTwo::is_power_of_two(-1i8));
+    /// assert!(!IsPowerOfTwo::is_power_of_two(0i8));
+    /// assert!(IsPowerOfTwo::is_power_of_two(1i8));
     /// // unsigned integers
-    /// assert!(!IsPowerOfTwo::is_power_of_two(&0u8));
-    /// assert!(IsPowerOfTwo::is_power_of_two(&1u8));
-    /// assert!(IsPowerOfTwo::is_power_of_two(&2i8));
+    /// assert!(!IsPowerOfTwo::is_power_of_two(0u8));
+    /// assert!(IsPowerOfTwo::is_power_of_two(1u8));
+    /// assert!(IsPowerOfTwo::is_power_of_two(2i8));
     /// ```
-    fn is_power_of_two(&self) -> bool;
+    fn is_power_of_two(self) -> bool;
 }
 
 macro_rules! unsigned_integer_is_power_of_two_impl {
     ($($integer:ty)*) => ($(
         impl IsPowerOfTwo for $integer {
             #[inline(always)]
-            fn is_power_of_two(&self) -> bool {
-                <$integer>::is_power_of_two(*self)
+            fn is_power_of_two(self) -> bool {
+                <$integer>::is_power_of_two(self)
             }
         }
     )*)
@@ -59,9 +59,18 @@ macro_rules! signed_integer_is_power_of_two_impl {
     ($($integer:ty)*) => ($(
         impl IsPowerOfTwo for $integer {
             #[inline(always)]
-            fn is_power_of_two(&self) -> bool {
+            fn is_power_of_two(self) -> bool {
+                <$integer>::is_positive(self)
+                    && (self as <$integer as Unsigned>::Output)
+                        .is_power_of_two()
+            }
+        }
+
+        impl IsPowerOfTwo for &$integer {
+            #[inline(always)]
+            fn is_power_of_two(self) -> bool {
                 <$integer>::is_positive(*self)
-                    && (*self as <$integer as Unsigned>::Output)
+                    && ((*self) as <$integer as Unsigned>::Output)
                         .is_power_of_two()
             }
         }

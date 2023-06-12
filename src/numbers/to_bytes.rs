@@ -9,24 +9,36 @@ pub trait ToBytes {
     /// ```
     /// use traiter::numbers::{ToBytes, Endianness};
     /// /// signed integers
-    /// assert_eq!(ToBytes::to_bytes(&-1i8, Endianness::Little), [255u8]);
-    /// assert_eq!(ToBytes::to_bytes(&0i8, Endianness::Little), [0u8]);
-    /// assert_eq!(ToBytes::to_bytes(&1i8, Endianness::Little), [1u8]);
+    /// assert_eq!(ToBytes::to_bytes(-1i8, Endianness::Little), [255u8]);
+    /// assert_eq!(ToBytes::to_bytes(0i8, Endianness::Little), [0u8]);
+    /// assert_eq!(ToBytes::to_bytes(1i8, Endianness::Little), [1u8]);
     /// /// unsigned integers
-    /// assert_eq!(ToBytes::to_bytes(&0u8, Endianness::Little), [0u8]);
-    /// assert_eq!(ToBytes::to_bytes(&1u8, Endianness::Little), [1u8]);
-    /// assert_eq!(ToBytes::to_bytes(&2u8, Endianness::Little), [2u8]);
+    /// assert_eq!(ToBytes::to_bytes(0u8, Endianness::Little), [0u8]);
+    /// assert_eq!(ToBytes::to_bytes(1u8, Endianness::Little), [1u8]);
+    /// assert_eq!(ToBytes::to_bytes(2u8, Endianness::Little), [2u8]);
     /// ```
-    fn to_bytes(&self, endianness: Endianness) -> Self::Output;
+    fn to_bytes(self, endianness: Endianness) -> Self::Output;
 }
 
 macro_rules! integer_to_bytes_impl {
     ($($integer:ty)*) => ($(
         impl ToBytes for $integer {
-            type Output = [u8; mem::size_of::<Self>()];
+            type Output = [u8; mem::size_of::<$integer>()];
 
             #[inline(always)]
-            fn to_bytes(&self, endianness: Endianness) -> Self::Output {
+            fn to_bytes(self, endianness: Endianness) -> Self::Output {
+                match endianness {
+                   Endianness::Big => self.to_be_bytes(),
+                   Endianness::Little => self.to_le_bytes(),
+                }
+            }
+        }
+
+        impl ToBytes for &$integer {
+            type Output = [u8; mem::size_of::<$integer>()];
+
+            #[inline(always)]
+            fn to_bytes(self, endianness: Endianness) -> Self::Output {
                 match endianness {
                    Endianness::Big => self.to_be_bytes(),
                    Endianness::Little => self.to_le_bytes(),
