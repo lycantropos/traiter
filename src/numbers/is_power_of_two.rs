@@ -22,6 +22,13 @@ macro_rules! unsigned_integer_is_power_of_two_impl {
                 <$integer>::is_power_of_two(self)
             }
         }
+
+        impl IsPowerOfTwo for &$integer {
+            #[inline(always)]
+            fn is_power_of_two(self) -> bool {
+                <$integer>::is_power_of_two(*self)
+            }
+        }
     )*)
 }
 
