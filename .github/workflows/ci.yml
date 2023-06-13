@@ -112,12 +112,12 @@ jobs:
         with:
           components: rustfmt
           target: ${{ matrix.platform.rust_target }}
-      - name: 'Check Rust metadata'
+      - name: 'Check metadata'
         run: >
           [[ $(cargo metadata --format-version=1 --no-deps | jq '.packages[0].repository')
           == '"${{ github.server_url }}/${{ github.repository }}"' ]]
         shell: bash
-      - name: 'Run Rust linter'
+      - name: 'Run linter'
         run: cargo fmt --check
       - name: 'Setup cross-compiling dependencies'
         run: sudo apt-get update && sudo apt-get install gcc-multilib
