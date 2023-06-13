@@ -65,7 +65,7 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v3
       - name: 'Setup Rust'
-        uses: dtolnay/rust-toolchain@nightly
+        uses: dtolnay/rust-toolchain@stable
         with:
           target: ${{ matrix.platform.rust_target }}
       - name: 'Setup QEMU'
@@ -117,7 +117,6 @@ jobs:
           [[ $(cargo metadata --format-version=1 --no-deps | jq '.packages[0].repository')
           == '"${{ github.server_url }}/${{ github.repository }}"' ]]
         shell: bash
-        if: ${{ !startsWith(matrix.python_version, 'pypy') }}
       - name: 'Run Rust linter'
         run: cargo fmt --check
       - name: 'Setup cross-compiling dependencies'
@@ -132,7 +131,7 @@ jobs:
           $(cargo metadata --format-version=1 --no-deps | jq '.packages[0].features | length')
           check --all-targets
       - name: 'Run doctests'
-        run: cargo test --all-features --doc
+        run: rustup run nightly cargo test --all-features --doc --target=${{ matrix.platform.rust_target }}
         env:
           CARGO_INCREMENTAL: 0
           RUSTDOCFLAGS: >
@@ -142,7 +141,7 @@ jobs:
             -Zprofile -Ccodegen-units=1 -Copt-level=0 -Coverflow-checks=off
             -Zpanic_abort_tests -Cpanic=abort
       - name: 'Run tests'
-        run: cargo test --all-features --all-targets
+        run: rustup run nightly cargo test --all-features --all-targets
         env:
           CARGO_INCREMENTAL: 0
           RUSTFLAGS: >
@@ -179,7 +178,7 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v3
       - name: 'Setup Rust'
-        uses: dtolnay/rust-toolchain@nightly
+        uses: dtolnay/rust-toolchain@stable
       - name: 'Upload'
         run: cargo publish --no-verify
         env:
