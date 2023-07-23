@@ -7,7 +7,7 @@ services:
       args:
         - IMAGE_NAME=${IMAGE_NAME}
         - IMAGE_VERSION=${IMAGE_VERSION}
-    image: lycantropos/traiter:3.1.0
+    image: lycantropos/traiter:4.0.0-alpha
     volumes:
       - ./Cargo.toml:/opt/traiter/Cargo.toml
       - ./README.md:/opt/traiter/README.md
