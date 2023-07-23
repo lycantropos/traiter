@@ -66,8 +66,8 @@ impl<Element> ItemInsertable for &mut Vec<Element> {
 }
 
 impl<Element> ItemRemovable for &mut Vec<Element> {
-    type Output = Element;
     type Key = usize;
+    type Output = Element;
 
     fn remove_item(self, key: Self::Key) -> Self::Output {
         Vec::remove(self, key)

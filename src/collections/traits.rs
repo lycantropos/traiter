@@ -61,8 +61,8 @@ assert_eq!(ItemInsertable::insert_item(&mut vec![10], 0, 20), ());
 }
 
 pub trait ItemRemovable {
-    type Output;
     type Key;
+    type Output;
 
     /// Removes item from a collection by key.
     #[cfg_attr(

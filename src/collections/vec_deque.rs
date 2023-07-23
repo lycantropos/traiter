@@ -65,8 +65,8 @@ impl<Element> ItemInsertable for &mut VecDeque<Element> {
 }
 
 impl<Element> ItemRemovable for &mut VecDeque<Element> {
-    type Output = Option<Element>;
     type Key = usize;
+    type Output = Option<Element>;
 
     fn remove_item(self, key: Self::Key) -> Self::Output {
         VecDeque::remove(self, key)

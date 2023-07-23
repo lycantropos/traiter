@@ -70,8 +70,8 @@ impl<Key: Eq + Hash, Value, State: BuildHasher> ItemInsertable
 impl<'a, Key: Eq + Hash, Value, State: BuildHasher> ItemRemovable
     for &'a mut HashMap<Key, Value, State>
 {
-    type Output = Option<Value>;
     type Key = &'a Key;
+    type Output = Option<Value>;
 
     fn remove_item(self, key: Self::Key) -> Self::Output {
         HashMap::remove(self, key)
