@@ -75,6 +75,7 @@ impl<Element> ItemRemovable for &mut Vec<Element> {
 }
 
 impl<'a, Element> Iterable for &'a Vec<Element> {
+    type Item = &'a Element;
     type Output = Iter<'a, Element>;
 
     fn iter(self) -> Self::Output {
@@ -83,6 +84,7 @@ impl<'a, Element> Iterable for &'a Vec<Element> {
 }
 
 impl<'a, Element> Iterable for &'a mut Vec<Element> {
+    type Item = &'a Element;
     type Output = Iter<'a, Element>;
 
     fn iter(self) -> Self::Output {
@@ -115,6 +117,7 @@ impl<Element> Lengthsome for &mut Vec<Element> {
 }
 
 impl<'a, Element> MutablyIterable for &'a mut Vec<Element> {
+    type Item = &'a mut Element;
     type Output = IterMut<'a, Element>;
 
     fn iter_mut(self) -> Self::Output {

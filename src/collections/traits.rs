@@ -78,7 +78,8 @@ assert_eq!(ItemRemovable::remove_item(&mut vec![10], 0), 10);
 }
 
 pub trait Iterable {
-    type Output: Iterator;
+    type Item;
+    type Output: Iterator<Item = Self::Item>;
 
     /// Returns an iterator over elements in a collection.
     /// ```
@@ -121,7 +122,8 @@ pub trait Lengthsome {
 }
 
 pub trait MutablyIterable {
-    type Output: Iterator;
+    type Item;
+    type Output: Iterator<Item = Self::Item>;
 
     /// Returns an iterator over mutable elements in a collection.
     /// ```

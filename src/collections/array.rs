@@ -23,6 +23,7 @@ impl<Element, const LENGTH: usize> Emptiable for &mut [Element; LENGTH] {
 }
 
 impl<'a, Element, const LENGTH: usize> Iterable for &'a [Element; LENGTH] {
+    type Item = &'a Element;
     type Output = Iter<'a, Element>;
 
     fn iter(self) -> Self::Output {
@@ -31,6 +32,7 @@ impl<'a, Element, const LENGTH: usize> Iterable for &'a [Element; LENGTH] {
 }
 
 impl<'a, Element, const LENGTH: usize> Iterable for &'a mut [Element; LENGTH] {
+    type Item = &'a Element;
     type Output = Iter<'a, Element>;
 
     fn iter(self) -> Self::Output {
@@ -65,6 +67,7 @@ impl<Element, const LENGTH: usize> Lengthsome for &mut [Element; LENGTH] {
 impl<'a, Element, const LENGTH: usize> MutablyIterable
     for &'a mut [Element; LENGTH]
 {
+    type Item = &'a mut Element;
     type Output = IterMut<'a, Element>;
 
     fn iter_mut(self) -> Self::Output {

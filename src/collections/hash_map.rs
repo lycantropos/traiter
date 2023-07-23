@@ -79,6 +79,7 @@ impl<'a, Key: Eq + Hash, Value, State: BuildHasher> ItemRemovable
 }
 
 impl<'a, Key, Value, State> Iterable for &'a HashMap<Key, Value, State> {
+    type Item = (&'a Key, &'a Value);
     type Output = Iter<'a, Key, Value>;
 
     fn iter(self) -> Self::Output {
@@ -87,6 +88,7 @@ impl<'a, Key, Value, State> Iterable for &'a HashMap<Key, Value, State> {
 }
 
 impl<'a, Key, Value, State> Iterable for &'a mut HashMap<Key, Value, State> {
+    type Item = (&'a Key, &'a Value);
     type Output = Iter<'a, Key, Value>;
 
     fn iter(self) -> Self::Output {
@@ -141,6 +143,7 @@ impl<Key, Value, State> Lengthsome for &mut HashMap<Key, Value, State> {
 impl<'a, Key, Value, State> MutablyIterable
     for &'a mut HashMap<Key, Value, State>
 {
+    type Item = (&'a Key, &'a mut Value);
     type Output = IterMut<'a, Key, Value>;
 
     fn iter_mut(self) -> Self::Output {

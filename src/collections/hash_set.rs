@@ -56,6 +56,7 @@ impl<Element, State> Emptiable for &mut HashSet<Element, State> {
 }
 
 impl<'a, Element, State> Iterable for &'a HashSet<Element, State> {
+    type Item = &'a Element;
     type Output = Iter<'a, Element>;
 
     fn iter(self) -> Self::Output {
@@ -64,6 +65,7 @@ impl<'a, Element, State> Iterable for &'a HashSet<Element, State> {
 }
 
 impl<'a, Element, State> Iterable for &'a mut HashSet<Element, State> {
+    type Item = &'a Element;
     type Output = Iter<'a, Element>;
 
     fn iter(self) -> Self::Output {

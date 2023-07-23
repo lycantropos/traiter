@@ -74,6 +74,7 @@ impl<Element> ItemRemovable for &mut VecDeque<Element> {
 }
 
 impl<'a, Element> Iterable for &'a VecDeque<Element> {
+    type Item = &'a Element;
     type Output = Iter<'a, Element>;
 
     fn iter(self) -> Self::Output {
@@ -82,6 +83,7 @@ impl<'a, Element> Iterable for &'a VecDeque<Element> {
 }
 
 impl<'a, Element> Iterable for &'a mut VecDeque<Element> {
+    type Item = &'a Element;
     type Output = Iter<'a, Element>;
 
     fn iter(self) -> Self::Output {
@@ -114,6 +116,7 @@ impl<Element> Lengthsome for &mut VecDeque<Element> {
 }
 
 impl<'a, Element> MutablyIterable for &'a mut VecDeque<Element> {
+    type Item = &'a mut Element;
     type Output = IterMut<'a, Element>;
 
     fn iter_mut(self) -> Self::Output {
